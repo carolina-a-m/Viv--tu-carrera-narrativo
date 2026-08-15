@@ -265,7 +265,12 @@ function obtenerOrdenActual(
       estado.eventosVistos.includes(
         evento.id
       ) &&
-      typeof evento.orden === 'number'
+      typeof evento.orden === 'number' &&
+      (
+        !evento.carrera ||
+        evento.carrera === 'generico' ||
+        evento.carrera === estado.carreraActiva
+      )
     ) {
 
       ordenActual =
@@ -279,6 +284,7 @@ function obtenerOrdenActual(
   }
 
   return ordenActual;
+
 }
 
 
@@ -302,7 +308,12 @@ function obtenerSiguienteOrden(
       eventos
         .filter(
           evento =>
-            typeof evento.orden === 'number'
+            typeof evento.orden === 'number' &&
+            (
+              !evento.carrera ||
+              evento.carrera === 'generico' ||
+              evento.carrera === estado.carreraActiva
+            )
         )
         .map(
           evento => evento.orden
@@ -320,6 +331,7 @@ function obtenerSiguienteOrden(
         orden > ordenActual
     ) ?? null
   );
+
 }
 
 

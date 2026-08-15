@@ -530,7 +530,7 @@
     "variables": { "exploracion": { "min": 1 } },
     "banderas": ["primer_parcial_resuelto", "duda_carrera"]
   },
-  "texto": "Quizás hay otros caminos.\n\nUna compañera te cuenta que tiene un amigo que estudia otra carrera en la UNR. Está participando de una actividad de extensión en un centro de salud público y te ofrece acompañarla.\n\nNo tenés que decidir nada todavía. Es simplemente una oportunidad para mirar qué hay del otro lado.",
+  "texto": "Quizás hay otros caminos.\n\nVioleta, una compañera, te cuenta que tiene un amigo que estudia otra carrera en la UNR. Está participando de una actividad de extensión en un centro de salud público y te ofrece acompañarla.\n\nNo tenés que decidir nada todavía. Es simplemente una oportunidad para mirar qué hay del otro lado.",
   "opciones": [
     {
       "texto": "Sí, voy.",
@@ -538,7 +538,7 @@
       "banderaSet": ["exploracion_salud_iniciada"]
     },
     {
-      "texto": "Prefiero seguir con Ciencia Política.",
+      "texto": "Mejor otro día.",
       "efectos": { "confianza": 1 },
       "banderaSet": ["exploracion_salud_rechazada"]
     }
@@ -550,7 +550,7 @@
   "orden": 70.1,
   "omitirSiNoCumple": true,
   "requiere": { "banderas": ["exploracion_salud_iniciada"] },
-  "texto": "Llegás al centro de salud con tu compañera. Mientras ella habla con otros estudiantes, vos te quedás cerca del mostrador.\n\nUna mujer llega con una receta.\n\n—¿Puedo retirar esto hoy?\n\nLa persona que la atiende revisa la pantalla.\n\n—Todavía no me figura.\n\n—Pero el mes pasado lo retiré acá.\n\nVuelve a revisar. Antes de que la mujer se ponga más nerviosa, alguien del equipo se acerca:\n\n—Dejame ver. A veces el sistema tarda en actualizar, pero probemos otra cosa.\n\nLa mujer se relaja un poco. Vos seguís mirando.",
+  "texto": "Llegás al centro de salud con Violeta. Mientras ella habla con otros estudiantes, vos te quedás cerca del mostrador.\n\nUna mujer llega con una receta.\n\n—Vengo a retirar esto.\n\nLa persona que la atiende revisa la pantalla.\n\n—Todavía no me figura.\n\n—Pero el mes pasado me lo dieron.\n\nVuelve a revisar. Antes de que la mujer se ponga más nerviosa, alguien del equipo se acerca:\n\n—Dejame ver. A veces el sistema tarda en actualizar, pero probemos otra cosa.\n\nLa mujer se relaja un poco. Vos seguís mirando.",
   "opciones": [
     {
       "texto": "Te acercás para preguntar qué está fallando en el sistema.",
@@ -563,7 +563,7 @@
       "banderaSet": ["presencio_problema_salud"]
     },
     {
-      "texto": "Te quedás observando cómo el equipo se coordina para resolverlo.",
+      "texto": "Te quedás viendo cómo el equipo trata de resolverlo.",
       "intereses": { "organizacion": 1 },
       "banderaSet": ["presencio_problema_salud"]
     }
@@ -576,7 +576,7 @@
   "orden": 70.2,
   "omitirSiNoCumple": true,
   "requiere": { "banderas": ["presencio_problema_salud"] },
-  "texto": "Tu compañera vuelve. Están revisando otro registro y haciendo una llamada.\n\nPensás que, si nadie insiste, la mujer se termina yendo sin nada.",
+  "texto": "Violeta vuelve. Están revisando otro registro y haciendo una llamada.\n\nPensás que, si nadie insiste, la mujer se termina yendo sin nada.",
   "opciones": [
     { "texto": "¿No alcanza con la receta?", "banderaSet": ["entendio_problema_salud"] }
   ]
@@ -588,7 +588,7 @@
   "orden": 70.3,
   "omitirSiNoCumple": true,
   "requiere": { "banderas": ["entendio_problema_salud"] },
-  "texto": "—Hay que verificar que esté autorizado.\n\nDespués de unos minutos encuentran cómo resolverlo. Antes de que la mujer se vaya, la persona del equipo le explica con calma qué hacer la próxima vez, para que no tenga que pasar por esto de nuevo.\n\nLa mujer agradece. La actividad continúa.\n\nMás tarde, tu compañera comenta, casi de pasada:\n\n—A mí lo que más me engancha no es tanto el sistema. Es la persona que tenés enfrente.",
+  "texto": "—Hay que verificar la autorización.\n\nDespués de unos minutos encuentran cómo resolverlo. Antes de que la mujer se vaya, la persona del equipo le explica qué hacer la próxima vez y a quién consultar si le vuelve a pasar.\n\nLa mujer agradece y se va. La actividad continúa.\n\nMás tarde, Violeta comenta, como al pasar:\n\n—Pensé que iba a ser más fácil. Hay un montón de cosas que no ves hasta que estás acá.",
   "opciones": [
     { "texto": "Seguir con la actividad.", "banderaSet": ["experiencia_salud_completada"] }
   ]
@@ -600,20 +600,47 @@
   "orden": 70.4,
   "omitirSiNoCumple": true,
   "requiere": { "banderas": ["experiencia_salud_completada"] },
-  "texto": "De camino a casa, tu compañera te pregunta:\n\n—¿Y? ¿Qué te pareció?\n\nNo fue una clase teórica. Viste a alguien resolver un problema real, con otra persona en el medio.\n\nTodavía no tenés que decidir nada. Pero la pregunta se quedó picando.",
+  "texto": "Cuando están volviendo, Violeta te pregunta:\n\n—¿Vos qué hubieras hecho?\n\nPensás un segundo.\n\nNo sabés bien qué responder.",
   "opciones": [
     {
-      "texto": "Me quedé pensando en esto. Me gustaría volver a ver algo así.",
+      "texto": "Me quedé pensando en eso. No sé bien. Me gustaría volver a ver algo así.",
       "efectos": { "exploracion": 1 },
       "banderaSet": ["deriva_medicina"]
     },
     {
-      "texto": "Estuvo bueno verlo, pero mi cabeza sigue en Ciencia Política.",
+      "texto": "Y... Hubiera tratado de resolverlo, pero no sé si me veo haciendo esto todos los días.",
       "efectos": { "confianza": 1 },
       "banderaSet": ["retoma_politica"]
     }
   ]
 },
+{
+    "id": "politica_bifurcacion_medicina_01",
+    "carrera": "politica",
+    "orden": 70.5,
+    "omitirSiNoCumple": true,
+    "requiere": {
+      "banderas": [
+        "deriva_medicina"
+      ]
+    },
+    "texto": "Pasaron varias semanas.\n\nSeguiste cursando, entregando trabajos, hablando con tus compañeros. Pero cada tanto volvías a pensar en Medicina.\n\nUna noche, mientras ordenabas apuntes, te pusiste a mirar las fechas de inscripción.\n\nLa inscripción todavía estaba abierta.",
+    "opciones": [
+      {
+        "texto": "Anotarte en Medicina.",
+        "cambiarCarrera": "medicina",
+        "banderaSet": [
+          "dejo_politica"
+        ]
+      },
+      {
+        "texto": "Quedarte en Ciencia Política.",
+        "banderaSet": [
+          "retoma_politica"
+        ]
+      }
+    ]
+  },
   {
     "id": "politica_pasantia_01",
     "carrera": "politica",
@@ -623,7 +650,7 @@
         "primer_parcial_resuelto"
       ]
     },
-    "texto": "Pasaron algunos años desde aquel primer día de cursado.\n\nA medida que fuiste avanzando en la carrera empezaron a abrirse algunas puertas.\n\nTenés la oportunidad de inscribirte en una pasantía. Te va a demandar tiempo extra, pero te permite conocer un ámbito laboral y sumar un ingreso.",
+    "texto": "Pasaron algunos años desde tu primer día de cursado.\n\nA medida que fuiste avanzando en la carrera empezaron a abrirse algunas puertas.\n\nTenés la oportunidad de inscribirte en una pasantía. Te va a demandar tiempo extra, pero te permite conocer un ámbito laboral y sumar un ingreso.",
     "opciones": [
       {
         "texto": "Elegir un organismo público.",
