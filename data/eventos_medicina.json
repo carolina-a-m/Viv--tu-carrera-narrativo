@@ -1,0 +1,668 @@
+[
+  {
+    "id": "medicina_inicio_01",
+    "carrera": "medicina",
+    "orden": 10,
+    "permiteTransversal": false,
+    "texto": "Es tu primera semana cursando en el área \"Crecimiento y Desarrollo\". La docente les pide que piensen una situación para trabajar en grupos: analizar el caso de un paciente que llega al centro de salud con distintos síntomas.\n\n\"No piensen solamente en qué enfermedad puede tener. Primero quiero que piensen qué información necesitan para entender el caso.\"",
+    "opciones": [
+      {
+        "texto": "Preguntar por la persona, su contexto y qué le está pasando antes de sacar conclusiones.",
+        "efectos": {
+          "interes_disciplina": 1,
+          "exploracion": 1,
+          "confianza": 1
+        },
+        "intereses": {
+          "social": 1
+        },
+        "banderaSet": [
+          "inicio_medicina",
+          "camino_contexto"
+        ]
+      },
+      {
+        "texto": "Buscar información para entender qué procesos biológicos pueden explicar los síntomas.",
+        "efectos": {
+          "interes_disciplina": 1,
+          "rendimiento": 1
+        },
+        "intereses": {
+          "tecnico": 1
+        },
+        "banderaSet": [
+          "inicio_medicina",
+          "camino_ciencias"
+        ]
+      },
+      {
+        "texto": "Escuchar las distintas hipótesis de los demás y tratar de ordenar el trabajo entre todos.",
+        "efectos": {
+          "interes_disciplina": 1,
+          "confianza": 1
+        },
+        "intereses": {
+          "organizacion": 1
+        },
+        "banderaSet": [
+          "inicio_medicina",
+          "camino_equipo"
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "medicina_contexto_01",
+    "carrera": "medicina",
+    "orden": 20,
+    "requiere": {
+      "banderas": [
+        "camino_contexto"
+      ]
+    },
+    "texto": "Mientras analizan el caso aparece un dato que cambia la situación: la persona tiene dificultades para acceder regularmente al sistema de salud.\n\nUna compañera te dice:\n\n\"Entonces quizás no alcanza con pensar qué tiene. También tenemos que pensar su contexto.\"",
+    "opciones": [
+      {
+        "texto": "Incorporar ese dato al análisis, aunque tengan que cambiar parte de lo que habían pensado.",
+        "efectos": {
+          "interes_disciplina": 1,
+          "exploracion": 1,
+          "tiempo": -1,
+          "confianza": 1
+        },
+        "intereses": {
+          "social": 1
+        },
+        "banderaSet": [
+          "conocio_contexto"
+        ]
+      },
+      {
+        "texto": "Mantener el foco en los síntomas porque es lo que pueden analizar con mayor facilidad.",
+        "efectos": {
+          "tiempo": 1,
+          "rendimiento": 1
+        },
+        "banderaSet": [
+          "conocio_contexto"
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "medicina_ciencias_01",
+    "carrera": "medicina",
+    "orden": 20,
+    "requiere": {
+      "banderas": [
+        "camino_ciencias"
+      ]
+    },
+    "texto": "Encontrás información que contradice la primera explicación que habían pensado.\n\nEl grupo ya había avanzado bastante y queda poco tiempo para entregar.",
+    "opciones": [
+      {
+        "texto": "Revisar la hipótesis aunque tengan que rehacer parte del trabajo.",
+        "efectos": {
+          "rendimiento": 1,
+          "tiempo": -1
+        },
+        "banderaSet": [
+          "reviso_hipotesis"
+        ]
+      },
+      {
+        "texto": "Buscar otra fuente antes de cambiarla.",
+        "efectos": {
+          "exploracion": 1,
+          "tiempo": -1
+        },
+        "banderaSet": [
+          "busco_evidencia"
+        ]
+      },
+      {
+        "texto": "Mantener la hipótesis porque necesitan entregar a tiempo.",
+        "efectos": {
+          "tiempo": 1,
+          "rendimiento": 1
+        },
+        "banderaSet": [
+          "mantengo_hipotesis"
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "medicina_equipo_01",
+    "carrera": "medicina",
+    "orden": 20,
+    "requiere": {
+      "banderas": [
+        "camino_equipo"
+      ]
+    },
+    "texto": "El grupo tiene varias hipótesis sobre el caso, pero empiezan a discutir por qué cada uno cree tener razón.\n\nUna compañera te mira y dice:\n\n\"Si cada uno sigue por su lado, no vamos a llegar a ninguna respuesta.\"",
+    "opciones": [
+      {
+        "texto": "Proponer comparar las distintas hipótesis y construir una respuesta conjunta.",
+        "efectos": {
+          "confianza": 1,
+          "rendimiento": 1
+        },
+        "intereses": {
+          "organizacion": 1
+        },
+        "banderaSet": [
+          "trabajo_en_equipo"
+        ]
+      },
+      {
+        "texto": "Defender la explicación que considerás más sólida.",
+        "efectos": {
+          "confianza": 1
+        },
+        "intereses": {
+          "tecnico": 1
+        },
+        "banderaSet": [
+          "defendio_hipotesis"
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "medicina_observacion_01",
+    "carrera": "medicina",
+    "orden": 30,
+    "requiere": {
+      "banderas": [
+        "inicio_medicina"
+      ]
+    },
+    "texto": "En la materia \"Medicina y Sociedad\" la docente les pide observar una entrevista de salud. Antes de empezar, les dice:\n\n\"No se apuren a responder. Aprender a observar también es aprender Medicina.\"\n\nDurante la actividad podés elegir a qué prestar especial atención.",
+    "opciones": [
+      {
+        "texto": "Prestar atención a cómo se comunica la persona y qué información aporta.",
+        "efectos": {
+          "interes_disciplina": 1,
+          "confianza": 1
+        },
+        "intereses": {
+          "comunicacion": 1
+        },
+        "banderaSet": [
+          "conocio_comunicacion"
+        ]
+      },
+      {
+        "texto": "Concentrarte en los datos que pueden ayudar a comprender el problema.",
+        "efectos": {
+          "interes_disciplina": 1,
+          "rendimiento": 1
+        },
+        "intereses": {
+          "investigacion": 1
+        },
+        "banderaSet": [
+          "conocio_diagnostico"
+        ]
+      },
+      {
+        "texto": "Observar cómo trabajan juntos los distintos integrantes del equipo de salud.",
+        "efectos": {
+          "interes_disciplina": 1,
+          "exploracion": 1
+        },
+        "intereses": {
+          "organizacion": 1
+        },
+        "banderaSet": [
+          "conocio_equipo_salud"
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "medicina_parcial_01",
+    "carrera": "medicina",
+    "orden": 40,
+    "requiere": {
+      "banderas": [
+        "inicio_medicina"
+      ]
+    },
+    "texto": "Llegó el momento del primer parcial. Entrás al aula y mirás las preguntas.\n\nAlgunas te resultan familiares. Otras te obligan a relacionar conceptos que habías estudiado por separado. Terminás, entregás y salís del aula.\n\nAhora solo queda esperar.",
+    "opciones": [
+      {
+        "texto": "Entregar el parcial y esperar los resultados.",
+        "efectos": {},
+        "banderaSet": [
+          "primer_parcial_realizado"
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "medicina_parcial_resultado_bien_01",
+    "carrera": "medicina",
+    "orden": 41,
+    "requiere": {
+      "banderas": [
+        "primer_parcial_realizado"
+      ],
+      "variables": {
+        "rendimiento": {
+          "min": 2
+        }
+      }
+    },
+    "texto": "Publican las notas. Te fue bien.\n\nNo fue fácil, pero sentís que empezás a entender cómo funciona la carrera.\n\nUna compañera te cuenta que existen distintas actividades en las que podés participar.",
+    "opciones": [
+      {
+        "texto": "Sumarte a una actividad vinculada con la investigación.",
+        "efectos": {
+          "exploracion": 1,
+          "tiempo": -1
+        },
+        "intereses": {
+          "investigacion": 1
+        },
+        "banderaSet": [
+          "conocio_investigacion"
+        ]
+      },
+      {
+        "texto": "Preferir aprovechar el tiempo para seguir preparando las materias.",
+        "efectos": {
+          "rendimiento": 1,
+          "tiempo": 1
+        },
+        "banderaSet": [
+          "priorizo_estudio"
+        ]
+      },
+      {
+        "texto": "Sumarte a un voluntariado en el área de Salud de la Universidad.",
+        "efectos": {
+          "confianza": 1,
+          "exploracion": 1,
+          "tiempo": -1
+        },
+        "intereses": {
+          "salud": 1
+        },
+        "banderaSet": [
+          "participo_voluntariado"
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "medicina_parcial_resultado_mal_01",
+    "carrera": "medicina",
+    "orden": 41,
+    "requiere": {
+      "banderas": [
+        "primer_parcial_realizado"
+      ],
+      "variables": {
+        "rendimiento": {
+          "max": 1
+        }
+      }
+    },
+    "texto": "Publican las notas. Mirás la tuya una segunda vez. No era la que esperabas.\n\nTus compañeros ya están hablando de cómo prepararse para la próxima instancia.",
+    "opciones": [
+      {
+        "texto": "Pedir ayuda y unirte a un grupo de estudio.",
+        "efectos": {
+          "confianza": 1,
+          "tiempo": -1
+        },
+        "banderaSet": [
+          "tiene_grupo_estudio",
+          "desaprobo_primer_parcial"
+        ]
+      },
+      {
+        "texto": "Cambiar tu forma de estudiar y reorganizar tus tiempos.",
+        "efectos": {
+          "rendimiento": 1,
+          "confianza": 1,
+          "tiempo": -1
+        },
+        "banderaSet": [
+          "cambio_metodo_estudio",
+          "desaprobo_primer_parcial"
+        ]
+      },
+      {
+        "texto": "Empezar a preguntarte si Medicina realmente era como la imaginabas.",
+        "efectos": {
+          "exploracion": 1
+        },
+        "banderaSet": [
+          "duda_carrera",
+          "desaprobo_primer_parcial"
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "medicina_no_podes_con_todo_01",
+    "carrera": "medicina",
+    "orden": 50,
+    "requiere": {
+      "banderas": [
+        "primer_parcial_realizado"
+      ]
+    },
+    "texto": "Ya pasaron varios años desde que empezaste Medicina.\n\nLa carga de la carrera aumentó y, entre las cursadas y el estudio, empezás a tener menos tiempo libre.\n\nUn grupo de compañeros con los que cursás te invita a hacer algo después de clases.\n\nUno de ellos te dice:\n\n\"Hace un montón que estamos todos a mil. ¿Venís un rato?\"\n\nSabés que también tenés cosas que estudiar.",
+    "opciones": [
+      {
+        "texto": "Ir un rato. También necesitás despejarte y compartir tiempo con tus compañeros.",
+        "efectos": {
+          "confianza": 1,
+          "tiempo": -1,
+          "cansancio": 1
+        }
+      },
+      {
+        "texto": "Quedarte estudiando. Preferís aprovechar ese tiempo para avanzar con las materias.",
+        "efectos": {
+          "rendimiento": 1,
+          "tiempo": 1
+        },
+        "banderaSet": [
+          "priorizo_estudio"
+        ]
+      },
+      {
+        "texto": "Ir, pero quedarte poco tiempo porque necesitás descansar.",
+        "efectos": {
+          "confianza": 1,
+          "cansancio": -1,
+          "tiempo": -1
+        },
+        "banderaSet": [
+          "priorizo_bienestar"
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "medicina_no_estas_solx_01",
+    "carrera": "medicina",
+    "orden": 60,
+    "texto": "Después de varios años de cursada, empezás a notar que Medicina no se sostiene solamente con estudiar.\n\nUn día, antes de una evaluación importante, varios compañeros están organizando cómo prepararse.\n\nUno de ellos dice:\n\n\"Si cada uno estudia por su lado, llegamos muertos. ¿Nos juntamos a estudiar?\"",
+    "opciones": [
+      {
+        "texto": "Sumarte al grupo y proponer repartirse los temas para después explicárselos entre todos.",
+        "efectos": {
+          "confianza": 1,
+          "rendimiento": 1,
+          "tiempo": -1
+        },
+        "banderaSet": [
+          "tiene_grupo_estudio"
+        ]
+      },
+      {
+        "texto": "Preferir estudiar por tu cuenta. Sentís que así aprovechás mejor el tiempo.",
+        "efectos": {
+          "rendimiento": 1,
+          "tiempo": 1
+        },
+        "banderaSet": [
+          "priorizo_estudio"
+        ]
+      },
+      {
+        "texto": "Sumarte, pero proponer que además de estudiar se tomen un momento para despejarse.",
+        "efectos": {
+          "confianza": 1,
+          "cansancio": -1,
+          "tiempo": -1
+        },
+        "banderaSet": [
+          "tiene_grupo_estudio"
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "medicina_practica_incipiente_01",
+    "carrera": "medicina",
+    "orden": 70,
+    "texto": "Después de varios años de cursada, empezás a tener una experiencia más cercana a la práctica profesional. En una actividad de la carrera, tenés que acompañar una situación dentro de un espacio de atención de salud.\n\nAntes de entrar, una docente te dice:\n\n\"Hasta ahora muchas de estas situaciones las viste en libros. Hoy vas a tener que pensar qué significa enfrentarlas con una persona real.\"\n\nDurante la actividad, aparece una situación que no esperabas: la persona está nerviosa y la consulta no se desarrolla como habían previsto.",
+    "opciones": [
+      {
+        "texto": "Intentar mantener la calma, aunque te sentís nervioso/a, y atender a lo que la persona necesita.",
+        "efectos": {
+          "confianza": 1,
+          "exploracion": 1
+        },
+        "intereses": {
+          "comunicacion": 1
+        },
+        "banderaSet": [
+          "experiencia_practica"
+        ]
+      },
+      {
+        "texto": "Concentrarte en aplicar lo que aprendiste y ordenar la información del caso.",
+        "efectos": {
+          "rendimiento": 1
+        },
+        "intereses": {
+          "investigacion": 1
+        },
+        "banderaSet": [
+          "experiencia_practica"
+        ]
+      },
+      {
+        "texto": "Observar cómo intervienen los profesionales y tratar de aprender de la situación.",
+        "efectos": {
+          "exploracion": 1,
+          "interes_disciplina": 1
+        },
+        "intereses": {
+          "organizacion": 1
+        },
+        "banderaSet": [
+          "experiencia_practica"
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "medicina_donde_te_imaginas_01",
+    "carrera": "medicina",
+    "orden": 80,
+    "requiere": {
+      "banderas": [
+        "experiencia_practica"
+      ]
+    },
+    "texto": "Después de esa experiencia, la carrera empieza a sentirse diferente.\n\nEmpezás a preguntarte qué tipo de profesional querés ser.\n\nUna docente comenta que algunos estudiantes ya están buscando experiencias relacionadas con distintos ámbitos de trabajo.",
+    "opciones": [
+      {
+        "texto": "Buscar una experiencia en un hospital público. Te interesa conocer de cerca cómo es trabajar en un sistema de salud que atiende a personas con realidades muy diferentes.",
+        "efectos": {
+          "exploracion": 1,
+          "tiempo": -2,
+          "dinero": 1
+        },
+        "intereses": {
+          "social": 1
+        },
+        "banderaSet": [
+          "tiene_trabajo",
+          "conocio_sector_publico"
+        ]
+      },
+      {
+        "texto": "Buscar una experiencia vinculada a la atención privada. Querés conocer otra forma de organizar el trabajo médico y la atención de pacientes.",
+        "efectos": {
+          "exploracion": 1,
+          "interes_disciplina": 1,
+          "tiempo": -2,
+          "dinero": 1
+        },
+        "banderaSet": [
+          "tiene_trabajo"
+        ]
+      },
+      {
+        "texto": "Por ahora, preferir concentrarte en terminar la carrera. Sentís que todavía necesitás fortalecer tu formación antes de empezar a trabajar.",
+        "efectos": {
+          "rendimiento": 1,
+          "tiempo": 1
+        },
+        "banderaSet": [
+          "priorizo_estudio"
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "medicina_reflexion_carrera_01",
+    "carrera": "medicina",
+    "orden": 90,
+    "requiere": {
+      "banderas": [
+        "experiencia_practica"
+      ]
+    },
+    "texto": "Después de varias experiencias en distintos espacios de trabajo y formación, empezás a descubrir que algunas cosas de Medicina te entusiasman y otras te cuestan más de lo que imaginabas.\n\nUna tarde, después de una jornada intensa, hablás con un compañero. Te dice:\n\n\"A mí me pasó lo mismo. Hay cosas de Medicina que me encantan, pero no sé si me veo haciendo esto toda la vida.\"\n\nLa conversación te deja pensando.",
+    "opciones": [
+      {
+        "texto": "Decidir seguir adelante. Hay dificultades, pero también encontraste cosas de la carrera que realmente te interesan.",
+        "efectos": {
+          "confianza": 1,
+          "interes_disciplina": 1
+        }
+      },
+      {
+        "texto": "Empezar a explorar otras posibilidades dentro del campo de la salud. No querés abandonar todo lo aprendido; te interesa descubrir si existe otra forma de trabajar con aquello que te interesa.",
+        "efectos": {
+          "exploracion": 2,
+          "interes_disciplina": 1
+        },
+        "banderaSet": [
+          "duda_carrera"
+        ]
+      },
+      {
+        "texto": "Darte un tiempo antes de tomar una decisión. Preferís terminar de entender qué te gusta y qué no antes de pensar en cambiar de rumbo.",
+        "efectos": {
+          "exploracion": 1,
+          "confianza": 1
+        },
+        "banderaSet": [
+          "duda_carrera"
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "medicina_otro_camino_01",
+    "carrera": "medicina",
+    "orden": 91,
+    "requiere": {
+      "banderas": [
+        "duda_carrera"
+      ],
+      "variables": {
+        "exploracion": {
+          "min": 2
+        }
+      }
+    },
+    "texto": "No tenés que tomar una decisión ahora.\n\nDespués de todo lo que viviste en Medicina, entendiste mejor qué cosas te interesan: trabajar con personas, investigar, resolver problemas, comunicar, acompañar procesos.\n\nTenés la posibilidad de conocer otras propuestas académicas de la UNR.",
+    "opciones": [
+      {
+        "texto": "Explorar otra carrera.",
+        "efectos": {
+          "exploracion": 1
+        },
+        "banderaSet": [
+          "conocio_otra_carrera"
+        ]
+      },
+      {
+        "texto": "Seguir en Medicina.",
+        "efectos": {}
+      }
+    ]
+  },
+
+  {
+    "id": "medicina_practica_final_01",
+    "carrera": "medicina",
+    "orden": 100,
+    "requiere": {
+      "banderas": [
+        "experiencia_practica"
+      ]
+    },
+    "texto": "Ya estás avanzada/o en la carrera.\n\nTe encontrás cursando la Práctica Final Obligatoria. La forma de estudiar cambió, las situaciones son más concretas y cada vez tenés más contacto con espacios de atención de salud.\n\nDurante una actividad práctica, una docente te dice:\n\n\"Hasta ahora muchas veces te preguntaste qué harías en una situación así. De a poco vas a empezar a tener que hacerlo.\"\n\nEn un momento aparece una situación que requiere tomar una decisión.",
+    "opciones": [
+      {
+        "texto": "Intentar intervenir con lo que aprendiste hasta ahora.",
+        "efectos": {
+          "confianza": 1,
+          "interes_disciplina": 1,
+          "cansancio": 1
+        }
+      },
+      {
+        "texto": "Consultar con alguien con más experiencia antes de intervenir.",
+        "efectos": {
+          "confianza": 1,
+          "exploracion": 1
+        },
+        "intereses": {
+          "organizacion": 1
+        }
+      },
+      {
+        "texto": "Primero observar cómo trabaja el equipo y después decidir cómo participar.",
+        "efectos": {
+          "exploracion": 1,
+          "tiempo": -1
+        },
+        "intereses": {
+          "organizacion": 1
+        }
+      }
+    ]
+  },
+
+  {
+    "id": "medicina_final_general",
+    "carrera": "medicina",
+    "orden": 110,
+    "texto": "Terminás la jornada y volvés a casa pensando en todo lo que cambió desde aquel primer día.\n\nTodavía te quedan materias, prácticas y mucho por aprender.\n\nPero algo sí cambió: Medicina dejó de ser solamente una carrera que estudiás. Ahora también empieza a ser una profesión que estás aprendiendo a ejercer.\n\nTu recorrido siempre continúa.",
+    "opciones": [
+      {
+        "texto": "Ver mi recorrido.",
+        "efectos": {}
+      }
+    ]
+  }
+]

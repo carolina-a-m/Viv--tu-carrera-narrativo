@@ -1,0 +1,37 @@
+[
+  {
+    "id": "exactas",
+    "nombre": "Ciencias Exactas, Ingeniería y Agrimensura",
+    "carreras": [
+      { "id": "computacion", "nombre": "Ciencias de la Computación" }
+    ]
+  },
+  {
+    "id": "humanidades",
+    "nombre": "Humanidades y Artes",
+    "carreras": [
+      { "id": "antropologia", "nombre": "Antropología" }
+    ]
+  },
+  {
+    "id": "politica_facultad",
+    "nombre": "Ciencia Política y Relaciones Internacionales",
+    "carreras": [
+      { "id": "politica", "nombre": "Licenciatura en Ciencia Política" }
+    ]
+  },
+    {
+    "id": "arquitectura_facultad",
+    "nombre": "Arquitectura, Planeamiento y Diseño",
+    "carreras": [
+      { "id": "arquitectura", "nombre": "Arquitectura" }
+    ]
+  },
+  {
+    "id": "medicas",
+    "nombre": "Ciencias Médicas",
+    "carreras": [
+      { "id": "medicina", "nombre": "Medicina" }
+    ]
+  }
+]

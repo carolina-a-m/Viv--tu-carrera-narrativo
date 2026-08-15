@@ -1,0 +1,961 @@
+[
+  {
+    "id": "politica_inicio_01",
+    "carrera": "politica",
+    "orden": 10,
+    "permiteTransversal": false,
+    "texto": "Es tu primera semana cursando Ciencia Política. En una actividad de Introducción a la Ciencia Política, la docente divide a la clase en grupos.\n\n\"Les voy a dar un caso real. Mañana tienen que presentar un análisis.\"\n\nEn Rosario se está discutiendo una nueva medida que afecta a distintos sectores de la ciudad. El problema es que cada grupo involucrado sostiene una versión diferente de lo que está pasando.\n\nTenés poco tiempo para empezar.",
+    "opciones": [
+      {
+        "texto": "Averiguar qué actores están involucrados y qué intereses tiene cada uno.",
+        "efectos": {
+          "interes_disciplina": 1,
+          "confianza": 1,
+          "exploracion": 1
+        },
+        "intereses": {
+          "politica": 1,
+          "social": 1
+        },
+        "banderaSet": [
+          "inicio_politica",
+          "interes_participacion",
+          "conocio_actores",
+          "camino_actores",
+          "inicio_resuelto"
+        ]
+      },
+      {
+        "texto": "Buscar antecedentes para entender cómo se llegó hasta esta situación.",
+        "efectos": {
+          "interes_disciplina": 1 },
+        "intereses": {
+          "politica": 1,
+          "investigacion": 1
+        },
+        "banderaSet": [
+          "inicio_politica",
+          "interes_investigacion",
+          "conocio_investigacion",
+          "camino_investigacion",
+          "inicio_resuelto"
+        ]
+      },
+      {
+        "texto": "Buscar datos para comprobar qué está pasando realmente.",
+        "efectos": {
+          "interes_disciplina": 1,
+          "exploracion": 1
+        },
+        "intereses": {
+          "politica": 1,
+          "comunicacion": 1
+        },
+        "banderaSet": [
+          "inicio_politica",
+          "interes_opinion_publica",
+          "conocio_datos",
+          "camino_datos",
+          "inicio_resuelto"
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "politica_actores_01",
+    "carrera": "politica",
+    "orden": 20,
+    "requiere": {
+      "banderas": [
+        "camino_actores"
+      ]
+    },
+    "texto": "Mientras revisan el conflicto encontrás algo raro: dos grupos que parecían estar enfrentados tienen un interés en común.\n\nTu compañero lee lo que encontraste y se queda pensando.\n\n\"Si mostramos esto, cambia completamente nuestro análisis.\"",
+    "opciones": [
+      {
+        "texto": "Intentar incorporar ese punto en el análisis, aunque tengan que rehacer parte del trabajo.",
+        "efectos": {
+        "interes_disciplina": 1,
+        "confianza": 1,
+        "energia": -1,
+        "progreso": 1
+      },
+        "intereses": {
+          "politica": 1,
+          "social": 1
+        },
+        "banderaSet": [
+          "conocio_actores",
+          "conflicto_resuelto"
+        ]
+      },
+      {
+        "texto": "Mantener el análisis original y dejarlo afuera porque puede complicar el argumento.",
+        "efectos": {
+          "progreso": 1,
+          "energia": 1
+        },
+        "intereses": {
+          "organizacion": 1
+        },
+        "banderaSet": [
+          "conocio_actores",
+          "conflicto_resuelto"
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "politica_investigacion_01",
+    "carrera": "politica",
+    "orden": 20,
+    "requiere": {
+      "banderas": [
+        "camino_investigacion"
+      ]
+    },
+    "texto": "Encontrás un estudio anterior sobre un conflicto parecido. Las conclusiones contradicen lo que ustedes pensaban.\n\nTu grupo ya escribió dos páginas y mañana tienen que presentar.",
+    "opciones": [
+      {
+        "texto": "Cambiar la hipótesis y revisar lo que ya escribieron.",
+        "efectos": {
+          "energia": -1,
+          "confianza": 1,
+          "progreso": 1
+        },
+        "intereses": {
+          "investigacion": 1
+        },
+        "banderaSet": [
+          "interes_investigacion",
+          "conflicto_resuelto"
+        ]
+      },
+      {
+        "texto": "Buscar más información en otras fuentes antes de cambiarla.",
+        "efectos": {
+          "energia": -1,
+          "exploracion": 1,
+          "progreso": 1
+        },
+        "intereses": {
+          "investigacion": 1
+        },
+        "banderaSet": [
+          "interes_investigacion",
+          "conflicto_resuelto"
+        ]
+      },
+      {
+        "texto": "Seguir con la hipótesis original.",
+        "efectos": {
+          "progreso": 1,
+          "energia": 1
+        },
+        "intereses": {
+          "organizacion": 1
+        },
+        "banderaSet": [
+          "conflicto_resuelto"
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "politica_datos_01",
+    "carrera": "politica",
+    "orden": 20,
+    "requiere": {
+      "banderas": [
+        "camino_datos"
+      ]
+    },
+    "texto": "El informe está casi terminado. Pero hay un problema: los datos que encontraron cuentan una historia y los actores involucrados cuentan otra.\n\nTu compañero te mira.\n\n\"Si presentamos esto así, alguien nos va a preguntar cuál de las dos versiones estamos tomando.\"",
+    "opciones": [
+      {
+        "texto": "Priorizar los datos y sostener la conclusión con la evidencia disponible.",
+        "efectos": {
+          "progreso": 1
+        },
+        "intereses": {
+          "comunicacion": 1,
+          "politica": 1
+        },
+        "banderaSet": [
+          "conflicto_resuelto"
+        ]
+      },
+      {
+        "texto": "Intentar entender por qué existe esa diferencia antes de cerrar el análisis.",
+        "efectos": {
+          "exploracion": 1,
+          "progreso": 1
+
+        },
+        "intereses": {
+          "politica": 1,
+          "investigacion": 1
+        },
+        "banderaSet": [
+          "conflicto_resuelto"
+        ]
+      }
+    ]
+  },
+{
+    "id": "politica_actividad_actores_01",
+    "carrera": "politica",
+    "orden": 30,
+    "requiere": {
+      "banderas": [
+        "conflicto_resuelto",
+        "camino_actores"
+      ]
+    },
+    "texto": "Después de entregar el trabajo, la docente te devuelve el análisis.\n\n\"Bien. Identificar quién está en juego en un conflicto, y qué intereses defiende cada uno, no es poca cosa: es la base de cualquier análisis político serio.\"\n\nAntes de irte, la docente agrega:\n\"Si te interesó especialmente entender quiénes intervienen en un conflicto y qué intereses hay detrás, podés seguir trabajando con ese tipo de problemas en distintas actividades fuera de la cursada.\"",
+    "opciones": [
+      {
+        "texto": "Sumarte a un proyecto de investigación y ayudar a buscar información y antecedentes.",
+        "efectos": {
+          "energia": -1
+        },
+        "intereses": {
+          "investigacion": 1,
+          "politica": 1
+        },
+        "banderaSet": [
+          "interes_investigacion",
+          "conocio_investigacion",
+          "actividad_resuelta"
+        ]
+      },
+      {
+        "texto": "Sumarte a un plenario donde estudiantes discuten el problema y posibles soluciones.",
+        "efectos": {
+          "energia": -1,
+          "confianza": 1
+        },
+        "intereses": {
+          "politica": 1,
+          "social": 1
+        },
+        "banderaSet": [
+          "interes_participacion",
+          "participo_actividad_estudiantil",
+          "actividad_resuelta"
+        ]
+      },
+      {
+        "texto": "No sumarte. Preferís dedicar ese tiempo a cursar y preparar los parciales.",
+        "efectos": {
+          "progreso": 1,
+          "energia": 1
+        },
+        "intereses": {
+          "organizacion": 1
+        },
+        "banderaSet": [
+          "priorizo_estudio",
+          "actividad_resuelta"
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "politica_actividad_investigacion_01",
+    "carrera": "politica",
+    "orden": 30,
+    "requiere": {
+      "banderas": [
+        "conflicto_resuelto",
+        "camino_investigacion"
+      ]
+    },
+    "texto": "Después de entregar el trabajo, la docente te devuelve el análisis.\n\n\"Bien. Cambiar de hipótesis cuando la evidencia lo pide es más difícil de lo que parece, y ustedes lo hicieron.\"\n\nAntes de irte, la docente agrega:\n\"Si te interesó especialmente buscar información, reconstruir antecedentes y ver qué pasó antes de sacar una conclusión, podés seguir trabajando con eso en distintas actividades fuera de la cursada.\"",
+    "opciones": [
+      {
+        "texto": "Sumarte a un proyecto de investigación y ayudar a buscar información y antecedentes.",
+        "efectos": {
+          "energia": -1
+        },
+        "intereses": {
+          "investigacion": 1,
+          "politica": 1
+        },
+        "banderaSet": [
+          "interes_investigacion",
+          "conocio_investigacion",
+          "actividad_resuelta"
+        ]
+      },
+      {
+        "texto": "Sumarte a un plenario donde estudiantes discuten el problema y posibles soluciones.",
+        "efectos": {
+          "energia": -1,
+          "confianza": 1
+        },
+        "intereses": {
+          "politica": 1,
+          "social": 1
+        },
+        "banderaSet": [
+          "interes_participacion",
+          "participo_actividad_estudiantil",
+          "actividad_resuelta"
+        ]
+      },
+      {
+        "texto": "No sumarte. Preferís dedicar ese tiempo a cursar y preparar los parciales.",
+        "efectos": {
+          "progreso": 1,
+          "energia": 1
+        },
+        "intereses": {
+          "organizacion": 1
+        },
+        "banderaSet": [
+          "priorizo_estudio",
+          "actividad_resuelta"
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "politica_actividad_datos_01",
+    "carrera": "politica",
+    "orden": 30,
+    "requiere": {
+      "banderas": [
+        "conflicto_resuelto",
+        "camino_datos"
+      ]
+    },
+    "texto": "Después de entregar el informe, la docente te devuelve el análisis.\n\n\"Bien. Sostener una conclusión con evidencia, sabiendo que hay otras versiones dando vueltas, es más incómodo de lo que se ve desde afuera.\"\n\nAntes de irte, la docente agrega:\n\"Si te interesó especialmente trabajar con evidencia y contrastarla con distintas versiones de un mismo problema, podés seguir trabajándolo en distintas actividades fuera de la cursada.\"",
+    "opciones": [
+      {
+        "texto": "Sumarte a un proyecto de investigación y ayudar a buscar información y antecedentes.",
+        "efectos": {
+          "energia": -1
+        },
+        "intereses": {
+          "investigacion": 1,
+          "politica": 1
+        },
+        "banderaSet": [
+          "interes_investigacion",
+          "conocio_investigacion",
+          "actividad_resuelta"
+        ]
+      },
+      {
+        "texto": "Sumarte a un plenario donde estudiantes discuten el problema y posibles soluciones.",
+        "efectos": {
+          "energia": -1,
+          "confianza": 1
+        },
+        "intereses": {
+          "politica": 1,
+          "social": 1
+        },
+        "banderaSet": [
+          "interes_participacion",
+          "participo_actividad_estudiantil",
+          "actividad_resuelta"
+        ]
+      },
+      {
+        "texto": "No sumarte. Preferís dedicar ese tiempo a cursar y preparar los parciales.",
+        "efectos": {
+          "progreso": 1,
+          "energia": 1
+        },
+        "intereses": {
+          "organizacion": 1
+        },
+        "banderaSet": [
+          "priorizo_estudio",
+          "actividad_resuelta"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "politica_parcial_presentacion_01",
+    "carrera": "politica",
+    "orden": 40,
+    "requiere": {
+      "banderas": [
+        "actividad_resuelta"
+      ]
+    },
+    "texto": "Llegó el momento del primer parcial.\n\nEntrás al aula y mirás las preguntas. Algunas te resultan familiares; otras te obligan a pensar más de lo que esperabas.\n\nCuando terminás, entregás la hoja. Ahora solo queda esperar la nota.",
+    "opciones": [
+      {
+        "texto": "Esperar el resultado.",
+        "efectos": {},
+        "banderaSet": [
+          "primer_parcial_realizado"
+        ]
+      }
+    ]
+  },
+{
+  "id": "politica_parcial_bien_01",
+  "carrera": "politica",
+  "orden": 50,
+  "requiere": {
+    "banderas": ["primer_parcial_realizado"],
+    "variables": { "progreso": { "min": 2 } }
+  },
+  "texto": "Publican las notas.\n\nTe fue bien. No fue fácil, pero sentís que empezás a entender cómo funciona la carrera.\n\nSalís del aula bastante conforme.",
+  "opciones": [
+    {
+      "texto": "Aprovechar el envión y empezar a buscar alguna actividad nueva.",
+      "efectos": { "exploracion": 1 },
+      "banderaSet": ["primer_parcial_resuelto", "aprobo_primer_parcial"]
+    },
+    {
+      "texto": "Mantener el ritmo y seguir priorizando las materias.",
+      "efectos": { "progreso": 1 },
+      "banderaSet": ["priorizo_estudio", "primer_parcial_resuelto", "aprobo_primer_parcial"]
+    }
+  ]
+},
+
+  {
+    "id": "politica_parcial_mal_01",
+    "carrera": "politica",
+    "orden": 50,
+    "requiere": {
+      "banderas": [
+        "primer_parcial_realizado"
+      ],
+      "variables": {
+        "progreso": {
+          "max": 1
+        }
+      }
+    },
+    "texto": "Publican las notas.\n\nMirás la tuya una segunda vez: 3.\n\nNo esperabas que te fuera tan mal.\n\nTus compañeros ya están hablando del recuperatorio.",
+    "opciones": [
+      {
+        "texto": "Pedir ayuda y armar un grupo de estudio.",
+        "efectos": {
+          "confianza": 1
+        },
+        "banderaSet": [
+          "tiene_grupo_estudio",
+          "desaprobo_primer_parcial",
+          "primer_parcial_resuelto"
+        ]
+      },
+      {
+        "texto": "Cambiar tu forma de estudiar y volver a intentarlo.",
+        "efectos": {
+          "progreso": 1,
+          "confianza": 1
+        },
+        "banderaSet": [
+          "desaprobo_primer_parcial",
+          "primer_parcial_resuelto"
+        ]
+      },
+      {
+        "texto": "Empezar a preguntarte si la carrera realmente era como imaginabas.",
+        "efectos": {
+          "exploracion": 1
+        },
+        "banderaSet": [
+          "desaprobo_primer_parcial",
+          "duda_carrera",
+          "primer_parcial_resuelto"
+        ]
+      }
+    ]
+  },
+
+{
+  "id": "politica_mitad_fracaso_grupo_01",
+  "carrera": "politica",
+  "orden": 60,
+  "requiere": {
+    "banderas": ["primer_parcial_resuelto", "desaprobo_primer_parcial", "tiene_grupo_estudio"]
+  },
+  "texto": "Ya pasaron varios meses desde que empezaste.\n\nTodavía te acordás del 3. No fue solo una nota: fue la primera vez que sentiste que algo no estaba funcionando como pensabas.\n\nSeguiste juntándote con el grupo de estudio.\n\nAhora tenés una experiencia concreta de la carrera, no solo una idea. También ves que varios compañeros empezaron a dejarla.",
+  "opciones": [
+    { "texto": "No era exactamente lo que imaginaba, pero cada vez encuentro más cosas que me interesan.", "efectos": { "confianza": 1, "interes_disciplina": 1 }, "banderaSet": ["retoma_politica"] },
+    { "texto": "Hay cosas que me gustan, pero otras no tienen nada que ver con lo que esperaba.", "efectos": { "exploracion": 1 }, "intereses": { "politica": 1 }, "banderaSet": ["duda_carrera"] },
+    { "texto": "Quiero conocer qué otras cosas puedo hacer antes de decidir.", "efectos": { "exploracion": 2 }, "banderaSet": ["duda_carrera"] }
+  ]
+},
+{
+  "id": "politica_mitad_fracaso_solo_01",
+  "carrera": "politica",
+  "orden": 60,
+  "requiere": {
+    "banderas": ["primer_parcial_resuelto", "desaprobo_primer_parcial"]
+  },
+  "texto": "Ya pasaron varios meses desde que empezaste.\n\nTodavía te acordás del 3. No fue solo una nota: fue la primera vez que sentiste que algo no estaba funcionando como pensabas.\n\nSeguiste con la cursada.\n\nAhora tenés una experiencia concreta de la carrera, no solo una idea. También ves que varios compañeros empezaron a dejarla.",
+  "opciones": [
+    { "texto": "No era exactamente lo que imaginaba, pero cada vez encuentro más cosas que me interesan.", "efectos": { "confianza": 1, "interes_disciplina": 1 }, "banderaSet": ["retoma_politica"] },
+    { "texto": "Hay cosas que me gustan, pero otras no tienen nada que ver con lo que esperaba.", "efectos": { "exploracion": 1 }, "intereses": { "politica": 1 }, "banderaSet": ["duda_carrera"] },
+    { "texto": "Quiero conocer qué otras cosas puedo hacer antes de decidir.", "efectos": { "exploracion": 2 }, "banderaSet": ["duda_carrera"] }
+  ]
+},
+{
+  "id": "politica_mitad_bien_01",
+  "carrera": "politica",
+  "orden": 60,
+  "requiere": {
+    "banderas": ["primer_parcial_resuelto", "aprobo_primer_parcial"]
+  },
+  "texto": "Ya pasaron varios meses desde que empezaste.\n\nCuando te anotaste en Ciencia Política tenías una idea de cómo iba a ser. Ahora tenés una experiencia concreta. También ves que varios compañeros empezaron a dejar la carrera.",
+  "opciones": [
+    { "texto": "No era exactamente lo que imaginaba, pero cada vez encuentro más cosas que me interesan.", "efectos": { "confianza": 1, "interes_disciplina": 1 }, "banderaSet": ["retoma_politica"] },
+    { "texto": "Hay cosas que me gustan, pero otras no tienen nada que ver con lo que esperaba.", "efectos": { "exploracion": 1 }, "intereses": { "politica": 1 }, "banderaSet": ["duda_carrera"] },
+    { "texto": "Quiero conocer qué otras cosas puedo hacer antes de decidir.", "efectos": { "exploracion": 2 }, "banderaSet": ["duda_carrera"] }
+  ]
+},
+{
+  "id": "politica_exploracion_01",
+  "carrera": "politica",
+  "orden": 70,
+  "omitirSiNoCumple": true,
+  "requiere": {
+    "variables": { "exploracion": { "min": 1 } },
+    "banderas": ["primer_parcial_resuelto", "duda_carrera"]
+  },
+  "texto": "Quizás hay otros caminos.\n\nUna compañera te cuenta que tiene un amigo que estudia otra carrera en la UNR. Está participando de una actividad de extensión en un centro de salud público y te ofrece acompañarla.\n\nNo tenés que decidir nada todavía. Es simplemente una oportunidad para mirar qué hay del otro lado.",
+  "opciones": [
+    {
+      "texto": "Sí, voy.",
+      "efectos": { "exploracion": 1 },
+      "banderaSet": ["exploracion_salud_iniciada"]
+    },
+    {
+      "texto": "Prefiero seguir con Ciencia Política.",
+      "efectos": { "confianza": 1 },
+      "banderaSet": ["exploracion_salud_rechazada"]
+    }
+  ]
+},
+{
+  "id": "politica_exploracion_experiencia_01",
+  "carrera": "politica",
+  "orden": 70.1,
+  "omitirSiNoCumple": true,
+  "requiere": { "banderas": ["exploracion_salud_iniciada"] },
+  "texto": "Llegás al centro de salud con tu compañera. Mientras ella habla con otros estudiantes, vos te quedás cerca del mostrador.\n\nUna mujer llega con una receta.\n\n—¿Puedo retirar esto hoy?\n\nLa persona que la atiende revisa la pantalla.\n\n—Todavía no me figura.\n\n—Pero el mes pasado lo retiré acá.\n\nVuelve a revisar. Antes de que la mujer se ponga más nerviosa, alguien del equipo se acerca:\n\n—Dejame ver. A veces el sistema tarda en actualizar, pero probemos otra cosa.\n\nLa mujer se relaja un poco. Vos seguís mirando.",
+  "opciones": [
+    {
+      "texto": "Te acercás para preguntar qué está fallando en el sistema.",
+      "intereses": { "tecnico": 1 },
+      "banderaSet": ["presencio_problema_salud"]
+    },
+    {
+      "texto": "Le preguntás a la mujer cómo está, más allá del trámite.",
+      "intereses": { "social": 1 },
+      "banderaSet": ["presencio_problema_salud"]
+    },
+    {
+      "texto": "Te quedás observando cómo el equipo se coordina para resolverlo.",
+      "intereses": { "organizacion": 1 },
+      "banderaSet": ["presencio_problema_salud"]
+    }
+  ]
+},
+
+{
+  "id": "politica_exploracion_experiencia_02",
+  "carrera": "politica",
+  "orden": 70.2,
+  "omitirSiNoCumple": true,
+  "requiere": { "banderas": ["presencio_problema_salud"] },
+  "texto": "Tu compañera vuelve. Están revisando otro registro y haciendo una llamada.\n\nPensás que, si nadie insiste, la mujer se termina yendo sin nada.",
+  "opciones": [
+    { "texto": "¿No alcanza con la receta?", "banderaSet": ["entendio_problema_salud"] }
+  ]
+},
+
+{
+  "id": "politica_exploracion_experiencia_03",
+  "carrera": "politica",
+  "orden": 70.3,
+  "omitirSiNoCumple": true,
+  "requiere": { "banderas": ["entendio_problema_salud"] },
+  "texto": "—Hay que verificar que esté autorizado.\n\nDespués de unos minutos encuentran cómo resolverlo. Antes de que la mujer se vaya, la persona del equipo le explica con calma qué hacer la próxima vez, para que no tenga que pasar por esto de nuevo.\n\nLa mujer agradece. La actividad continúa.\n\nMás tarde, tu compañera comenta, casi de pasada:\n\n—A mí lo que más me engancha no es tanto el sistema. Es la persona que tenés enfrente.",
+  "opciones": [
+    { "texto": "Seguir con la actividad.", "banderaSet": ["experiencia_salud_completada"] }
+  ]
+},
+
+{
+  "id": "politica_exploracion_decision_01",
+  "carrera": "politica",
+  "orden": 70.4,
+  "omitirSiNoCumple": true,
+  "requiere": { "banderas": ["experiencia_salud_completada"] },
+  "texto": "De camino a casa, tu compañera te pregunta:\n\n—¿Y? ¿Qué te pareció?\n\nNo fue una clase teórica. Viste a alguien resolver un problema real, con otra persona en el medio.\n\nTodavía no tenés que decidir nada. Pero la pregunta se quedó picando.",
+  "opciones": [
+    {
+      "texto": "Me quedé pensando en esto. Me gustaría volver a ver algo así.",
+      "efectos": { "exploracion": 1 },
+      "banderaSet": ["deriva_medicina"]
+    },
+    {
+      "texto": "Estuvo bueno verlo, pero mi cabeza sigue en Ciencia Política.",
+      "efectos": { "confianza": 1 },
+      "banderaSet": ["retoma_politica"]
+    }
+  ]
+},
+  {
+    "id": "politica_pasantia_01",
+    "carrera": "politica",
+    "orden": 80,
+    "requiere": {
+      "banderas": [
+        "primer_parcial_resuelto"
+      ]
+    },
+    "texto": "Pasaron algunos años desde aquel primer día de cursado.\n\nA medida que fuiste avanzando en la carrera empezaron a abrirse algunas puertas.\n\nTenés la oportunidad de inscribirte en una pasantía. Te va a demandar tiempo extra, pero te permite conocer un ámbito laboral y sumar un ingreso.",
+    "opciones": [
+      {
+        "texto": "Elegir un organismo público.",
+        "efectos": {
+          "dinero": 1,
+          "energia": -2
+        },
+        "intereses": {
+          "politica": 1,
+          "social": 1
+        },
+        "banderaSet": [
+          "tiene_trabajo",
+          "conocio_sector_publico"
+        ]
+      },
+      {
+        "texto": "Elegir una consultora de opinión pública.",
+        "efectos": {
+          "dinero": 1,
+          "energia": -2
+        },
+        "intereses": {
+          "politica": 1,
+          "comunicacion": 1
+        },
+        "banderaSet": [
+          "tiene_trabajo",
+          "conocio_consultoria"
+        ]
+      },
+      {
+        "texto": "Seguir enfocándote en la carrera. Por el momento no trabajás.",
+        "efectos": {
+          "progreso": 1,
+          "energia": 1
+        },
+        "banderaSet": [
+          "priorizo_estudio"
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "politica_oportunidad_01",
+    "carrera": "politica",
+    "orden": 90,
+    "requiere": {
+      "banderas": [
+        "primer_parcial_resuelto"
+      ]
+    },
+    "texto": "Estás en cuarto año.\n\nTe ofrecen una oportunidad laboral que realmente te interesa.\n\nPero hay un problema: el horario se superpone con los primeros 30 minutos de una materia importante.\n\nNo hay una opción perfecta.",
+    "opciones": [
+      {
+        "texto": "Aceptar la oportunidad. Puede no volver a aparecer.",
+        "efectos": {
+          "exploracion": 2,
+          "confianza": 1,
+          "dinero": 1,
+          "energia": -2
+        },
+        "banderaSet": [
+          "tiene_trabajo",
+          "acepto_oportunidad"
+        ]
+      },
+      {
+        "texto": "Mantener tu camino actual y priorizar la carrera.",
+        "efectos": {
+          "progreso": 1,
+          "confianza": 1,
+          "exploracion": -1
+        },
+        "banderaSet": [
+          "priorizo_estudio"
+        ]
+      },
+      {
+        "texto": "Intentar combinar ambas cosas.",
+        "efectos": {
+          "energia": -2,
+          "exploracion": 1,
+          "dinero": 1
+        },
+        "banderaSet": [
+          "tiene_trabajo",
+          "intento_combinar"
+        ]
+      }
+    ]
+  },
+
+
+  {
+    "id": "politica_consecuencia_trabajo_01",
+    "carrera": "politica",
+    "orden": 100,
+    "omitirSiNoCumple": true,
+    "requiere": {
+      "banderas": [
+        "acepto_oportunidad"
+      ]
+    },
+    "texto": "Tu trabajo empieza a ocupar cada vez más lugar en tu vida, y ya no es tan fácil hacer convivir las dos cosas.\n\nUnos meses después, tu jefe te llama a la oficina.\n\n\"Necesito a alguien que se haga cargo del nuevo equipo. Vengo pensando en vos.\"\n\nSon más horas, más responsabilidad y menos margen para la facultad.\n\nUn compañero de la cursada, que ya casi no te ve, te dice de pasada:\n\"¿Seguís cursando?\"",
+    "opciones": [
+      {
+        "texto": "Aceptar el nuevo desafío.",
+        "efectos": {
+          "dinero": 1,
+          "exploracion": 1,
+          "confianza": 1
+        },
+        "banderaSet": [
+          "asumio_responsabilidad"
+        ]
+      },
+      {
+        "texto": "Mantener el equilibrio y no sumar más responsabilidades por ahora.",
+        "efectos": {
+          "confianza": 1,
+          "energia": 1
+        },
+        "banderaSet": [
+          "mantuvo_equilibrio"
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "politica_consecuencia_investigacion_01",
+    "carrera": "politica",
+    "orden": 100,
+    "omitirSiNoCumple": true,
+    "requiere": {
+      "banderas": [
+        "priorizo_estudio"
+      ],
+      "intereses": {
+        "investigacion": {
+          "min": 2
+        }
+      }
+    },
+    "texto": "Unos meses después, una docente te propone participar en un proyecto de investigación.\n\nTu decisión de priorizar la carrera te permitió profundizar en un área que ya había despertado tu interés al comienzo.",
+    "opciones": [
+      {
+        "texto": "Aceptar y participar del proyecto.",
+        "efectos": {
+          "progreso": 1,
+          "exploracion": 1
+        },
+        "intereses": {
+          "investigacion": 1
+        },
+        "banderaSet": [
+          "conocio_investigacion"
+        ]
+      },
+      {
+        "texto": "Agradecer la propuesta y mantener el foco en la cursada.",
+        "efectos": {
+          "progreso": 1
+        }
+      }
+    ]
+  },
+{
+    "id": "politica_combinar_01",
+    "carrera": "politica",
+    "orden": 100,
+    "omitirSiNoCumple": true,
+    "requiere": {
+      "banderas": [
+        "intento_combinar"
+      ]
+    },
+    "texto": "Semana de parciales.\n\nSon las 23:30. Mañana tenés un parcial. También tenés una entrega del trabajo.\n\nMirás el calendario: trabajo, cursada, parcial y entrega están prácticamente juntos.\n\nEstás agotado/a.\n\nTu celular vibra.\n\n\"¿Llegás mañana a la reunión del trabajo?\"\n\nUn segundo mensaje aparece:\n\n\"¿Alguien quiere juntarse a repasar antes del parcial?\"",
+    "opciones": [
+      {
+        "texto": "Organizarte y priorizar lo urgente.",
+        "efectos": {
+          "energia": -1,
+          "confianza": 1
+        },
+        "banderaSet": [
+          "prioriza_organizacion"
+        ]
+      },
+      {
+        "texto": "Intentar hacer todo al mismo tiempo.",
+        "efectos": {
+          "energia": -1
+        },
+        "banderaSet": [
+          "satura_agenda"
+        ]
+      },
+      {
+        "texto": "Bajar una actividad para llegar mejor al parcial.",
+        "efectos": {
+          "energia": 1,
+          "progreso": 1
+        },
+        "banderaSet": [
+          "prioriza_bienestar"
+        ]
+      }
+    ]
+  },
+  {
+  "id": "politica_consecuencia_neutra_01",
+  "carrera": "politica",
+  "orden": 100,
+  "omitirSiNoCumple": true,
+  "requiere": {
+    "banderas": ["priorizo_estudio"],
+    "banderas_no": ["acepto_oportunidad", "intento_combinar"],
+    "intereses": { "investigacion": { "max": 1 } }
+  },
+  "texto": "Seguiste avanzando materia por materia, sin apurarte a definirte por un camino en particular.\n\nNo hubo una única experiencia que marcara el rumbo. Tu recorrido se fue construyendo, sobre todo, en la cursada misma.",
+  "opciones": [
+    {
+      "texto": "Seguir así.",
+      "efectos": { "progreso": 1 }
+    }
+  ]
+},
+
+  {
+    "id": "politica_final_investigacion",
+    "carrera": "politica",
+    "orden": 110,
+    "requiere": {
+      "intereses": {
+        "investigacion": {
+          "min": 2
+        }
+      },
+      "banderas": [
+        "conocio_investigacion"
+      ]
+    },
+    "texto": "Tu trayectoria.\n\nComenzaste Ciencia Política intentando entender los conflictos desde sus antecedentes.\n\nA lo largo de la carrera te acercaste a la investigación y al análisis.\n\nTu recorrido estuvo marcado por la búsqueda de información, la interpretación de problemas políticos y la construcción de argumentos.",
+    "opciones": [
+      {
+        "texto": "Ver mi recorrido.",
+        "efectos": {}
+      }
+    ]
+  },
+
+  {
+    "id": "politica_final_participacion",
+    "carrera": "politica",
+    "orden": 110,
+    "requiere": {
+      "intereses": {
+        "politica": {
+          "min": 2
+        }
+      },
+      "banderas": [
+        "conocio_actores",
+        "participo_actividad_estudiantil"
+      ]
+    },
+    "texto": "Tu trayectoria.\n\nDesde tus primeras semanas te interesó entender quiénes participan en los conflictos y qué intereses están en juego.\n\nDurante la carrera te involucraste en actividades estudiantiles y experiencias vinculadas con distintos actores.\n\nTu recorrido estuvo marcado por la participación y el trabajo con problemas colectivos.",
+    "opciones": [
+      {
+        "texto": "Ver mi recorrido.",
+        "efectos": {}
+      }
+    ]
+  },
+
+  {
+    "id": "politica_final_publico",
+    "carrera": "politica",
+    "orden": 110,
+    "prioridad": 1,
+    "requiere": {
+      "banderas": [
+        "conocio_sector_publico",
+        "tiene_trabajo"
+      ],
+      "variables": {
+        "exploracion": {
+          "min": 2
+        }
+      }
+    },
+    "texto": "Tu trayectoria.\n\nTus experiencias te llevaron progresivamente hacia el trabajo con problemas concretos.\n\nUna pasantía te permitió conocer desde adentro cómo se analiza y se implementa una política pública.\n\nTu recorrido terminó orientándose hacia el ámbito público y la gestión de problemas colectivos.",
+    "opciones": [
+      {
+        "texto": "Ver mi recorrido.",
+        "efectos": {}
+      }
+    ]
+  },
+
+  {
+    "id": "politica_final_exploracion",
+    "carrera": "politica",
+    "orden": 110,
+    "requiere": {
+      "variables": {
+        "exploracion": {
+          "min": 3
+        }
+      }
+    },
+    "texto": "Tu trayectoria.\n\nProbaste distintas experiencias, conociste otros espacios y descubriste que algunas de las cosas que más te interesaban no aparecían necesariamente donde las imaginabas al principio.\n\nMás que encontrar una única respuesta, tu experiencia te llevó a explorar distintas posibilidades.",
+    "opciones": [
+      {
+        "texto": "Ver mi recorrido.",
+        "efectos": {}
+      }
+    ]
+  },
+  {
+  "id": "politica_final_general",
+  "carrera": "politica",
+  "orden": 110,
+  "texto": "Tu trayectoria.\n\nA lo largo de la carrera fuiste avanzando de forma constante, materia por materia, sin apurarte a definirte por un camino en particular.\n\nNo hubo un único interés que se impusiera sobre los demás, ni una experiencia puntual que marcara el rumbo. Tu recorrido se construyó, sobre todo, en la cursada misma.",
+  "opciones": [
+    {
+      "texto": "Ver mi recorrido.",
+      "efectos": {}
+    }
+  ]
+}
+]

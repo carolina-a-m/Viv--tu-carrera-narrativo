@@ -1,0 +1,230 @@
+[
+  {
+    "id": "transversal_aprender_a_estudiar",
+    "tipo": "transversal",
+    "ventana": ["inicio", "actividad"],
+    "prioridad": 1,
+    "funcion": "transicion_universitaria",
+    "texto": "Tenés que preparar tu primera evaluación importante.\n\nLeés el material por tercera vez.\n\nEntendés las palabras. Más o menos.\n\nLo que no entendés es qué se supone que tenés que hacer con todo eso.\n\nAbrís un documento nuevo y escribís el título.\n\nDespués de veinte minutos, el título sigue siendo lo único que escribiste.\n\nUn compañero mira tu pantalla.\n\n—¿Ya sabés cómo estudiar para esto?\n\nLo mirás.\n\n—Creí que sí.\n\nSe ríe.\n\n—Yo también.",
+    "opciones": [
+      {
+        "texto": "Seguir probando por tu cuenta hasta encontrarle la vuelta.",
+        "efectos": {
+          "progreso": 1,
+          "energia": -1
+        },
+        "banderaSet": [
+          "intento_adaptacion_autonoma"
+        ]
+      },
+      {
+        "texto": "Preguntarles a tus compañeros cómo se están organizando.",
+        "efectos": {
+          "confianza": 1,
+          "exploracion": 1
+        },
+        "intereses": {
+          "social": 1
+        },
+        "banderaSet": [
+          "busco_apoyo_pares"
+        ]
+      },
+      {
+        "texto": "Buscar si la universidad tiene algún espacio para estudiantes que están atravesando este comienzo.",
+        "efectos": {
+          "confianza": 1,
+          "exploracion": 1
+        },
+        "banderaSet": [
+          "conocio_codo_a_codo",
+          "conocio_apoyo_academico"
+        ]
+      }
+    ],
+    "recurso": {
+      "nombre": "Programa Codo a Codo",
+      "descripcion": "Acompañamiento académico de estudiantes avanzados a ingresantes.",
+      "link": "https://unr.edu.ar/codo-a-codo/"
+    }
+  },
+
+  {
+    "id": "transversal_comer_o_volver",
+    "tipo": "transversal",
+    "ventana": ["inicio", "actividad", "mitad"],
+    "prioridad": 2,
+    "funcion": "permanencia_economica",
+    "texto": "Terminás de cursar y todavía te quedan varias horas antes de volver a casa.\n\nMetés la mano en el bolsillo.\n\nContás la plata.\n\nLa volvés a contar, por las dudas.\n\nNo alcanza para comer y pagar el viaje de vuelta.\n\nUn compañero te ve haciendo cuentas en el celular.\n\n—¿Todo bien?\n\n—Estoy viendo si como o si vuelvo a casa.\n\nHace una pausa.\n\n—¿Nunca fuiste al comedor?",
+    "opciones": [
+      {
+        "texto": "Guardar la plata para el viaje y aguantar hasta llegar a casa.",
+        "efectos": {
+          "dinero": -1,
+          "energia": -1
+        },
+        "banderaSet": [
+          "priorizo_dinero"
+        ]
+      },
+      {
+        "texto": "Comer y resolver el viaje después.",
+        "efectos": {
+          "dinero": -2,
+          "energia": 1
+        },
+        "banderaSet": [
+          "priorizo_alimentacion"
+        ]
+      },
+      {
+        "texto": "Preguntar qué comedor dice y cómo funciona.",
+        "efectos": {
+          "energia": 1,
+          "exploracion": 1
+        },
+        "banderaSet": [
+          "conocio_comedor_unr",
+          "conocio_beneficio_alimentario"
+        ]
+      }
+    ],
+    "recurso": {
+      "nombre": "Comedores Universitarios UNR",
+      "descripcion": "Red de seis comedores universitarios.",
+      "link": "https://comedores.unr.edu.ar/"
+    },
+    "recurso_secundario": {
+      "nombre": "Becas UNR",
+      "descripcion": "Incluyen, entre otras, Beca de Alimentos y Beca de Asistencia Integral.",
+      "link": "https://becas.unr.edu.ar/"
+    }
+  },
+
+  {
+    "id": "transversal_no_me_alcanza_el_dia",
+    "tipo": "transversal",
+    "ventana": ["actividad", "mitad"],
+    "prioridad": 3,
+    "funcion": "gestion_de_vida",
+    "texto": "Son las 22:40.\n\nMañana tenés una entrega.\n\nPasado mañana, un parcial.\n\nEl jueves trabajás.\n\nEl viernes tenés que volver a cursar temprano.\n\nAbrís el calendario para organizarte.\n\nLo cerrás.\n\nLo volvés a abrir.\n\nUn mensaje aparece:\n\n\"¿Podés cubrirme mañana? Te pago las horas.\"\n\nCasi al mismo tiempo llega otro:\n\n\"¿Nos juntamos a estudiar después de cursar?\"\n\nMirás el calendario otra vez.\n\nNo hay espacio para todo.",
+    "opciones": [
+      {
+        "texto": "Aceptar el trabajo y acomodar el estudio alrededor.",
+        "efectos": {
+          "dinero": 1,
+          "energia": -2,
+          "exploracion": 1
+        },
+        "banderaSet": [
+          "priorizo_ingreso",
+          "combina_estudio_trabajo"
+        ]
+      },
+      {
+        "texto": "Rechazar el trabajo esta vez y priorizar la cursada.",
+        "efectos": {
+          "progreso": 1,
+          "energia": 1,
+          "dinero": -1
+        },
+        "banderaSet": [
+          "priorizo_estudio"
+        ]
+      },
+      {
+        "texto": "Buscar si existe algún apoyo que pueda aliviar parte de los gastos.",
+        "efectos": {
+          "exploracion": 1
+        },
+        "banderaSet": [
+          "busco_beneficios_unr"
+        ]
+      }
+    ],
+    "consecuencia": {
+      "requiere": {
+        "banderas": [
+          "busco_beneficios_unr"
+        ]
+      },
+      "texto": "Descubrís que la UNR tiene distintas becas de permanencia: asistencia integral, alimentos, material de estudio y movilidad.\n\nNo significa que tengas el problema resuelto. Pero ahora sabés que existen recursos que antes ni siquiera conocías.",
+      "efectos": {
+        "confianza": 1,
+        "exploracion": 1
+      },
+      "banderaSet": [
+        "conocio_becas_unr"
+      ]
+    },
+    "recurso": {
+      "nombre": "Becas UNR",
+      "descripcion": "Programas de apoyo económico para distintas situaciones de permanencia estudiantil.",
+      "link": "https://becas.unr.edu.ar/"
+    }
+  },
+
+  {
+    "id": "transversal_no_estoy_pudiendo",
+    "tipo": "transversal",
+    "ventana": ["mitad"],
+    "prioridad": 4,
+    "funcion": "acompanamiento_y_bienestar",
+    "texto": "Hace varios días que intentás avanzar con una entrega.\n\nAbrís el archivo.\n\nLeés lo mismo tres veces.\n\nNo escribís nada.\n\nCerrás la computadora.\n\nLa abrís otra vez.\n\nUn compañero te pregunta:\n\n—¿Estás bien?\n\nLa respuesta automática aparece antes de que puedas pensarlo.\n\n—Sí, sí. Estoy cansado/a nomás.\n\nPero esta vez no estás tan seguro/a.",
+    "opciones": [
+      {
+        "texto": "Seguir como si nada. Ya se va a pasar.",
+        "efectos": {
+          "energia": -2
+        },
+        "banderaSet": [
+          "sigo_sin_ayuda"
+        ]
+      },
+      {
+        "texto": "Contarle a tu compañero que realmente no estás pudiendo.",
+        "efectos": {
+          "confianza": 1
+        },
+        "banderaSet": [
+          "hablo_con_alguien"
+        ]
+      },
+      {
+        "texto": "Averiguar si la universidad tiene algún espacio de orientación para estudiantes.",
+        "efectos": {
+          "confianza": 1,
+          "exploracion": 1
+        },
+        "banderaSet": [
+          "conocio_orientacion_estudiantil"
+        ]
+      }
+    ],
+    "consecuencia": {
+      "requiere": {
+        "banderas": [
+          "conocio_orientacion_estudiantil"
+        ]
+      },
+      "texto": "Encontrás que la UNR cuenta con espacios de Orientación Estudiantil para acompañar dificultades vinculadas con la adaptación y la vida académica.\n\nNo tenés que decidir nada ahora.\n\nPero por primera vez en varios días sentís que pedir ayuda también puede ser una forma de seguir.",
+      "efectos": {
+        "confianza": 1,
+        "energia": 1
+      },
+      "banderaSet": [
+        "conocio_recurso_bienestar"
+      ]
+    },
+    "recurso": {
+      "nombre": "Orientación Estudiantil UNR",
+      "descripcion": "Acompañamiento ante dificultades de adaptación y vida académica.",
+      "link": "https://unr.edu.ar/orientacion-estudiantil/"
+    },
+    "recurso_salud": {
+      "nombre": "Salud UNR",
+      "descripcion": "Atención integral para estudiantes regulares.",
+      "link": "https://unr.edu.ar/salud/"
+    }
+  }
+]
