@@ -1,0 +1,45 @@
+Ingresantes
+Estudiantes
+Docentes
+Nodocentes
+Graduados
+Facultades/Institutos Facultad de Ciencias Agrarias Facultad de Arquitectura, Planeamiento y Diseño Facultad de Ciencias Bioquímicas y Farmaceúticas Facultad de Derecho Facultad de Ciencias Económicas y Estadística Facultad de Humanidades y Artes Facultad de Ciencias Exactas, Ingeniería y Agrimensura Facultad de Ciencias Médicas Facultad de Ciencias del Movimiento Humano y del Cuidado Facultad de Psicología Facultad de Ciencia Política Y RRII Facultad de Odontología Facultad de Ciencias Veterinarias Centro de Estudios Interdisciplinarios Escuela Agrotécnica Escuela Superior de Comercio Escuela Preuniversitaria en Ciencias Sociales y Humanísticas Instituto Politécnico Superior
+Facultad de Ciencias Agrarias
+Facultad de Arquitectura, Planeamiento y Diseño
+Facultad de Ciencias Bioquímicas y Farmaceúticas
+Facultad de Derecho
+Facultad de Ciencias Económicas y Estadística
+Facultad de Humanidades y Artes
+Facultad de Ciencias Exactas, Ingeniería y Agrimensura
+Facultad de Ciencias Médicas
+Facultad de Ciencias del Movimiento Humano y del Cuidado
+Facultad de Psicología
+Facultad de Ciencia Política Y RRII
+Facultad de Odontología
+Facultad de Ciencias Veterinarias
+Centro de Estudios Interdisciplinarios
+Escuela Agrotécnica
+Escuela Superior de Comercio
+Escuela Preuniversitaria en Ciencias Sociales y Humanísticas
+Instituto Politécnico Superior
+Carreras
+La UNR apuesta a través de su programa de ayuda para garantizar que los estudiantes que presenten dificultades sociales y económicas puedan acceder, permanecer y concluir sus estudios superiores.
+Esta Beca está dirigida a estudiantes de las tres escuelas preuniversitarias de la UNR. Consiste en una de tres opciones a elección del/la beneficiario/a: un apoyo mensual destinado a contribuir con el material de estudio solicitado (o cursado virtual según se requiera), el traslado desde y hacia la escuela (sistema de transporte urbano) o el acceso sin costo a los servicios de la red de Comedores Universitarios. El/la estudiante que opte por la utilización de los Comedores deberá registrarse previamente en el sistema MORA en cualquier comedor de la red UNR y elegirá el Comedor que sea de su conveniencia al momento de hacer uso de la Beca.
+Destinadas a contribuir con el ingreso y la permanencia en los estudios universitarios de los y las estudiantes de la UNR que requieren de un apoyo integral.
+Beca para Estudiantes de Pueblos OriginariosEsta es una beca integral, destinada a fortalecer el acceso a la Universidad de estudiantesprovenientes de comunidades de Pueblos Originarios, cuyo beneficio consiste en un apoyo económico mensual destinado a contribuir con la compra del material de estudio (o cursado virtual según se requiera), la carga de un importe equivalente a 40 viajes mensuales en transporte urbano y la posibilidad de acceder sin costo a los servicios de la red de Comedores Universitarios.
+Beca de Acceso a la UniversidadEsta es una beca integral, destinada a fortalecer el acceso a la Universidad de estudiantes en situación de vulnerabilidad, que sean primera generación de estudiantes universitarios en su familia. La misma consiste en un acompañamiento académico desde el último año del nivel medio, con talleres de orientación vocacional, acceso sin costos al material de estudio para los cursillos nivelatorios si los hubiera en la carrera elegida, y a los servicios de la red de Comedores Universitarios; y desde el momento de inicio efectivo del cursado se les otorgará además un apoyo económico mensual destinado a contribuir con la compra del material de estudio (o cursado virtual según se requiera) y la carga del importe equivalente a 40 viajes mensuales del transporte urbano. Los/las estudiantes en condiciones de acceder a esta Beca pertenecen exclusivamente a las Escuelas Medias que a continuación se detallan:1) EETP Nº 4732) EESOPI Nº 3169 “SAN ANTONIO”3) EESO Nº 3161 “M. CHAMPAGNAT”4) EESOPI Nº 3165 “SAN JUAN DIEGO”5) EESO Nº 518 “CARLOS FUENTEALBA”6) Escuela Nº3127 “DON BOSCO”7) EESOPI Nº 3047 “NTRA. SRA. DE LA MERCED”8) EESO Nº 569 “CARLOS FUENTEALBA”9) Escuela Nº 309 “OVIDIO LAGOS”10) Escuela Nº 40711) Escuela “NTRA. SRA. DE ITATÍ”12) Escuela “SAN MARTÍN DE PORRES”13) Escuela “ÉTICA”Beca estímulo para estudiantes de Enfermería Profesional y Trabajo SocialEsta beca se dirige a Estudiantes de la Carrera de Enfermería Profesional y Estudiantes de la Lic. en Trabajo Social y tiene como objetivo promover, optimizar y formar futuros profesionales que aporten a la resolución de los problemas y cooperen en la transformación de los servicios de salud y sociales, ofreciendo cuidados de calidad, para mejorar el estado general de la población y contribuir al desarrollo humano. La misma consiste en la entrega mensual de un monto dedinero a cada estudiante becado/a, y la posibilidad de acceder sin costo a los servicios de la red de Comedores Universitarios.
+Destinadas a contribuir con la permanencia y avance de los y las estudiantes de la UNR que requieren de algún tipo de apoyo económico para iniciar o continuar sus estudios.
+Beca de Asistencia IntegralDestinada a aquellos estudiantes ingresantes o cursantes, que ven afectada la posibilidad de iniciar o continuar sus estudios debido a pérdida de empleo en los últimos 12 meses, y/o por situaciones familiares, y requieran de un acompañamientoeconómico de mayor intensidad. Beca de Movilidad UrbanaDestinada a estudiantes que residen a más de 20 cuadras de la Facultad en la que cursan. Al momento de la aceptación de la Beca el/la estudiante podrá optar entre la carga mensual del importe equivalente a 40 viajes de transporte urbano de pasajeros o la carga del importe correspondiente al importe del abono anual del sistemade bicicletas públicas denominado “Mi Bici Tu Bici”más 40 viajes por cuatrimestre.
+Beca de Material de EstudioConsiste de la entrega mensual de un monto de dinero a cada estudiante becado/a para utilizar en librerías y/o fotocopiadoras o para cubrir parte del costo de conectividad en caso de cursado virtual.
+Beca de AlimentosConsiste en la posibilidad de acceder diariamente a los servicios de los Comedores Universitarios sin costo:• Comedor Siberia: desayuno, almuerzo, merienda y cena.• Comedor Área Salud: desayuno, almuerzo, merienda y cena.• Comedor Casilda: desayuno, almuerzo, merienda y cena (vianda).• Comedor Zavalla: desayuno y almuerzo.• Comedor Ingeniería: desayuno, almuerzo, merienda y cena.• Comedor Centro: desayuno, almuerzo, merienda y cena.
+Beca de Madres y Padres EstudiantesEs destinada a contribuir económicamente con el cuidado del o los hijos que aún no estén en edad de asistir a establecimientos de enseñanza obligatoria y que a su vez seencuentren a cargo del/la estudiante durante las horas de cursado, más el importecorrespondiente a 40 viajes de transporte urbano mensuales, o podrá optar por la carga del abono anual del sistema de bicicletas públicas denominado “Mi Bici Tu Bici” más 40 viajes por cuatrimestre para dirigirse desde y hacia la Facultad.
+Beca de ResidenciaConsiste en la entrega mensual de un monto fijo de dinero destinado a solventar parte del monto que el estudiante deberá abonar enconcepto de alquiler en el lugar de residencia que haya elegido.
+Destinadas a estudiantes que se encuentran en el último tramo de su carrera y requieren un apoyo económico para poder finalizar sus estudios.
+Beca de Promoción del EgresoEs un tipo de beca integral destinada a brindar apoyo a estudiantes de hasta 40 años que se encuentren en el último tramo de su carrera de grado. Consiste, además de un monto fijo de dinero, de apoyo académico, talleres de desarrollo de herramientas destinadas a fortalecer su desempeño académico y brindarles acompañamiento para poder concluir con éxito sus estudios superiores.
+Orientadas a incentivar la formación docente en áreas específicas y la incorporación temprana de estudiantes en equipos de investigación acreditados en la UNR.
+Beca de Ayudante AlumnoEsta beca está destinada a los estudiantes que se desempeñen como Ayudantes de 2º y/oAyudantes alumnos ad-honorem concursados que la soliciten y cumplan con los requisitosacadémicos y socioeconómicos.
+Compartir Contenido Share this content
+Opens in a new window
+Opens in a new window
+Opens in a new window
+Opens in a new window

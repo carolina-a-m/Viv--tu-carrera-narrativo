@@ -384,34 +384,40 @@
       }
     ]
   },
-  {
-    "id": "politica_parcial_presentacion_01",
-    "carrera": "politica",
-    "orden": 40,
-    "requiere": {
-      "banderas": [
-        "actividad_resuelta"
-      ]
-    },
-    "texto": "Llegó el momento del primer parcial.\n\nEntrás al aula y mirás las preguntas. Algunas te resultan familiares; otras te obligan a pensar más de lo que esperabas.\n\nCuando terminás, entregás la hoja. Ahora solo queda esperar la nota.",
-    "opciones": [
-      {
-        "texto": "Esperar el resultado.",
-        "efectos": {},
-        "banderaSet": [
-          "primer_parcial_realizado"
-        ]
-      }
+ {
+  "id": "politica_parcial_presentacion_01",
+  "carrera": "politica",
+  "orden": 40,
+  "requiere": {
+    "banderas": [
+      "actividad_resuelta"
     ]
   },
+  "texto": "Llegó el momento del primer parcial.\n\nEntrás al aula y mirás las preguntas. Algunas te resultan familiares; otras te obligan a pensar más de lo que esperabas.\n\nCuando terminás, entregás la hoja. Ahora solo queda esperar la nota.",
+  "opciones": [
+    {
+      "texto": "Esperar el resultado.",
+      "efectos": {},
+      "banderaSet": [
+        "primer_parcial_realizado"
+      ],
+      "resultadoAleatorio": {
+        "variable": "progreso",
+        "probabilidadBase": 0.3,
+        "incrementoPorPunto": 0.2,
+        "banderaExito": "aprobo_primer_parcial",
+        "banderaFracaso": "desaprobo_primer_parcial"
+      }
+    }
+  ]
+},
 {
   "id": "politica_parcial_bien_01",
   "carrera": "politica",
   "orden": 50,
   "requiere": {
-    "banderas": ["primer_parcial_realizado"],
-    "variables": { "progreso": { "min": 2 } }
-  },
+    "banderas": ["primer_parcial_realizado", "aprobo_primer_parcial"]
+    },
   "texto": "Publican las notas.\n\nTe fue bien. No fue fácil, pero sentís que empezás a entender cómo funciona la carrera.\n\nSalís del aula bastante conforme.",
   "opciones": [
     {
@@ -433,21 +439,16 @@
     "orden": 50,
     "requiere": {
       "banderas": [
-        "primer_parcial_realizado"
-      ],
-      "variables": {
-        "progreso": {
-          "max": 1
-        }
-      }
-    },
+        "primer_parcial_realizado",
+        "desaprobo_primer_parcial"
+      ]  },
     "texto": "Publican las notas.\n\nMirás la tuya una segunda vez: 3.\n\nNo esperabas que te fuera tan mal.\n\nTus compañeros ya están hablando del recuperatorio.",
     "opciones": [
       {
         "texto": "Pedir ayuda y armar un grupo de estudio.",
         "efectos": {
           "confianza": 1
-        },
+        }, 
         "banderaSet": [
           "tiene_grupo_estudio",
           "desaprobo_primer_parcial",
@@ -653,7 +654,7 @@
     "texto": "Pasaron algunos años desde tu primer día de cursado.\n\nA medida que fuiste avanzando en la carrera empezaron a abrirse algunas puertas.\n\nTenés la oportunidad de inscribirte en una pasantía. Te va a demandar tiempo extra, pero te permite conocer un ámbito laboral y sumar un ingreso.",
     "opciones": [
       {
-        "texto": "Elegir un organismo público.",
+        "texto": "Quiero hacer la pasantía en el Ministerio de Salud de la Provincia.",
         "efectos": {
           "dinero": 1,
           "energia": -2
@@ -668,7 +669,7 @@
         ]
       },
       {
-        "texto": "Elegir una consultora de opinión pública.",
+        "texto": "Quiero hacer la pasantía en una consultora de opinión pública.",
         "efectos": {
           "dinero": 1,
           "energia": -2
@@ -683,7 +684,7 @@
         ]
       },
       {
-        "texto": "Seguir enfocándote en la carrera. Por el momento no trabajás.",
+        "texto": "Prefiero seguir enfocándome en la carrera y no sumar más responsabilidades.",
         "efectos": {
           "progreso": 1,
           "energia": 1
@@ -694,7 +695,105 @@
       }
     ]
   },
+{
+  "id": "politica_pasantia_caso_01",
+  "carrera": "politica",
+  "orden": 81,
+  "requiere": {
+    "banderas": ["tiene_trabajo", "conocio_sector_publico"]
+  },
+  "texto": "El primer día te explican algunas cosas, te muestran dónde sentarte y te presentan a la gente del área.\n\nRevisás pedidos, informes y situaciones que llegan desde distintos centros de salud.\n\nEse día te asignan una tarea bastante concreta: revisar algunos casos en los que una prestación de salud no llegó a resolverse como estaba previsto.\n\nEntre los casos aparece uno que te llama la atención.\n\nUna persona fue varias veces a un centro de salud para acceder a una medicación. La prestación estaba indicada y autorizada, pero algo en el circuito hizo que nunca llegara a resolverse.\n\nVolvés a leer el caso. La autorización está, tiene fecha, tiene número. Pero el sistema que debía avisarle al centro de salud nunca se actualizó.",
+  "opciones": [
+    {
+      "texto": "Revisar el caso con más atención.",
+      "efectos": {},
+      "banderaSet": ["reviso_caso_medicacion"]
+    }
+  ]
+},
 
+{
+  "id": "politica_pasantia_investigacion_01",
+  "carrera": "politica",
+  "orden": 82,
+  "requiere": {
+    "banderas": ["reviso_caso_medicacion"]
+  },
+  "texto": "—¿Pudiste fijarte qué pasó? —te dice la persona que trabaja con vos.",
+  "opciones": [
+    {
+      "texto": "Ver qué actores institucionales intervinieron en la demora.",
+      "efectos": {},
+      "intereses": {
+        "politica": 1,
+        "social": 1
+      },
+      "banderaSet": ["camino_actores_pasantia"]
+    },
+    {
+      "texto": "Reconstruir el circuito de la prestación y ver dónde se frena el acceso a la política pública.",
+      "efectos": {},
+      "intereses": {
+        "politica": 1,
+        "investigacion": 1
+      },
+      "banderaSet": ["camino_circuito_pasantia"]
+    }
+  ]
+},
+
+{
+  "id": "politica_pasantia_actores_01",
+  "carrera": "politica",
+  "orden": 82.1,
+  "omitirSiNoCumple": true,
+  "requiere": {
+    "banderas": ["camino_actores_pasantia"]
+  },
+  "texto": "Reconstruís quién tocó el caso en cada paso.\n\nNadie negó la prestación. El centro de salud la pidió. La obra social la autorizó. Pero quedó esperando una confirmación que ningún actor sintió que le tocaba resolver a él.\n\nNo hay una decisión que revertir. Hay una espera que nadie cerró.",
+  "opciones": [
+    {
+      "texto": "Seguir revisando el caso.",
+      "efectos": {},
+      "banderaSet": ["pasantia_caso_resuelto"]
+    }
+  ]
+},
+
+{
+  "id": "politica_pasantia_circuito_01",
+  "carrera": "politica",
+  "orden": 82.1,
+  "omitirSiNoCumple": true,
+  "requiere": {
+    "banderas": ["camino_circuito_pasantia"]
+  },
+  "texto": "Reconstruís el recorrido del trámite paso a paso.\n\nLa prestación fue autorizada hace semanas. Pero el sistema que debía notificar al centro de salud nunca se actualizó. La política \"funcionó\" en el papel y se perdió en la ejecución.\n\nNo hay una decisión que revertir. Hay un aviso que nunca llegó.",
+  "opciones": [
+    {
+      "texto": "Seguir revisando el caso.",
+      "efectos": {},
+      "banderaSet": ["pasantia_caso_resuelto"]
+    }
+  ]
+},
+
+{
+  "id": "politica_pasantia_cierre_01",
+  "carrera": "politica",
+  "orden": 83,
+  "requiere": {
+    "banderas": ["pasantia_caso_resuelto"]
+  },
+  "texto": "Seguís el recorrido del trámite.\n\nEl programa está definido, la prestación está autorizada, el pedido fue realizado. Pero cada parte depende de otra para que finalmente llegue a quien la necesita. En el medio aparecen demoras, información que no se actualiza y áreas que tendrían que coordinarse entre sí y no lo hacen.\n\nPor primera vez entendés qué significa implementar una política pública: no alcanza con que algo esté autorizado. Alguien, en algún punto del circuito, tiene que sostenerlo hasta que llegue.",
+  "opciones": [
+    {
+      "texto": "Seguir.",
+      "efectos": {},
+      "banderaSet": ["pasantia_medicina_resuelta"]
+    }
+  ]
+},
   {
     "id": "politica_oportunidad_01",
     "carrera": "politica",

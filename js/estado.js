@@ -55,16 +55,18 @@ function estadoInicial() {
     // CONTROL DE EVENTOS TRANSVERSALES
     // ----------------------------------------------------------
     //
-    // Guarda qué etapas ya tuvieron una oportunidad transversal.
+    // Guarda, por carrera, qué ventanas ya tuvieron una
+    // oportunidad transversal.
     //
     // Ejemplo:
     //
-    // ["inicio", "actividad"]
+    // { politica: ["inicio", "actividad"], medicina: ["inicio"] }
     //
-    // Esto evita que la misma etapa dispare acontecimientos
-    // secundarios indefinidamente.
+    // Esto evita que la misma ventana, dentro de la misma
+    // carrera, dispare acontecimientos secundarios indefinidamente
+    // — sin bloquear esas mismas ventanas en otra carrera.
     //
-    transversalesProcesados: []
+    transversalesProcesados: {}
   };
 }
 
@@ -214,13 +216,22 @@ function registrarTransversalProcesado(
 
   if (!ventana) return;
 
+  const carrera =
+    estado.carreraActiva;
+
+  if (!carrera) return;
+
+  if (!estado.transversalesProcesados[carrera]) {
+    estado.transversalesProcesados[carrera] = [];
+  }
+
   if (
-    !estado.transversalesProcesados.includes(
+    !estado.transversalesProcesados[carrera].includes(
       ventana
     )
   ) {
 
-    estado.transversalesProcesados.push(
+    estado.transversalesProcesados[carrera].push(
       ventana
     );
 
@@ -237,7 +248,21 @@ function transversalYaProcesado(
     return false;
   }
 
-  return estado.transversalesProcesados.includes(
+  const carrera =
+    estado.carreraActiva;
+
+  if (!carrera) {
+    return false;
+  }
+
+  const procesadas =
+    estado.transversalesProcesados[carrera];
+
+  if (!procesadas) {
+    return false;
+  }
+
+  return procesadas.includes(
     ventana
   );
 }

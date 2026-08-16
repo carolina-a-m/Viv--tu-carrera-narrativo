@@ -1,0 +1,77 @@
+{
+  "actualizado": "2026-08-16T03:43:16.037Z",
+  "becas": [
+    {
+      "nombre": "Becas Preuniversitarias",
+      "resumen": "Están destinadas a estudiantes de las escuelas preuniversitarias de la UNR, ofreciendo un apoyo mensual para material de estudio o acceso sin costo a los comedores universitarios.",
+      "fecha_limite": "20 de marzo",
+      "link": "https://becas.unr.edu.ar"
+    },
+    {
+      "nombre": "Beca para Estudiantes de Pueblos Originarios",
+      "resumen": "Es una beca integral para fortalecer el acceso a la universidad de estudiantes de comunidades de Pueblos Originarios mediante un apoyo económico mensual, transporte y acceso a comedores.",
+      "fecha_limite": "20 de marzo",
+      "link": "https://becas.unr.edu.ar"
+    },
+    {
+      "nombre": "Beca de Acceso a la Universidad",
+      "resumen": "Destinada a estudiantes vulnerables que son primera generación universitaria en su familia, ofreciendo acompañamiento académico previo, beneficios en comedores y apoyo económico con transporte.",
+      "fecha_limite": "20 de marzo",
+      "link": "https://becas.unr.edu.ar"
+    },
+    {
+      "nombre": "Beca estímulo para estudiantes de Enfermería Profesional y Trabajo Social",
+      "resumen": "Se dirige a estudiantes de Enfermería y Trabajo Social para promover su formación y cooperación en servicios de salud y sociales, entregando un monto mensual y acceso a comedores.",
+      "fecha_limite": "20 de marzo",
+      "link": "https://becas.unr.edu.ar"
+    },
+    {
+      "nombre": "Beca de Asistencia Integral",
+      "resumen": "Dirigida a estudiantes ingresantes o cursantes afectados por pérdida de empleo o situaciones familiares que requieren un mayor acompañamiento económico.",
+      "fecha_limite": "20 de marzo",
+      "link": "https://becas.unr.edu.ar"
+    },
+    {
+      "nombre": "Beca de Movilidad Urbana",
+      "resumen": "Destinada a estudiantes que viven a más de 20 cuadras de su facultad, ofreciendo la carga mensual para transporte urbano o abono de bicicletas públicas más viajes.",
+      "fecha_limite": "20 de marzo",
+      "link": "https://becas.unr.edu.ar"
+    },
+    {
+      "nombre": "Beca de Material de Estudio",
+      "resumen": "Consiste en la entrega mensual de dinero para utilizar en librerías/fotocopiadoras o para cubrir costos de conectividad virtual.",
+      "fecha_limite": "20 de marzo",
+      "link": "https://becas.unr.edu.ar"
+    },
+    {
+      "nombre": "Beca de Alimentos",
+      "resumen": "Ofrece acceso diario y sin costo a los servicios de los diferentes comedores universitarios de la red UNR.",
+      "fecha_limite": "20 de marzo",
+      "link": "https://becas.unr.edu.ar"
+    },
+    {
+      "nombre": "Beca de Madres y Padres Estudiantes",
+      "resumen": "Contribuye económicamente con el cuidado de hijos menores que no están en edad escolar y con transporte o bicicletas públicas para el estudiante.",
+      "fecha_limite": "20 de marzo",
+      "link": "https://becas.unr.edu.ar"
+    },
+    {
+      "nombre": "Beca de Residencia",
+      "resumen": "Entrega un monto fijo mensual de dinero para solventar parte del costo de alquiler en el lugar de residencia elegido por el estudiante.",
+      "fecha_limite": "20 de marzo",
+      "link": "https://becas.unr.edu.ar"
+    },
+    {
+      "nombre": "Beca de Promoción del Egreso",
+      "resumen": "Brinda apoyo económico y académico a estudiantes de hasta 40 años que se encuentran en el último tramo de su carrera de grado para ayudarlos a finalizar sus estudios.",
+      "fecha_limite": "20 de marzo",
+      "link": "https://becas.unr.edu.ar"
+    },
+    {
+      "nombre": "Beca de Ayudante Alumno",
+      "resumen": "Orientada a estudiantes que se desempeñan como ayudantes de segunda o ayudantes alumnos concursados que cumplen requisitos académicos y socioeconómicos.",
+      "fecha_limite": "20 de marzo",
+      "link": "https://becas.unr.edu.ar"
+    }
+  ]
+}

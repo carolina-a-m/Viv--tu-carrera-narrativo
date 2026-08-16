@@ -334,6 +334,51 @@ function obtenerSiguienteOrden(
 
 }
 
+// ============================================================
+// RESULTADO ALEATORIO EN PARCIAL
+// ============================================================
+//
+// Resuelve un chequeo probabilístico UNA sola vez, en el
+// momento en que se elige la opción, y fija el resultado como
+// bandera. El resto del motor no vuelve a evaluar azar.
+//
+// ============================================================
+
+function resolverResultadoAleatorio(
+  estado,
+  config
+) {
+
+  if (!config) {
+    return null;
+  }
+
+  const valor =
+    estado.variables[config.variable] ?? 0;
+
+  const base =
+    config.probabilidadBase ?? 0.5;
+
+  const incremento =
+    config.incrementoPorPunto ?? 0;
+
+  let probabilidad =
+    base + (valor * incremento);
+
+  probabilidad =
+    Math.max(0, Math.min(1, probabilidad));
+
+  const exito =
+    Math.random() < probabilidad;
+
+  setearBanderas(
+    estado,
+    [exito ? config.banderaExito : config.banderaFracaso]
+  );
+
+  return exito;
+}
+
 
 // ============================================================
 // ESPECIFICIDAD
@@ -1056,7 +1101,14 @@ function elegirOpcion(
     );
 
   }
+if (opcion.resultadoAleatorio) {
 
+    resolverResultadoAleatorio(
+      estado,
+      opcion.resultadoAleatorio
+    );
+
+  }
 
   // ----------------------------------------------------------
   // REGISTRAR EVENTO
@@ -1283,6 +1335,8 @@ export {
 
   obtenerProgresoNarrativo,
 
-  obtenerEstadoTransversales
+  obtenerEstadoTransversales,
+
+  resolverResultadoAleatorio,
 
 };

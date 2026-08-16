@@ -1,0 +1,48 @@
+name: Actualizar becas UNR
+
+on:
+  schedule:
+    # Lunes 09:00 UTC = 06:00 Argentina
+    - cron: "0 9 * * 1"
+  # Permite dispararlo a mano desde la pestaña Actions, para probar
+  # sin esperar a la corrida semanal.
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  actualizar-becas:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el repo
+        uses: actions/checkout@v4
+
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Etapa 1 — scraping (sin IA)
+        run: npm run scrape
+
+      - name: Etapa 2 — estructuración con Gemini
+        run: npm run structure
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+      - name: Etapa 3 — publicar solo si hay cambios
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet -- data/becas-live.json; then
+            echo "Sin cambios en becas-live.json, no se commitea nada."
+          else
+            git add data/becas-live.json
+            git commit -m "chore: actualizar becas-live.json [automático]"
+            git push
+          fi

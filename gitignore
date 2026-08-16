@@ -1,0 +1,5 @@
+node_modules/
+
+# Texto crudo intermedio del scraping (etapa 1).
+# Solo el resultado final (data/becas-live.json) se versiona.
+data/raw/
