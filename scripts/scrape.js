@@ -1,53 +1,63 @@
 // scripts/scrape.js
 // Etapa 1: scraping SIN IA.
-// Trae el HTML de cada URL, extrae el texto visible y lo guarda en
-// data/raw/<slug>.txt. No interpreta ni estructura nada: eso lo hace
+// Trae el RSS de noticias de política (fuente nacional) y guarda,
+// como texto crudo, los ítems de la última semana: título, resumen,
+// fecha y link. No interpreta ni categoriza nada: eso lo hace
 // scripts/structure.js (etapa 2) con Gemini.
 
 import { writeFile, mkdir } from "node:fs/promises";
 import * as cheerio from "cheerio";
 
-const FUENTES = [
-  {
-    slug: "becas-estudiantiles",
-    url: "https://unr.edu.ar/becas-estudiantiles/",
-  },
-  {
-    slug: "bienestar-universitario",
-    url: "https://unr.edu.ar/area-de-bienestar-universitario/",
-  },
-  {
-    slug: "inscripcion-becas-2026",
-    url: "https://unr.edu.ar/inscripcion-a-las-becas-2026/",
-  },
-];
+const RSS_URL = "https://www.lanacion.com.ar/arc/outboundfeeds/rss/?outputType=xml";
 
 const DIR_SALIDA = new URL("../data/raw/", import.meta.url);
+const RUTA_SALIDA = new URL("politica-rss.json", DIR_SALIDA);
 
-// Convierte el HTML de la página en texto plano legible:
-// saca <script>/<style>/<nav>/<footer>, junta el texto de los
-// bloques de contenido y colapsa espacios en blanco.
-function extraerTexto(html) {
-  const $ = cheerio.load(html);
+// Solo nos interesan noticias recientes: el workflow corre una vez
+// por semana, así que tomamos la última semana de ítems.
+const DIAS_VENTANA = 7;
 
-  $("script, style, noscript, nav, footer, header, svg").remove();
-
-  const bloques = [];
-  $("h1, h2, h3, h4, p, li, td, th").each((_, el) => {
-    const texto = $(el).text().replace(/\s+/g, " ").trim();
-    if (texto) bloques.push(texto);
-  });
-
-  // Fallback: si la página no tiene esas etiquetas, usar el body entero.
-  if (bloques.length === 0) {
-    return $("body").text().replace(/\s+/g, " ").trim();
-  }
-
-  return bloques.join("\n");
+function limpiarTexto(texto) {
+  return (texto || "").replace(/\s+/g, " ").trim();
 }
 
-async function scrapearUna(fuente) {
-  const res = await fetch(fuente.url, {
+function parsearItems(xml) {
+  const $ = cheerio.load(xml, { xmlMode: true });
+
+  const items = [];
+
+  $("item").each((_, el) => {
+    const titulo = limpiarTexto($(el).find("title").first().text());
+    const resumen = limpiarTexto($(el).find("description").first().text());
+    const link = limpiarTexto($(el).find("link").first().text());
+    const fechaTexto = limpiarTexto($(el).find("pubDate").first().text());
+
+    if (!titulo) return;
+
+    const fecha = fechaTexto ? new Date(fechaTexto) : null;
+
+    items.push({
+      titulo,
+      resumen,
+      link,
+      fecha: fecha && !isNaN(fecha) ? fecha.toISOString() : null,
+    });
+  });
+
+  return items;
+}
+
+function filtrarUltimaSemana(items) {
+  const limite = Date.now() - DIAS_VENTANA * 24 * 60 * 60 * 1000;
+
+  return items.filter((item) => {
+    if (!item.fecha) return true; // sin fecha parseable: la dejamos pasar
+    return new Date(item.fecha).getTime() >= limite;
+  });
+}
+
+async function main() {
+  const res = await fetch(RSS_URL, {
     headers: {
       "User-Agent":
         "Mozilla/5.0 (compatible; ViviTuCarreraBot/1.0; +https://github.com/carolina-a-m/Viv--tu-carrera-narrativo)",
@@ -56,60 +66,40 @@ async function scrapearUna(fuente) {
 
   if (!res.ok) {
     throw new Error(
-      `No se pudo traer ${fuente.url} (status ${res.status} ${res.statusText})`
+      `No se pudo traer el RSS (status ${res.status} ${res.statusText})`
     );
   }
 
-  const html = await res.text();
-  const texto = extraerTexto(html);
+  const xml = await res.text();
+  const itemsCompletos = parsearItems(xml);
+  const items = itemsCompletos.filter((item) => item.link.includes("/politica/"));
 
-  if (!texto) {
-    throw new Error(`Texto vacío al extraer ${fuente.url}`);
+  if (items.length === 0) {
+    throw new Error("El RSS no devolvió ningún ítem parseable.");
   }
 
-  return texto;
-}
+  let itemsRecientes = filtrarUltimaSemana(items);
 
-async function main() {
+  if (itemsRecientes.length === 0) {
+    console.warn(
+      `Ningún ítem cae dentro de la ventana de ${DIAS_VENTANA} días. Se usan todos los ítems disponibles.`
+    );
+    itemsRecientes = items;
+  }
+
   await mkdir(DIR_SALIDA, { recursive: true });
-
-  const resultados = await Promise.allSettled(
-    FUENTES.map((fuente) => scrapearUna(fuente))
+  await writeFile(
+    RUTA_SALIDA,
+    JSON.stringify(itemsRecientes, null, 2),
+    "utf-8"
   );
 
-  let huboError = false;
-
-  for (let i = 0; i < FUENTES.length; i++) {
-    const fuente = FUENTES[i];
-    const resultado = resultados[i];
-
-    if (resultado.status === "fulfilled") {
-      const rutaSalida = new URL(`${fuente.slug}.txt`, DIR_SALIDA);
-      await writeFile(rutaSalida, resultado.value, "utf-8");
-      console.log(`OK  ${fuente.slug} (${resultado.value.length} caracteres)`);
-    } else {
-      huboError = true;
-      console.error(`ERROR  ${fuente.slug}: ${resultado.reason.message}`);
-    }
-  }
-
-  // Si TODAS las fuentes fallaron, cortamos con error para que el
-  // workflow no siga a la etapa de estructuración con datos vacíos.
-  // Si falló solo alguna, seguimos: la etapa 2/3 va a trabajar con
-  // las fuentes que sí se pudieron traer, y la validación final
-  // decide si publica o mantiene el último JSON bueno.
-  const fallaronTodas = resultados.every((r) => r.status === "rejected");
-  if (fallaronTodas) {
-    console.error("Fallaron todas las fuentes. Abortando.");
-    process.exit(1);
-  }
-
-  if (huboError) {
-    console.warn("Alguna fuente falló, se continúa con las que sí se trajeron.");
-  }
+  console.log(
+    `OK  ${itemsRecientes.length} ítems recientes guardados en data/raw/politica-rss.json`
+  );
 }
 
 main().catch((err) => {
-  console.error("Error inesperado en scrape.js:", err);
+  console.error("Error en scrape.js:", err.message);
   process.exit(1);
 });

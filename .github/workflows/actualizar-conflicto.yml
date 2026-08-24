@@ -1,4 +1,4 @@
-name: Actualizar becas UNR
+name: Actualizar conflicto actual (Ciencia Política)
 
 on:
   schedule:
@@ -12,7 +12,7 @@ permissions:
   contents: write
 
 jobs:
-  actualizar-becas:
+  actualizar-conflicto:
     runs-on: ubuntu-latest
     steps:
       - name: Descargar el repo
@@ -26,11 +26,16 @@ jobs:
       - name: Instalar dependencias
         run: npm install
 
-      - name: Etapa 1 — scraping (sin IA)
+      - name: Etapa 1 — scraping del RSS (sin IA)
         run: npm run scrape
 
-      - name: Etapa 2 — estructuración con Gemini
-        run: npm run structure
+      - name: Etapa 2a — categorización con Gemini
+        run: npm run categorizar
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+      - name: Etapa 2b — adaptación de la noticia con Gemini
+        run: npm run adaptar
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
@@ -39,10 +44,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          if git diff --quiet -- data/becas-live.json; then
-            echo "Sin cambios en becas-live.json, no se commitea nada."
+          if git diff --quiet -- data/conflicto-actual.json; then
+            echo "Sin cambios en conflicto-actual.json, no se commitea nada."
           else
-            git add data/becas-live.json
-            git commit -m "chore: actualizar becas-live.json [automático]"
+            git add data/conflicto-actual.json
+            git commit -m "chore: actualizar conflicto-actual.json [automático]"
             git push
           fi

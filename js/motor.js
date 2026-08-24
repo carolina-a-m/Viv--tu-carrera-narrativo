@@ -1038,10 +1038,82 @@ function evaluarConsecuencia(
     texto: consecuencia.texto,
     recurso: evento.recurso || null,
     recursoSecundario:
-      evento.recurso_secundario || null
+      evento.recurso_secundario || null,
+    opciones: consecuencia.opciones || null
   };
 }
 
+// ============================================================
+// RESULTADO DE OPCIÓN
+// ============================================================
+//
+// Algunas opciones tienen una respuesta narrativa inmediata
+// propia (no condicionada, no compartida con otras opciones
+// del mismo evento). Se muestra apenas se elige esa opción.
+//
+// ============================================================
+
+function evaluarResultadoOpcion(
+  opcion
+) {
+
+  if (!opcion || !opcion.resultado) {
+    return null;
+  }
+
+  return {
+    texto: opcion.resultado.texto,
+    recurso: opcion.resultado.recurso || null,
+    recursoSecundario:
+      opcion.resultado.recurso_secundario || null
+  };
+}
+
+// ============================================================
+// OPCIÓN DE CONSECUENCIA
+// ============================================================
+//
+// Cuando una consecuencia diferida tiene su propio array de
+// opciones (ej. una segunda decisión encadenada dentro de la
+// misma escena transversal), esta función aplica los efectos
+// de la opción elegida. No registra un evento nuevo: sigue
+// siendo parte del mismo remate narrativo, no de la
+// progresión principal.
+//
+// ============================================================
+
+function elegirOpcionConsecuencia(
+  estado,
+  opcion
+) {
+
+  if (!opcion) {
+    return { estado, resultadoOpcion: null, consecuencia: null };
+  }
+
+  aplicarEfectos(
+    estado,
+    opcion.efectos || {}
+  );
+
+  setearBanderas(
+    estado,
+    opcion.banderaSet || []
+  );
+
+  const resultadoOpcion =
+    evaluarResultadoOpcion(
+      opcion
+    );
+
+  const consecuencia =
+    evaluarConsecuencia(
+      estado,
+      opcion
+    );
+
+  return { estado, resultadoOpcion, consecuencia };
+}
 
 // ============================================================
 // DECISIÓN
@@ -1181,8 +1253,13 @@ if (opcion.resultadoAleatorio) {
       evento
     );
 
+  const resultadoOpcion =
+    evaluarResultadoOpcion(
+      opcion
+    );
 
-  return { estado, consecuencia };
+
+  return { estado, consecuencia, resultadoOpcion };
 }
 
 
@@ -1318,6 +1395,10 @@ export {
   elegirOpcion,
 
   evaluarConsecuencia,
+
+  evaluarResultadoOpcion,
+
+  elegirOpcionConsecuencia,
 
   iniciarCarrera,
 

@@ -1,230 +1,185 @@
 [
   {
-    "id": "transversal_aprender_a_estudiar",
-    "tipo": "transversal",
-    "ventana": ["inicio", "actividad"],
-    "prioridad": 1,
-    "funcion": "transicion_universitaria",
-    "texto": "Tenés que preparar tu primera evaluación importante.\n\nLeés el material por tercera vez.\n\nEntendés las palabras. Más o menos.\n\nLo que no entendés es qué se supone que tenés que hacer con todo eso.\n\nAbrís un documento nuevo y escribís el título.\n\nDespués de veinte minutos, el título sigue siendo lo único que escribiste.\n\nUn compañero mira tu pantalla.\n\n—¿Ya sabés cómo estudiar para esto?\n\nLo mirás.\n\n—Creí que sí.\n\nSe ríe.\n\n—Yo también.",
-    "opciones": [
-      {
-        "texto": "Seguir probando por tu cuenta hasta encontrarle la vuelta.",
-        "efectos": {
-          "progreso": 1,
-          "energia": -1
-        },
-        "banderaSet": [
-          "intento_adaptacion_autonoma"
-        ]
-      },
-      {
-        "texto": "Preguntarles a tus compañeros cómo se están organizando.",
-        "efectos": {
-          "confianza": 1,
-          "exploracion": 1
-        },
-        "intereses": {
-          "social": 1
-        },
-        "banderaSet": [
-          "busco_apoyo_pares"
-        ]
-      },
-      {
-        "texto": "Buscar si la universidad tiene algún espacio para estudiantes que están atravesando este comienzo.",
-        "efectos": {
-          "confianza": 1,
-          "exploracion": 1
-        },
-        "banderaSet": [
-          "conocio_codo_a_codo",
-          "conocio_apoyo_academico"
-        ]
-      }
-    ],
-    "recurso": {
-      "nombre": "Programa Codo a Codo",
-      "descripcion": "Acompañamiento académico de estudiantes avanzados a ingresantes.",
-      "link": "https://unr.edu.ar/codo-a-codo/"
-    }
+  "id": "transversal_silencio_gime",
+  "tipo": "transversal",
+  "ventana": [ "consecuencias"],
+  "funcion": "acompanamiento_y_bienestar",
+  "requiere": {
+    "variables": { "energia": { "max": 1 } }
   },
-
-  {
-    "id": "transversal_comer_o_volver",
-    "tipo": "transversal",
-    "ventana": ["inicio", "actividad", "mitad"],
-    "prioridad": 2,
-    "funcion": "permanencia_economica",
-    "texto": "Terminás de cursar y todavía te quedan varias horas antes de volver a casa.\n\nMetés la mano en el bolsillo.\n\nContás la plata.\n\nLa volvés a contar, por las dudas.\n\nNo alcanza para comer y pagar el viaje de vuelta.\n\nUn compañero te ve haciendo cuentas en el celular.\n\n—¿Todo bien?\n\n—Estoy viendo si como o si vuelvo a casa.\n\nHace una pausa.\n\n—¿Nunca fuiste al comedor?",
-    "opciones": [
-      {
-        "texto": "Guardar la plata para el viaje y aguantar hasta llegar a casa.",
-        "efectos": {
-          "dinero": -1,
-          "energia": -1
-        },
-        "banderaSet": [
-          "priorizo_dinero"
-        ]
-      },
-      {
-        "texto": "Comer y resolver el viaje después.",
-        "efectos": {
-          "dinero": -2,
-          "energia": 1
-        },
-        "banderaSet": [
-          "priorizo_alimentacion"
-        ]
-      },
-      {
-        "texto": "Preguntar qué comedor dice y cómo funciona.",
-        "efectos": {
-          "energia": 1,
-          "exploracion": 1
-        },
-        "banderaSet": [
-          "conocio_comedor_unr",
-          "conocio_beneficio_alimentario"
-        ]
+  "texto": "Hace más de una semana que no vas a la facu.\n\nSilenciaste el grupo hace unos días, sin pensarlo mucho.\n\nEstás en tu cuarto, de noche, con el celular en la mano.\n\nTe llega un mensaje de Gime:\n\n\"Che, ¿todo bien? ¿no estás yendo más a cursar?\"\n\n¿Qué le contestás?",
+  "opciones": [
+    {
+      "texto": "Contarle que la venís pasando mal en serio y que no tenés ganas de nada.",
+      "efectos": { "confianza": 1, "energia": 1 },
+      "banderaSet": ["abrio_conversacion", "conocio_salud_mental"],
+      "resultado": {
+        "texto": "Gime: Uh... con razón no estabas apareciendo. A mí me pasó algo parecido el cuatrimestre pasado. Venía bastante mal, estaba agotada, dormía pésimo y terminé yendo al Centro de Salud de la Siberia. Hablé con alguien de ahí y me re sirvió. Si querés, te acompaño.",
+        "recurso": {
+          "nombre": "Centro de Salud \"Dr. Arturo Illia\" (Siberia)",
+          "descripcion": "Atención primaria gratuita para estudiantes sin obra social: medicina general, psicología, trabajo social, enfermería y un dispositivo específico de salud mental. Lunes a viernes de 9 a 17 hs, con turno o por guardia en situaciones urgentes.",
+          "link": "https://radio.unr.edu.ar/2026/04/06/la-unr-abre-el-centro-de-salud-siberia-dr-arturo-illia/"
+        }
       }
-    ],
-    "recurso": {
-      "nombre": "Comedores Universitarios UNR",
-      "descripcion": "Red de seis comedores universitarios.",
-      "link": "https://comedores.unr.edu.ar/"
     },
-    "recurso_secundario": {
-      "nombre": "Becas UNR",
-      "descripcion": "Incluyen, entre otras, Beca de Alimentos y Beca de Asistencia Integral.",
-      "link": "https://becas.unr.edu.ar/"
-    }
-  },
-
-  {
-    "id": "transversal_no_me_alcanza_el_dia",
-    "tipo": "transversal",
-    "ventana": ["actividad", "mitad"],
-    "prioridad": 3,
-    "funcion": "gestion_de_vida",
-    "texto": "Son las 22:40.\n\nMañana tenés una entrega.\n\nPasado mañana, un parcial.\n\nEl jueves trabajás.\n\nEl viernes tenés que volver a cursar temprano.\n\nAbrís el calendario para organizarte.\n\nLo cerrás.\n\nLo volvés a abrir.\n\nUn mensaje aparece:\n\n\"¿Podés cubrirme mañana? Te pago las horas.\"\n\nCasi al mismo tiempo llega otro:\n\n\"¿Nos juntamos a estudiar después de cursar?\"\n\nMirás el calendario otra vez.\n\nNo hay espacio para todo.",
-    "opciones": [
-      {
-        "texto": "Aceptar el trabajo y acomodar el estudio alrededor.",
-        "efectos": {
-          "dinero": 1,
-          "energia": -2,
-          "exploracion": 1
-        },
-        "banderaSet": [
-          "priorizo_ingreso",
-          "combina_estudio_trabajo"
-        ]
-      },
-      {
-        "texto": "Rechazar el trabajo esta vez y priorizar la cursada.",
-        "efectos": {
-          "progreso": 1,
-          "energia": 1,
-          "dinero": -1
-        },
-        "banderaSet": [
-          "priorizo_estudio"
-        ]
-      },
-      {
-        "texto": "Buscar si existe algún apoyo que pueda aliviar parte de los gastos.",
-        "efectos": {
-          "exploracion": 1
-        },
-        "banderaSet": [
-          "busco_beneficios_unr"
-        ]
+    {
+      "texto": "\"Todo bien, un quilombo personal nomás.\"",
+      "efectos": { "energia": -1 },
+      "banderaSet": ["minimizo", "no_abrio_con_gime"],
+      "resultado": {
+        "texto": "Gime: Ok, cualquier cosa avisame."
       }
-    ],
-    "consecuencia": {
-      "requiere": {
-        "banderas": [
-          "busco_beneficios_unr"
-        ]
-      },
-      "texto": "Descubrís que la UNR tiene distintas becas de permanencia: asistencia integral, alimentos, material de estudio y movilidad.\n\nNo significa que tengas el problema resuelto. Pero ahora sabés que existen recursos que antes ni siquiera conocías.",
-      "efectos": {
-        "confianza": 1,
-        "exploracion": 1
-      },
-      "banderaSet": [
-        "conocio_becas_unr"
-      ]
     },
-    "recurso": {
-      "nombre": "Becas UNR",
-      "descripcion": "Programas de apoyo económico para distintas situaciones de permanencia estudiantil.",
-      "link": "https://becas.unr.edu.ar/"
+    {
+      "texto": "No contestar.",
+      "efectos": { "energia": -1, "confianza": -1 },
+      "banderaSet": ["evito", "no_abrio_con_gime"]
     }
+  ],
+  "consecuencia": {
+    "requiere": {
+      "banderas": ["no_abrio_con_gime"]
+    },
+    "texto": "Estás en la sala de espera del Centro de Salud \"Dr. Arturo Illia\" en la Siberia, esperando que te llamen para el certificado que te piden en el área de Deportes de la facultad. Hace poco empezaste a entrenar para despejarte un poco y levantar el ánimo.\n\nMientras esperás, mirás alrededor.\n\nEn una pared hay información sobre las distintas formas de atención del centro. Entre ellas, encontrás una referencia al acompañamiento en salud mental.\n\nNo sabías que también podías consultar por eso ahí.\n\nTe quedás mirando el cartel un segundo más.\n\nDespués escuchás tu nombre. Te llaman para el certificado.\n\nSabés que podés volver si alguna vez lo necesitás.",
+    "efectos": { "confianza": 1 },
+    "banderaSet": ["conocio_salud_mental"]
   },
-
+  "recurso": {
+    "nombre": "Centro de Salud \"Dr. Arturo Illia\" (Siberia)",
+    "descripcion": "Atención primaria gratuita para estudiantes sin obra social: medicina general, psicología, trabajo social, enfermería y un dispositivo específico de salud mental. Lunes a viernes de 9 a 17 hs, con turno o por guardia en situaciones urgentes.",
+    "link": "https://radio.unr.edu.ar/2026/04/06/la-unr-abre-el-centro-de-salud-siberia-dr-arturo-illia/"
+  }
+  },
   {
-    "id": "transversal_no_estoy_pudiendo",
+    "id": "transversal_apuro_economico_comedor",
     "tipo": "transversal",
     "ventana": ["mitad"],
-    "prioridad": 4,
-    "funcion": "acompanamiento_y_bienestar",
-    "texto": "Hace varios días que intentás avanzar con una entrega.\n\nAbrís el archivo.\n\nLeés lo mismo tres veces.\n\nNo escribís nada.\n\nCerrás la computadora.\n\nLa abrís otra vez.\n\nUn compañero te pregunta:\n\n—¿Estás bien?\n\nLa respuesta automática aparece antes de que puedas pensarlo.\n\n—Sí, sí. Estoy cansado/a nomás.\n\nPero esta vez no estás tan seguro/a.",
+    "funcion": "acompanamiento_economico",
+    "texto": "Son las dos de la tarde. Todavía te quedan varias horas de cursada y tenés la plata justa para volver a casa.\n\nMale te pregunta:\n\n—¿Comemos algo?\n\nSabés que si la gastás te tenés que volver caminando.\n\n¿Qué hacés?",
     "opciones": [
       {
-        "texto": "Seguir como si nada. Ya se va a pasar.",
-        "efectos": {
-          "energia": -2
-        },
-        "banderaSet": [
-          "sigo_sin_ayuda"
-        ]
+        "texto": "Aguantar y decirle: \"No amiga, tranqui. No tengo hambre.\"",
+        "efectos": { "energia": -1 },
+        "resultado": {
+          "texto": "La tarde se hace larga y en la última clase te cuesta concentrarte. Llegás a tu casa y comés apenas entrás."
+        }
       },
       {
-        "texto": "Contarle a tu compañero que realmente no estás pudiendo.",
-        "efectos": {
-          "confianza": 1
-        },
-        "banderaSet": [
-          "hablo_con_alguien"
-        ]
-      },
-      {
-        "texto": "Averiguar si la universidad tiene algún espacio de orientación para estudiantes.",
-        "efectos": {
-          "confianza": 1,
-          "exploracion": 1
-        },
-        "banderaSet": [
-          "conocio_orientacion_estudiantil"
-        ]
+        "texto": "Pedirle plata prestada.",
+        "efectos": { "confianza": 1, "energia": 1 },
+        "banderaSet": ["conocio_comedor"],
+        "resultado": {
+          "texto": "Male: —No, tranqui, te invito yo. Vamos al comedor, no hace falta que me devuelvas.",
+          "recurso": {
+            "nombre": "Comedores Universitarios - UNR",
+            "descripcion": "Información sobre los comedores universitarios de la Universidad Nacional de Rosario.",
+            "link": "https://unr.edu.ar/comedores/"
+          }
+        }
       }
     ],
     "consecuencia": {
       "requiere": {
-        "banderas": [
-          "conocio_orientacion_estudiantil"
-        ]
+        "banderas": ["conocio_comedor"]
       },
-      "texto": "Encontrás que la UNR cuenta con espacios de Orientación Estudiantil para acompañar dificultades vinculadas con la adaptación y la vida académica.\n\nNo tenés que decidir nada ahora.\n\nPero por primera vez en varios días sentís que pedir ayuda también puede ser una forma de seguir.",
-      "efectos": {
-        "confianza": 1,
-        "energia": 1
-      },
-      "banderaSet": [
-        "conocio_recurso_bienestar"
+      "texto": "Durante las siguientes semanas seguís yendo al comedor cuando podés. Pero este mes perdés algunas horas de trabajo debido al cursado, y empezás a tener que ajustar otros gastos para llegar a fin de mes.\n\nUn día, mientras estás esperando tu menú, ves un QR cerca de la caja.\n\n¿Qué hacés?",
+      "efectos": { "dinero": -1 },
+      "opciones": [
+        {
+          "texto": "Escanear el QR.",
+          "efectos": { "dinero": 1, "confianza": 1 },
+          "banderaSet": ["conocio_beca_alimentos"],
+          "resultado": {
+            "texto": "Abrís el enlace. Es información sobre la Beca de Alimentos de la UNR. Te inscribís.",
+            "recurso": {
+              "nombre": "Becas UNR - Beca de Alimentos",
+              "descripcion": "Beca que cubre el costo de las comidas en los comedores universitarios. Inscripción online.",
+              "link": "https://becas.unr.edu.ar/"
+            }
+          },
+          "consecuencia": {
+            "texto": "Pasa el tiempo y la situación económica empieza a afectar tu cursada. Ya no se trata solo de ajustar gastos: necesitás tomar más horas de trabajo y empezás a faltar a algunas clases. Te das cuenta de que, si la situación sigue así, cada vez te va a costar más sostener la carrera.\n\nAlguien de Orientación Estudiantil te cuenta sobre la Beca de Asistencia Integral.\n\n¿Qué hacés?",
+            "efectos": { "energia": -1 },
+            "opciones": [
+              {
+                "texto": "Averiguar si podés acceder a ese acompañamiento.",
+                "efectos": { "confianza": 1, "dinero": 1 },
+                "banderaSet": ["averiguo_asistencia_integral"],
+                "resultado": {
+                  "recurso": {
+                    "nombre": "Becas UNR - Beca de Asistencia Integral",
+                    "descripcion": "Acompañamiento económico integral orientado a estudiantes con dificultades para garantizar su permanencia en la carrera. Inscripción online en becas.unr.edu.ar.",
+                    "link": "https://becas.unr.edu.ar/"
+                  }
+                }
+              },
+              {
+                "texto": "Intentar seguir resolviéndolo por tu cuenta.",
+                "efectos": { "energia": -1 },
+                "banderaSet": ["sostiene_problema_economico"]
+              }
+            ]
+          }
+        },
+        {
+          "texto": "Seguir esperando.",
+          "efectos": { },
+          "banderaSet": ["mantiene_solucion_comedor"]
+        }
       ]
-    },
-    "recurso": {
-      "nombre": "Orientación Estudiantil UNR",
-      "descripcion": "Acompañamiento ante dificultades de adaptación y vida académica.",
-      "link": "https://unr.edu.ar/orientacion-estudiantil/"
-    },
-    "recurso_salud": {
-      "nombre": "Salud UNR",
-      "descripcion": "Atención integral para estudiantes regulares.",
-      "link": "https://unr.edu.ar/salud/"
+    }
+  },
+  {
+    "id": "transversal_salir_del_papel",
+    "tipo": "transversal",
+    "ventana": ["actividad"],
+    "funcion": "acompanamiento_academico",
+    "texto": "Tenés que presentar oralmente un trabajo en clase. Arrancás bien. Después te hacen una pregunta. Sabés la respuesta, pero no logras formularla.\n\nTe trabas.\n\nMirás tus apuntes.\n\nIntentás volver a explicar.\n\nCuando finalmente terminás, sentís que no salió tan mal. Pero tampoco salió como lo habías imaginado.\n\nAfuera del aula, te cruzás con Fede.\n\n—¿Cómo te fue?\n\n—No sé. Me había estudiado todo. Pero cuando tuve que explicarlo me quedé en blanco.\n\nFede se ríe.\n\n—A mí me pasaba lo mismo.\n\n—¿Y qué hiciste?\n\n—Y... la verdad que solo, releyendo, no me entra nada. Yo empecé a ir con un tutor de Codo a Codo. Me ayudó a encontrar otra forma de estudiar, a organizarme y a preparar mejor las exposiciones. Me obliga a no quedarme solamente leyendo. Si querés te paso los horarios.\n\n¿Qué hacés?", 
+    "opciones": [
+      {
+        "texto": "Dale. Quiero probar.",
+        "efectos": { "confianza": 1, "energia": -1, "interes_disciplina": 1 },
+        "banderaSet": ["flag_codo_a_codo"],
+        "resultado": {
+        "texto": "El martes era el único hueco libre que tenías esa semana, pero vas igual. No es una clase: es un espacio de acompañamiento con un estudiante avanzado. Le contás cómo venís estudiando y juntos revisan qué te está pasando y cómo podés encararlo de otra manera.\n\nEn un momento te das cuenta de algo: habías leído varias veces los apuntes, pero nunca habías intentado explicar con tus propias palabras lo que habías entendido.\n\nEn la próxima exposición te va mejor, aunque esa tarde libre ya no la tenés.",
+          "recurso": {
+            "nombre": "Programa Codo a Codo",
+            "descripcion": "Acompañamiento académico entre estudiantes, con herramientas para mejorar las estrategias de estudio y organizar mejor el aprendizaje.",
+            "link": "https://unr.edu.ar/codo-a-codo/"
+          }
+        }
+      },
+      {
+        "texto": "Nah, para la próxima cambio algunas cosas y estudio más horas.",
+        "efectos": { "progreso": 1, "energia": -1 },
+        "banderaSet": ["flag_metodo_propio"],
+        "resultado": {
+          "texto": "Volvés a estudiar, esta vez metiéndole muchas más horas e intentando explicar cada tema como si alguien te estuviera haciendo una pregunta. La próxima exposición te sale mejor. Eso sí: llegás agotado, y no tenés del todo claro si vas a poder sostener el mismo ritmo para todas las materias."
+        }
+      }
+    ],
+    "consecuencia": {
+     "texto": "Semanas después:\n\nLa estrategia nueva te sirvió.\n\nPero ahora aparece otro problema.\n\nTenés tres materias encima, dos trabajos prácticos y un parcial la semana siguiente. Abrís el calendario y no sabés por dónde empezar.\n\nEn la fotocopiadora escuchás a un compañero comentar:\n\n—Yo antes iba a las tutorías cuando no entendía una materia. Pero me di cuenta de que no era solamente que no entendía. No sabía cómo organizarme con todo.\n\n—¿Y qué hiciste?\n\n—Fui a Orientación Estudiantil.\n\nTe quedás pensando si tu problema también es ese.\n\n¿Qué hacés?", 
+      "efectos": { "energia": -1 },
+      "opciones": [
+        {
+          "texto": "Ir a Orientación Estudiantil.",
+          "efectos": { "confianza": 1, "progreso": 1 },
+          "banderaSet": ["flag_orientacion_estudiantil"],
+          "resultado": {
+            "recurso": {
+              "nombre": "Orientación Estudiantil UNR",
+              "descripcion": "Espacio de acompañamiento ante dificultades de organización y adaptación a la vida universitaria, con acceso a Entrevistas de Orientación Pedagógica.",
+              "link": "https://unr.edu.ar/orientacion-estudiantil/"
+            }
+          }
+        },
+        {
+          "texto": "Seguir por tu cuenta.",
+          "efectos": { "energia": -1 },
+          "banderaSet": ["flag_autogestion_estudio"]
+        }
+      ]
     }
   }
 ]

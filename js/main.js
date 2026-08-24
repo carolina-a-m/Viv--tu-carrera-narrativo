@@ -28,6 +28,7 @@ import { estadoInicial } from './estado.js';
 import {
   siguienteEvento,
   elegirOpcion,
+  elegirOpcionConsecuencia,
   iniciarCarrera
 } from './motor.js';
 
@@ -40,16 +41,18 @@ import {
 import {
   renderEvento,
   renderConsecuencia,
+  renderResultadoOpcion,
   renderInicio,
   renderFinDeEventos,
-  renderDebugEstado
+  renderDebugEstado,
+  renderIntervencionIA
 } from './ui.js';
-
 
 let estado;
 let eventos;
 let eventosTransversales;
 let facultades;
+let conflictoActual = null;
 
 
 // ------------------------------------------------------------
@@ -145,7 +148,71 @@ function mostrarErrorCarga(error) {
   }
 }
 
+async function cargarConflictoActual() {
 
+  try {
+
+    const resp =
+      await fetch('./data/conflicto-actual.json');
+
+    if (!resp.ok) return;
+
+    const datos =
+      await resp.json();
+
+    if (
+      typeof datos?.resumen_adaptado === 'string' &&
+      datos.resumen_adaptado.trim() !== ''
+    ) {
+      conflictoActual = datos;
+    }
+
+  } catch (error) {
+
+    console.warn(
+      'No se pudo cargar conflicto-actual.json:',
+      error.message
+    );
+
+  }
+}
+
+
+function aplicarConflictoATexto(texto) {
+
+  const MARCADOR = '{{CONFLICTO_RESUMEN}}';
+
+  if (!texto || !texto.includes(MARCADOR)) {
+    return texto;
+  }
+
+  const relleno =
+    conflictoActual
+      ? `${conflictoActual.resumen_adaptado} (Fuente: ${conflictoActual.fuente_titulo})`
+      : 'Una medida reciente generó reclamos de distintos sectores.';
+
+  return texto.replaceAll(MARCADOR, relleno);
+}
+
+function construirResumenJugador(estado, facultades) {
+
+  const facultad = facultades.find(f =>
+    f.carreras.some(c => c.id === estado.carreraActiva)
+  );
+
+  const carrera = facultad?.carreras.find(
+    c => c.id === estado.carreraActiva
+  );
+
+  return {
+    nombre: estado.nombre,
+    facultadId: facultad?.id || null,
+    carreraNombre: carrera?.nombre || '',
+    interes: estado.variables.interes_disciplina,
+    progreso: estado.variables.progreso,
+    variables: estado.variables
+  };
+}
 // ------------------------------------------------------------
 // INICIO
 // ------------------------------------------------------------
@@ -154,7 +221,7 @@ async function iniciar() {
 
   try {
 
-    const [
+const [
       respTransversales,
       respFacultades
     ] = await Promise.all([
@@ -164,6 +231,8 @@ async function iniciar() {
       fetch('./data/careers.json')
 
     ]);
+
+    await cargarConflictoActual();
 
 
     // ----------------------------------------------------------
@@ -257,6 +326,7 @@ async function iniciar() {
 
 
     ocultarInicio();
+    mostrarReiniciar();
 
     mostrarSiguiente();
 
@@ -268,62 +338,52 @@ async function iniciar() {
   // NUEVA PARTIDA
   // ----------------------------------------------------------
 
-  renderInicio(
-    facultades,
+renderInicio(
+  facultades,
 
-    async ({ nombre, carrera }) => {
+  async ({ nombre, facultadId, carreraId }) => {
 
-      estado =
-        estadoInicial();
-
-
-      estado.nombre =
-        nombre;
+    estado =
+      estadoInicial();
 
 
-      // --------------------------------------------------------
-      // CARRERA INICIAL
-      // --------------------------------------------------------
-      //
-      // La carrera elegida se convierte en la trayectoria
-      // activa inicial.
-      //
-      // No significa que sea una decisión definitiva.
-      //
+    estado.nombre =
+      nombre;
 
-      iniciarCarrera(
-        estado,
-        carrera
+
+    iniciarCarrera(
+      estado,
+      carreraId
+    );
+
+
+    try {
+
+      await cargarEventosCarrera(
+        carreraId
       );
 
+    } catch (error) {
 
-      try {
+      mostrarErrorCarga(error);
 
-        await cargarEventosCarrera(
-          carrera
-        );
-
-      } catch (error) {
-
-        mostrarErrorCarga(error);
-
-        return;
-      }
-
-
-      guardar(
-        estado
-      );
-
-
-      ocultarInicio();
-
-      mostrarSiguiente();
-
+      return;
     }
-  );
-}
 
+
+    guardar(
+      estado
+    );
+ 
+
+    ocultarInicio();
+    mostrarReiniciar();
+
+    mostrarSiguiente();
+
+  }
+);
+}
 
 // ------------------------------------------------------------
 // MOSTRAR EVENTO
@@ -342,6 +402,7 @@ async function iniciar() {
 // La distinción pertenece exclusivamente al motor.
 //
 // ------------------------------------------------------------
+
 
 function mostrarSiguiente() {
 
@@ -390,11 +451,8 @@ function mostrarSiguiente() {
   //
   // Ambos son acontecimientos narrativos con opciones.
   //
-
-  renderEvento(
-    evento,
-
-    async (opcion) => {
+  
+  const manejarEleccion = async (opcion) => {
 
       // --------------------------------------------------------
       // CARRERA ANTES DE APLICAR LA OPCIÓN
@@ -418,6 +476,10 @@ function mostrarSiguiente() {
           eventos
         );
 
+      if (!Array.isArray(estado.decisionesTexto)) {
+        estado.decisionesTexto = [];
+      }
+      estado.decisionesTexto.push(opcion.texto);
 
       if (
         estado.carreraActiva !==
@@ -465,29 +527,180 @@ function mostrarSiguiente() {
       // una pantalla intermedia antes de seguir avanzando.
       //
 
+            const mostrarConsecuenciaSiHay = () => {
+
+        if (
+          resultado &&
+          resultado.consecuencia
+        ) {
+
+          const manejarOpcionConsecuencia = (opcionConsecuencia) => {
+
+            const resultadoConsecuencia =
+              elegirOpcionConsecuencia(
+                estado,
+                opcionConsecuencia
+              );
+
+            guardar(
+              estado
+            );
+
+            const continuarOMostrarSiguienteNivel = () => {
+
+              if (
+                resultadoConsecuencia &&
+                resultadoConsecuencia.consecuencia
+              ) {
+
+                renderConsecuencia(
+                  resultadoConsecuencia.consecuencia,
+                  continuar,
+                  manejarOpcionConsecuencia
+                );
+
+              } else {
+
+                continuar();
+
+              }
+
+            };
+
+            if (
+              resultadoConsecuencia &&
+              resultadoConsecuencia.resultadoOpcion
+            ) {
+
+              renderResultadoOpcion(
+                resultadoConsecuencia.resultadoOpcion,
+                continuarOMostrarSiguienteNivel
+              );
+
+            } else {
+
+              continuarOMostrarSiguienteNivel();
+
+            }
+
+          };
+
+          renderConsecuencia(
+            resultado.consecuencia,
+            continuar,
+            manejarOpcionConsecuencia
+          );
+
+        } else {
+
+          continuar();
+
+        }
+
+      };
+
+
+      // --------------------------------------------------------
+      // RESULTADO DE OPCIÓN
+      // --------------------------------------------------------
+      //
+      // Si la opción elegida tiene una respuesta narrativa
+      // inmediata propia (ver motor.js / evaluarResultadoOpcion),
+      // la mostramos antes de evaluar la consecuencia diferida.
+      //
+
       if (
         resultado &&
-        resultado.consecuencia
+        resultado.resultadoOpcion
       ) {
 
-        renderConsecuencia(
-          resultado.consecuencia,
-          continuar
+        renderResultadoOpcion(
+          resultado.resultadoOpcion,
+          mostrarConsecuenciaSiHay
         );
 
       } else {
 
-        continuar();
+        mostrarConsecuenciaSiHay();
 
       }
 
-    }
-  );
+  };
+
+
+  // ----------------------------------------------------------
+  // INTERVENCIÓN DE IA (única vez, punto fijo del recorrido)
+  // ----------------------------------------------------------
+
+const ORDEN_FINAL = 110;
+
+if (
+  evento.orden === ORDEN_FINAL &&
+  !estado.banderas.intervencion_ia_vista
+  ) {
+
+    estado.banderas.intervencion_ia_vista = true;
+
+    pedirIntervencionIA(estado).then((texto) => {
+
+      renderIntervencionIA(
+        texto || '...',
+        () => renderEvento({ ...evento, texto: aplicarConflictoATexto(evento.texto) }, manejarEleccion, construirResumenJugador(estado, facultades))
+      );
+
+    });
+
+  } else {
+
+    renderEvento({ ...evento, texto: aplicarConflictoATexto(evento.texto) }, manejarEleccion, construirResumenJugador(estado, facultades))
+
+  }
 
 
   renderDebugEstado(
     estado
   );
+}
+
+
+// ------------------------------------------------------------
+// INTERVENCIÓN DE IA — LLAMADA AL WORKER
+// ------------------------------------------------------------
+
+const URL_INTERVENCION_IA =
+  'https://intervencion-ia.vivitucarrera.workers.dev';
+
+async function pedirIntervencionIA(estado) {
+
+  const caminoOrigen =
+    estado.banderas.camino_actores ? 'actores' :
+    estado.banderas.camino_investigacion ? 'investigacion' :
+    estado.banderas.camino_datos ? 'datos' :
+    'desconocido';
+
+  try {
+
+    const respuesta = await fetch(URL_INTERVENCION_IA, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+        nombreJugador: estado.nombre,
+        caminoOrigen,
+        decisionesTexto: estado.decisionesTexto || []
+      })
+    });
+
+    if (!respuesta.ok) return null;
+
+    const datos = await respuesta.json();
+
+    return datos.texto || null;
+
+  } catch {
+
+    return null;
+
+  }
 }
 
 
@@ -524,6 +737,10 @@ function mostrarInicio() {
   }
 }
 
+function mostrarReiniciar() {
+  const boton = document.getElementById('reiniciar');
+  if (boton) boton.style.display = 'flex';
+}
 
 // ------------------------------------------------------------
 // REINICIAR
@@ -532,53 +749,40 @@ function mostrarInicio() {
 const botonReiniciar =
   document.getElementById('reiniciar');
 
-
 if (botonReiniciar) {
+
+  // Oculto mientras estamos en la pantalla de inicio
+  botonReiniciar.style.display = 'none';
 
   botonReiniciar.addEventListener(
     'click',
-
     () => {
+
+      botonReiniciar.style.display = 'none';
 
       borrar();
 
-
-      estado =
-        null;
-
+      estado = null;
 
       mostrarInicio();
-
 
       const juego =
         document.getElementById('juego');
 
-
       if (juego) {
-
-        juego.innerHTML =
-          '';
-
+        juego.innerHTML = '';
       }
-
 
       const debug =
         document.getElementById('debug');
 
-
       if (debug) {
-
-        debug.textContent =
-          '';
-
+        debug.textContent = '';
       }
 
-
       iniciar();
-
     }
   );
-
 }
 
 

@@ -1,389 +1,170 @@
 [
   {
-    "id": "politica_inicio_01",
-    "carrera": "politica",
-    "orden": 10,
-    "permiteTransversal": false,
-    "texto": "Es tu primera semana cursando Ciencia Política. En una actividad de Introducción a la Ciencia Política, la docente divide a la clase en grupos.\n\n\"Les voy a dar un caso real. Mañana tienen que presentar un análisis.\"\n\nEn Rosario se está discutiendo una nueva medida que afecta a distintos sectores de la ciudad. El problema es que cada grupo involucrado sostiene una versión diferente de lo que está pasando.\n\nTenés poco tiempo para empezar.",
-    "opciones": [
-      {
-        "texto": "Averiguar qué actores están involucrados y qué intereses tiene cada uno.",
-        "efectos": {
-          "interes_disciplina": 1,
-          "confianza": 1,
-          "exploracion": 1
-        },
-        "intereses": {
-          "politica": 1,
-          "social": 1
-        },
-        "banderaSet": [
-          "inicio_politica",
-          "interes_participacion",
-          "conocio_actores",
-          "camino_actores",
-          "inicio_resuelto"
-        ]
-      },
-      {
-        "texto": "Buscar antecedentes para entender cómo se llegó hasta esta situación.",
-        "efectos": {
-          "interes_disciplina": 1 },
-        "intereses": {
-          "politica": 1,
-          "investigacion": 1
-        },
-        "banderaSet": [
-          "inicio_politica",
-          "interes_investigacion",
-          "conocio_investigacion",
-          "camino_investigacion",
-          "inicio_resuelto"
-        ]
-      },
-      {
-        "texto": "Buscar datos para comprobar qué está pasando realmente.",
-        "efectos": {
-          "interes_disciplina": 1,
-          "exploracion": 1
-        },
-        "intereses": {
-          "politica": 1,
-          "comunicacion": 1
-        },
-        "banderaSet": [
-          "inicio_politica",
-          "interes_opinion_publica",
-          "conocio_datos",
-          "camino_datos",
-          "inicio_resuelto"
-        ]
-      }
-    ]
-  },
-
-  {
-    "id": "politica_actores_01",
-    "carrera": "politica",
-    "orden": 20,
-    "requiere": {
-      "banderas": [
-        "camino_actores"
-      ]
+  "id": "politica_inicio_01",
+  "carrera": "politica",
+  "orden": 10,
+  "permiteTransversal": false,
+  "texto": "Es tu primera semana cursando Ciencia Política. En una actividad de Introducción a la Ciencia Política, la docente divide a la clase en grupos.\n\n\"Les voy a dar un caso real. Mañana tienen que presentar un análisis.\"\n\n{{CONFLICTO_RESUMEN}}\n\nEn tu grupo aparecen tres ideas distintas.",
+  "opciones": [
+    {
+      "texto": "Armar un mapa de los actores: quiénes intervienen, qué intereses tienen y qué capacidad tienen para imponer o negociar sus posiciones.",
+      "efectos": { "interes_disciplina": 1, "confianza": 1, "exploracion": 1 },
+      "intereses": { "politica": 1, "social": 1 },
+      "banderaSet": ["inicio_politica", "interes_participacion", "conocio_actores", "camino_actores", "inicio_resuelto"]
     },
-    "texto": "Mientras revisan el conflicto encontrás algo raro: dos grupos que parecían estar enfrentados tienen un interés en común.\n\nTu compañero lee lo que encontraste y se queda pensando.\n\n\"Si mostramos esto, cambia completamente nuestro análisis.\"",
-    "opciones": [
-      {
-        "texto": "Intentar incorporar ese punto en el análisis, aunque tengan que rehacer parte del trabajo.",
-        "efectos": {
-        "interes_disciplina": 1,
-        "confianza": 1,
-        "energia": -1,
-        "progreso": 1
-      },
-        "intereses": {
-          "politica": 1,
-          "social": 1
-        },
-        "banderaSet": [
-          "conocio_actores",
-          "conflicto_resuelto"
-        ]
-      },
-      {
-        "texto": "Mantener el análisis original y dejarlo afuera porque puede complicar el argumento.",
-        "efectos": {
-          "progreso": 1,
-          "energia": 1
-        },
-        "intereses": {
-          "organizacion": 1
-        },
-        "banderaSet": [
-          "conocio_actores",
-          "conflicto_resuelto"
-        ]
-      }
-    ]
-  },
-
-  {
-    "id": "politica_investigacion_01",
-    "carrera": "politica",
-    "orden": 20,
-    "requiere": {
-      "banderas": [
-        "camino_investigacion"
-      ]
+    {
+      "texto": "Buscar antecedentes, decisiones y conflictos anteriores que puedan explicar la situación actual.",
+      "efectos": { "interes_disciplina": 1 },
+      "intereses": { "politica": 1, "investigacion": 1 },
+      "banderaSet": ["inicio_politica", "interes_investigacion", "conocio_investigacion", "camino_investigacion", "inicio_resuelto"]
     },
-    "texto": "Encontrás un estudio anterior sobre un conflicto parecido. Las conclusiones contradicen lo que ustedes pensaban.\n\nTu grupo ya escribió dos páginas y mañana tienen que presentar.",
-    "opciones": [
-      {
-        "texto": "Cambiar la hipótesis y revisar lo que ya escribieron.",
-        "efectos": {
-          "energia": -1,
-          "confianza": 1,
-          "progreso": 1
-        },
-        "intereses": {
-          "investigacion": 1
-        },
-        "banderaSet": [
-          "interes_investigacion",
-          "conflicto_resuelto"
-        ]
-      },
-      {
-        "texto": "Buscar más información en otras fuentes antes de cambiarla.",
-        "efectos": {
-          "energia": -1,
-          "exploracion": 1,
-          "progreso": 1
-        },
-        "intereses": {
-          "investigacion": 1
-        },
-        "banderaSet": [
-          "interes_investigacion",
-          "conflicto_resuelto"
-        ]
-      },
-      {
-        "texto": "Seguir con la hipótesis original.",
-        "efectos": {
-          "progreso": 1,
-          "energia": 1
-        },
-        "intereses": {
-          "organizacion": 1
-        },
-        "banderaSet": [
-          "conflicto_resuelto"
-        ]
-      }
-    ]
-  },
-
-  {
-    "id": "politica_datos_01",
-    "carrera": "politica",
-    "orden": 20,
-    "requiere": {
-      "banderas": [
-        "camino_datos"
-      ]
-    },
-    "texto": "El informe está casi terminado. Pero hay un problema: los datos que encontraron cuentan una historia y los actores involucrados cuentan otra.\n\nTu compañero te mira.\n\n\"Si presentamos esto así, alguien nos va a preguntar cuál de las dos versiones estamos tomando.\"",
-    "opciones": [
-      {
-        "texto": "Priorizar los datos y sostener la conclusión con la evidencia disponible.",
-        "efectos": {
-          "progreso": 1
-        },
-        "intereses": {
-          "comunicacion": 1,
-          "politica": 1
-        },
-        "banderaSet": [
-          "conflicto_resuelto"
-        ]
-      },
-      {
-        "texto": "Intentar entender por qué existe esa diferencia antes de cerrar el análisis.",
-        "efectos": {
-          "exploracion": 1,
-          "progreso": 1
-
-        },
-        "intereses": {
-          "politica": 1,
-          "investigacion": 1
-        },
-        "banderaSet": [
-          "conflicto_resuelto"
-        ]
-      }
-    ]
-  },
+    {
+      "texto": "Contrastar las distintas versiones con los datos disponibles: qué se afirma y qué evidencia lo sostiene.",
+      "efectos": { "interes_disciplina": 1, "exploracion": 1 },
+      "intereses": { "politica": 1, "comunicacion": 1 },
+      "banderaSet": ["inicio_politica", "interes_opinion_publica", "conocio_datos", "camino_datos", "inicio_resuelto"]
+    }
+  ]
+},
 {
-    "id": "politica_actividad_actores_01",
-    "carrera": "politica",
-    "orden": 30,
-    "requiere": {
-      "banderas": [
-        "conflicto_resuelto",
-        "camino_actores"
-      ]
+  "id": "politica_actores_01",
+  "carrera": "politica",
+  "orden": 20,
+  "requiere": { "banderas": ["camino_actores"] },
+  "texto": "Mientras armás el mapa de actores, descubrís algo que no esperabas: los dos sectores que parecían inicialmente enfrentados tienen un interés importante en común. Ahora vos y tu grupo tienen que decidir cómo representar esa contradicción.",
+  "opciones": [
+    {
+      "texto": "Reformular el mapa para mostrar dónde se enfrentan y dónde coinciden los intereses de los actores involucrados.",
+      "efectos": { "interes_disciplina": 1, "confianza": 1, "energia": -1, "progreso": 1 },
+      "intereses": { "politica": 1, "social": 1 },
+      "banderaSet": ["conocio_actores", "conflicto_resuelto"]
     },
-    "texto": "Después de entregar el trabajo, la docente te devuelve el análisis.\n\n\"Bien. Identificar quién está en juego en un conflicto, y qué intereses defiende cada uno, no es poca cosa: es la base de cualquier análisis político serio.\"\n\nAntes de irte, la docente agrega:\n\"Si te interesó especialmente entender quiénes intervienen en un conflicto y qué intereses hay detrás, podés seguir trabajando con ese tipo de problemas en distintas actividades fuera de la cursada.\"",
-    "opciones": [
-      {
-        "texto": "Sumarte a un proyecto de investigación y ayudar a buscar información y antecedentes.",
-        "efectos": {
-          "energia": -1
-        },
-        "intereses": {
-          "investigacion": 1,
-          "politica": 1
-        },
-        "banderaSet": [
-          "interes_investigacion",
-          "conocio_investigacion",
-          "actividad_resuelta"
-        ]
-      },
-      {
-        "texto": "Sumarte a un plenario donde estudiantes discuten el problema y posibles soluciones.",
-        "efectos": {
-          "energia": -1,
-          "confianza": 1
-        },
-        "intereses": {
-          "politica": 1,
-          "social": 1
-        },
-        "banderaSet": [
-          "interes_participacion",
-          "participo_actividad_estudiantil",
-          "actividad_resuelta"
-        ]
-      },
-      {
-        "texto": "No sumarte. Preferís dedicar ese tiempo a cursar y preparar los parciales.",
-        "efectos": {
-          "progreso": 1,
-          "energia": 1
-        },
-        "intereses": {
-          "organizacion": 1
-        },
-        "banderaSet": [
-          "priorizo_estudio",
-          "actividad_resuelta"
-        ]
-      }
-    ]
-  },
+    {
+      "texto": "Separar lo central de lo secundario y concentrarse en el punto donde realmente se juega el conflicto.",
+      "efectos": { "progreso": 1, "energia": 1 },
+      "intereses": { "organizacion": 1 },
+      "banderaSet": ["conocio_actores", "conflicto_resuelto"]
+    },
+    {
+      "texto": "Jerarquizar en el mapa a los actores según su capacidad real para imponer su posición.",
+      "efectos": { "confianza": 1, "progreso": 1 },
+      "intereses": { "politica": 1 },
+      "banderaSet": ["conocio_actores", "conflicto_resuelto"]
+    }
+  ]
+},
 
-  {
-    "id": "politica_actividad_investigacion_01",
-    "carrera": "politica",
-    "orden": 30,
-    "requiere": {
-      "banderas": [
-        "conflicto_resuelto",
-        "camino_investigacion"
-      ]
+{
+  "id": "politica_investigacion_01",
+  "carrera": "politica",
+  "orden": 20,
+  "requiere": { "banderas": ["camino_investigacion"] },
+  "texto": "Te quedás hasta tarde buscando antecedentes. Encontrás una situación que parece idéntica.\n\nCuando empezás a leer, aparece un problema: el contexto social y político cambió desde ese entonces, y la situación actual ocurre en condiciones completamente diferentes.\n\nTenés poco tiempo para decidir qué hacer con ese descubrimiento.",
+  "opciones": [
+    {
+      "texto": "Usar el caso anterior como punto de comparación.",
+      "efectos": { "energia": -1, "confianza": 1, "progreso": 1 },
+      "intereses": { "investigacion": 1 },
+      "banderaSet": ["interes_investigacion", "conflicto_resuelto"]
     },
-    "texto": "Después de entregar el trabajo, la docente te devuelve el análisis.\n\n\"Bien. Cambiar de hipótesis cuando la evidencia lo pide es más difícil de lo que parece, y ustedes lo hicieron.\"\n\nAntes de irte, la docente agrega:\n\"Si te interesó especialmente buscar información, reconstruir antecedentes y ver qué pasó antes de sacar una conclusión, podés seguir trabajando con eso en distintas actividades fuera de la cursada.\"",
-    "opciones": [
-      {
-        "texto": "Sumarte a un proyecto de investigación y ayudar a buscar información y antecedentes.",
-        "efectos": {
-          "energia": -1
-        },
-        "intereses": {
-          "investigacion": 1,
-          "politica": 1
-        },
-        "banderaSet": [
-          "interes_investigacion",
-          "conocio_investigacion",
-          "actividad_resuelta"
-        ]
-      },
-      {
-        "texto": "Sumarte a un plenario donde estudiantes discuten el problema y posibles soluciones.",
-        "efectos": {
-          "energia": -1,
-          "confianza": 1
-        },
-        "intereses": {
-          "politica": 1,
-          "social": 1
-        },
-        "banderaSet": [
-          "interes_participacion",
-          "participo_actividad_estudiantil",
-          "actividad_resuelta"
-        ]
-      },
-      {
-        "texto": "No sumarte. Preferís dedicar ese tiempo a cursar y preparar los parciales.",
-        "efectos": {
-          "progreso": 1,
-          "energia": 1
-        },
-        "intereses": {
-          "organizacion": 1
-        },
-        "banderaSet": [
-          "priorizo_estudio",
-          "actividad_resuelta"
-        ]
-      }
-    ]
-  },
+    {
+      "texto": "Seguir buscando. Si el caso no encaja, quizás todavía no encontraron el antecedente correcto.",
+      "efectos": { "energia": -1, "exploracion": 1, "progreso": 1 },
+      "intereses": { "investigacion": 1 },
+      "banderaSet": ["interes_investigacion", "conflicto_resuelto"]
+    }
+  ]
+},
 
-  {
-    "id": "politica_actividad_datos_01",
-    "carrera": "politica",
-    "orden": 30,
-    "requiere": {
-      "banderas": [
-        "conflicto_resuelto",
-        "camino_datos"
-      ]
+{
+  "id": "politica_datos_01",
+  "carrera": "politica",
+  "orden": 20,
+  "requiere": { "banderas": ["camino_datos"] },
+  "texto": "Encontrás un dato que contradice una de las afirmaciones más repetidas sobre el conflicto.\n\nLo compartís en el grupo.\n\nSilencio.\n\n\"Por ahí conviene dejarlo afuera para no complicarnos.\", dice tu compañero.\n\nOtra integrante del grupo responde:\n\"Capaz nos sirve para replantear el análisis.\"\n\nLa diferencia no es menor: según cómo interpreten ese dato, la conclusión del trabajo cambia.",
+  "opciones": [
+    {
+      "texto": "Defender el dato: revisar qué evidencia hay detrás y sostenerlo aunque contradiga el relato más difundido.",
+      "efectos": { "confianza": 1, "progreso": 1 },
+      "intereses": { "comunicacion": 1, "politica": 1 },
+      "banderaSet": ["conflicto_resuelto"]
     },
-    "texto": "Después de entregar el informe, la docente te devuelve el análisis.\n\n\"Bien. Sostener una conclusión con evidencia, sabiendo que hay otras versiones dando vueltas, es más incómodo de lo que se ve desde afuera.\"\n\nAntes de irte, la docente agrega:\n\"Si te interesó especialmente trabajar con evidencia y contrastarla con distintas versiones de un mismo problema, podés seguir trabajándolo en distintas actividades fuera de la cursada.\"",
-    "opciones": [
-      {
-        "texto": "Sumarte a un proyecto de investigación y ayudar a buscar información y antecedentes.",
-        "efectos": {
-          "energia": -1
-        },
-        "intereses": {
-          "investigacion": 1,
-          "politica": 1
-        },
-        "banderaSet": [
-          "interes_investigacion",
-          "conocio_investigacion",
-          "actividad_resuelta"
-        ]
-      },
-      {
-        "texto": "Sumarte a un plenario donde estudiantes discuten el problema y posibles soluciones.",
-        "efectos": {
-          "energia": -1,
-          "confianza": 1
-        },
-        "intereses": {
-          "politica": 1,
-          "social": 1
-        },
-        "banderaSet": [
-          "interes_participacion",
-          "participo_actividad_estudiantil",
-          "actividad_resuelta"
-        ]
-      },
-      {
-        "texto": "No sumarte. Preferís dedicar ese tiempo a cursar y preparar los parciales.",
-        "efectos": {
-          "progreso": 1,
-          "energia": 1
-        },
-        "intereses": {
-          "organizacion": 1
-        },
-        "banderaSet": [
-          "priorizo_estudio",
-          "actividad_resuelta"
-        ]
-      }
-    ]
-  },
+    {
+      "texto": "Investigar quién produjo ese dato, cómo se obtuvo y qué podría estar dejando afuera.",
+      "efectos": { "exploracion": 1, "progreso": 1 },
+      "intereses": { "investigacion": 1 },
+      "banderaSet": ["conflicto_resuelto", "cuestiono_fuente_datos"]
+    },
+    {
+      "texto": "Poner las dos versiones en tensión y hacer de esa contradicción una parte central del análisis.",
+      "efectos": { "exploracion": 1, "progreso": 1 },
+      "intereses": { "politica": 1, "investigacion": 1 },
+      "banderaSet": ["conflicto_resuelto"]
+    }
+  ]
+}
+,
+{
+  "id": "politica_actividad_actores_01",
+  "carrera": "politica",
+  "orden": 30,
+  "requiere": { "banderas": ["conflicto_resuelto", "camino_actores"] },
+  "texto": "La devolución de la profe no llega como una nota.\n\nPrimero marca una parte del trabajo con una lapicera.\n\n\"Acá hicieron algo interesante. Vieron que esta aparente división no explicaba por completo los intereses en juego.\"\n\nSeñala el mapa de actores.\n\n\"En política, muchas veces el desafío no es identificar quién está de cada lado, sino comprender cómo se construyen y articulan sus posiciones.\"\n\nAl salir del aula escuchás a un grupo de estudiantes hablando en el pasillo. Están organizando una asamblea para discutir medidas frente a la actual situación de la Ley de Financiamiento Universitario.",
+  "opciones": [
+    {
+      "texto": "Te acercás a escuchar qué medidas proponen y por qué.",
+      "efectos": { "confianza": 1, "energia": -1 },
+      "intereses": { "politica": 1, "social": 1 },
+      "banderaSet": ["interes_participacion", "participo_actividad_estudiantil", "actividad_resuelta"]
+    },
+    {
+      "texto": "Seguís de largo.",
+      "efectos": { "progreso": 1, "energia": 1 },
+      "banderaSet": ["priorizo_estudio", "actividad_resuelta"]
+    }
+  ]
+},
+
+{
+  "id": "politica_actividad_investigacion_01",
+  "carrera": "politica",
+  "orden": 30,
+  "requiere": { "banderas": ["conflicto_resuelto", "camino_investigacion"] },
+  "texto": "La profe mira el trabajo y vuelve varias veces sobre la misma parte.\n\n\"Acá podrían haberse quedado con el primer antecedente, pero siguieron buscando.\"\n\nTe devuelve la hoja.\n\n\"Una buena explicación política no se limita a un caso particular. También requiere ponerlo en relación con otros similares para reconocer qué procesos y decisiones se ponen en juego y qué nos permiten comprender en conjunto.\"\n\nAl salir del aula ves un cartel pegado en una pared:\n\nProyecto de investigación\n\"Paridad de papel: cumplimiento y resistencias a la ley de paridad de género en los concejos deliberantes de Santa Fe (2023-2026)\"\nConvocatoria a estudiantes.\n\nHay un mail abajo.",
+  "opciones": [
+    {
+      "texto": "Anotar el contacto.",
+      "efectos": {},
+      "intereses": { "investigacion": 1, "politica": 1 },
+      "banderaSet": ["interes_investigacion", "conocio_investigacion", "actividad_resuelta"]
+    },
+    {
+      "texto": "Seguir de largo. Preferís ver primero cómo te va con las demás materias.",
+      "efectos": { "progreso": 1, "energia": 1 },
+      "banderaSet": ["priorizo_estudio", "actividad_resuelta"]
+    }
+  ]
+},
+  {
+  "id": "politica_actividad_datos_01",
+  "carrera": "politica",
+  "orden": 30,
+  "requiere": { "banderas": ["conflicto_resuelto", "camino_datos"] },
+  "texto": "La docente lee la última parte del informe.\n\n\"Lo más valioso no es que hayan encontrado un dato, sino que se hayan detenido a preguntarse qué significa, cómo fue producido, qué permite o no afirmar y cómo se relaciona con otras posibles interpretaciones. En política, contar con información es un punto de partida. Explicar supone interpretarla, ponerla en contexto y reconocer sus alcances y límites.\"\n\nAl salir, escuchás una discusión en un aula cercana. Dos compañeros hablan sobre el análisis que también tuvieron que armar para esta materia.\n\nUno dice:\n\"La información objetiva es que...\"\n\nEl otro lo interrumpe.\n\"No. La información nunca es objetiva, está condicionada por la interpretación.\"\n\nLa puerta queda abierta.",
+  "opciones": [
+    {
+      "texto": "Entrar y sumarte a la conversación.",
+      "efectos": { "confianza": 1, "energia": -1 },
+      "intereses": { "comunicacion": 1, "politica": 1 },
+      "banderaSet": ["interes_opinion_publica", "actividad_resuelta"]
+    },
+    {
+      "texto": "Seguir caminando. Ya tenés bastante con la cursada.",
+      "efectos": { "progreso": 1, "energia": 1 },
+      "banderaSet": ["priorizo_estudio", "actividad_resuelta"]
+    }
+  ]
+},
  {
   "id": "politica_parcial_presentacion_01",
   "carrera": "politica",
@@ -601,7 +382,7 @@
   "orden": 70.4,
   "omitirSiNoCumple": true,
   "requiere": { "banderas": ["experiencia_salud_completada"] },
-  "texto": "Cuando están volviendo, Violeta te pregunta:\n\n—¿Vos qué hubieras hecho?\n\nPensás un segundo.\n\nNo sabés bien qué responder.",
+  "texto": "Cuando están volviendo, Violeta te pregunta:\n\n—¿Vos qué hubieras hecho? Con la señora, digo.\n\nPensás un segundo.\n\nNo sabés bien qué responder.",
   "opciones": [
     {
       "texto": "Me quedé pensando en eso. No sé bien. Me gustaría volver a ver algo así.",
@@ -699,6 +480,7 @@
   "id": "politica_pasantia_caso_01",
   "carrera": "politica",
   "orden": 81,
+  "omitirSiNoCumple": true,
   "requiere": {
     "banderas": ["tiene_trabajo", "conocio_sector_publico"]
   },
@@ -716,6 +498,7 @@
   "id": "politica_pasantia_investigacion_01",
   "carrera": "politica",
   "orden": 82,
+  "omitirSiNoCumple": true,
   "requiere": {
     "banderas": ["reviso_caso_medicacion"]
   },
@@ -782,6 +565,7 @@
   "id": "politica_pasantia_cierre_01",
   "carrera": "politica",
   "orden": 83,
+  "omitirSiNoCumple": true,
   "requiere": {
     "banderas": ["pasantia_caso_resuelto"]
   },
