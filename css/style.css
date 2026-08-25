@@ -167,6 +167,12 @@ body {
 .decision-promedio-caret img { position: absolute; width: 5.231px; height: 2.615px; left: 5.23px; top: 6.54px; }
 
 .decision-competencias-fila { display: flex; gap: 9px; align-items: flex-start; justify-content: center; }
+.decision-parametros { display: flex; align-items: center; justify-content: space-between; width: 169px; margin: 0 auto; }
+.decision-parametro { display: flex; flex-direction: column; gap: 6px; align-items: center; width: 59px; }
+.decision-parametro-label { color: #ffffff; font-size: 9.6px; line-height: 1.2; text-align: center; margin: 0; }
+.decision-parametro-track { width: 59px; height: 4px; border-radius: 149.85px; background: #707070; overflow: hidden; }
+.decision-parametro-progreso { height: 100%; border-radius: 149.85px; background: #ffffff; transition: width 0.3s ease; }
+.decision-parametro-porcentaje { color: #d9d9d9; font-size: 8.5px; text-align: center; margin: 0; }
 .decision-competencia { display: flex; flex-direction: column; align-items: center; width: 46px; }
 .decision-competencia-valor { position: relative; display: flex; align-items: center; justify-content: center; width: 30px; height: 24px; margin-bottom: -6px; }
 .decision-competencia-valor img { position: absolute; left: 0; top: 0; width: 30px; height: 16px; z-index: 0; }
@@ -600,4 +606,51 @@ body {
     border-color: rgba(228, 222, 255, 1);
     box-shadow: 0 0 10px rgba(196, 181, 253, 0.32);
   }
+}
+
+.ficha-recurso {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+
+.ficha-recurso-nombre {
+  color: #ffffff;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.ficha-recurso-nombre:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+  text-decoration-thickness: 0.5px;
+  text-underline-offset: 3px;
+}
+
+.ficha-recurso-descripcion {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--font);
+  font-size: 9.6px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.recurso-flecha {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+}
+
+.intervencion-ia-texto {
+  color: #ffffff;
+  font-family: var(--font);
+  font-size: 9.6px;
+  line-height: 1.2;
+  text-align: center;
 }

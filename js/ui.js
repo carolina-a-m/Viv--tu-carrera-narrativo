@@ -162,11 +162,34 @@ function crearPanelIndicadores(resumen) {
     filaComp.appendChild(item);
   });
 
-  competencias.appendChild(filaComp);
+
+    competencias.appendChild(filaComp);
   filaStats.appendChild(competencias);
   datos.appendChild(filaStats);
 
+  const parametros = document.createElement('div');
+  parametros.className = 'decision-parametros';
+  const configParametros = [
+    { clave: 'rendimiento', label: 'Rendimiento' },
+    { clave: 'progreso', label: 'Progreso' }
+  ];
+  configParametros.forEach(({ clave, label }) => {
+    const valor = Math.min(100, Math.max(0, variables[clave] ?? 0));
+    const item = document.createElement('div');
+    item.className = 'decision-parametro';
+    item.innerHTML = `
+      <p class="decision-parametro-label">${label}</p>
+      <div class="decision-parametro-track">
+        <div class="decision-parametro-progreso" style="width:${valor}%"></div>
+      </div>
+      <p class="decision-parametro-porcentaje">${valor}%</p>
+    `;
+    parametros.appendChild(item);
+  });
+  datos.appendChild(parametros);
+
   const objetivos = document.createElement('div');
+
   objetivos.className = 'decision-objetivos';
   const barraWrap = document.createElement('div');
   barraWrap.className = 'decision-barra-wrap';
@@ -200,6 +223,7 @@ function crearPanelIndicadores(resumen) {
   toggle.innerHTML = `<div class="decision-colapsar-icono"><img src="${ASSETS}caret-down.svg" alt=""></div>`;
   toggle.addEventListener('click', () => {
     toggle.classList.toggle('abierto');
+    panel.classList.toggle('expandido');
   });
   panel.appendChild(toggle);
 
@@ -353,26 +377,29 @@ function crearFichaRecurso(recurso) {
   const ficha = document.createElement('div');
   ficha.className = 'ficha-recurso';
 
-  const nombre = document.createElement('strong');
-  nombre.className = 'ficha-recurso-nombre';
-  nombre.textContent = recurso.nombre;
-  ficha.appendChild(nombre);
+  if (recurso.link) {
+    const nombre = document.createElement('a');
+    nombre.className = 'ficha-recurso-nombre';
+    nombre.href = recurso.link;
+    nombre.target = '_blank';
+    nombre.rel = 'noopener noreferrer';
+    nombre.textContent = recurso.nombre;
+    ficha.appendChild(nombre);
+  } else {
+    const nombre = document.createElement('a');
+nombre.className = 'ficha-recurso-nombre';
+nombre.href = recurso.link;
+nombre.target = '_blank';
+nombre.rel = 'noopener noreferrer';
+nombre.innerHTML = `${recurso.nombre} <span class="recurso-flecha">🔗</span>`;
+ficha.appendChild(nombre);
+  }
 
   if (recurso.descripcion) {
     const descripcion = document.createElement('p');
     descripcion.className = 'ficha-recurso-descripcion';
     descripcion.textContent = recurso.descripcion;
     ficha.appendChild(descripcion);
-  }
-
-  if (recurso.link) {
-    const link = document.createElement('a');
-    link.className = 'ficha-recurso-link';
-    link.href = recurso.link;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    link.textContent = 'Más información';
-    ficha.appendChild(link);
   }
 
   return ficha;

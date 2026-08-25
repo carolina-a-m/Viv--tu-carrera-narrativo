@@ -23,7 +23,12 @@
 // Los eventos transversales NO reemplazan la progresión principal.
 // Solamente pueden aparecer entre etapas.
 
-import { estadoInicial } from './estado.js';
+
+import {
+  estadoInicial,
+  registrarDecision,
+  obtenerContextoSeguroIA
+} from './estado.js';
 
 import {
   siguienteEvento,
@@ -476,10 +481,12 @@ function mostrarSiguiente() {
           eventos
         );
 
-      if (!Array.isArray(estado.decisionesTexto)) {
-        estado.decisionesTexto = [];
-      }
-      estado.decisionesTexto.push(opcion.texto);
+
+            registrarDecision(
+        estado,
+        opcion.texto,
+        { funcion: evento.funcion, tipo: evento.tipo }
+      );
 
       if (
         estado.carreraActiva !==
@@ -536,10 +543,11 @@ function mostrarSiguiente() {
 
           const manejarOpcionConsecuencia = (opcionConsecuencia) => {
 
-            const resultadoConsecuencia =
+              const resultadoConsecuencia =
               elegirOpcionConsecuencia(
                 estado,
-                opcionConsecuencia
+                opcionConsecuencia,
+                evento
               );
 
             guardar(
@@ -670,7 +678,36 @@ if (
 const URL_INTERVENCION_IA =
   'https://intervencion-ia.vivitucarrera.workers.dev';
 
-async function pedirIntervencionIA(estado) {
+
+const VARIABLES_NO_NARRATIVAS = ['progreso', 'tiempo', 'rendimiento'];
+
+function construirResumenTrayectoria(estado) {
+
+  const { banderasSeguras, decisionesSeguras } =
+    obtenerContextoSeguroIA(estado);
+
+  const interesesRankeados = Object.entries(estado.intereses || {})
+    .filter(([nombre]) => nombre !== 'tecnico')
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(([nombre, valor]) => ({ nombre, valor }));
+
+  const variablesNarrativas = Object.fromEntries(
+    Object.entries(estado.variables || {})
+      .filter(([nombre]) => !VARIABLES_NO_NARRATIVAS.includes(nombre))
+  );
+
+  return {
+    carrerasExploradas: estado.carrerasExploradas || [],
+    banderas: banderasSeguras,
+    interesesRankeados,
+    variables: variablesNarrativas,
+    decisionesTexto: decisionesSeguras
+  };
+
+}
+
+  async function pedirIntervencionIA(estado) {
 
   const caminoOrigen =
     estado.banderas.camino_actores ? 'actores' :
@@ -686,7 +723,7 @@ async function pedirIntervencionIA(estado) {
         body: JSON.stringify({
         nombreJugador: estado.nombre,
         caminoOrigen,
-        decisionesTexto: estado.decisionesTexto || []
+        resumenTrayectoria: construirResumenTrayectoria(estado)
       })
     });
 

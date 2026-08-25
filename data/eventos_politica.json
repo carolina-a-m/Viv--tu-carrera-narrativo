@@ -40,7 +40,7 @@
       "banderaSet": ["conocio_actores", "conflicto_resuelto"]
     },
     {
-      "texto": "Separar lo central de lo secundario y concentrarse en el punto donde realmente se juega el conflicto.",
+      "texto": "Separar lo central de lo secundario: preguntarse si ese interés en común afecta realmente cómo se juega el conflicto.",
       "efectos": { "progreso": 1, "energia": 1 },
       "intereses": { "organizacion": 1 },
       "banderaSet": ["conocio_actores", "conflicto_resuelto"]
@@ -68,7 +68,7 @@
       "banderaSet": ["interes_investigacion", "conflicto_resuelto"]
     },
     {
-      "texto": "Seguir buscando. Si el caso no encaja, quizás todavía no encontraron el antecedente correcto.",
+      "texto": "Descartar la analogía y seguir buscando. Si el caso no encaja podría llevarte a una conclusión errada. Quizás todavía no encontraron el antecedente correcto.",
       "efectos": { "energia": -1, "exploracion": 1, "progreso": 1 },
       "intereses": { "investigacion": 1 },
       "banderaSet": ["interes_investigacion", "conflicto_resuelto"]
@@ -108,19 +108,45 @@
   "id": "politica_actividad_actores_01",
   "carrera": "politica",
   "orden": 30,
+  "permiteTransversal": false,
   "requiere": { "banderas": ["conflicto_resuelto", "camino_actores"] },
-  "texto": "La devolución de la profe no llega como una nota.\n\nPrimero marca una parte del trabajo con una lapicera.\n\n\"Acá hicieron algo interesante. Vieron que esta aparente división no explicaba por completo los intereses en juego.\"\n\nSeñala el mapa de actores.\n\n\"En política, muchas veces el desafío no es identificar quién está de cada lado, sino comprender cómo se construyen y articulan sus posiciones.\"\n\nAl salir del aula escuchás a un grupo de estudiantes hablando en el pasillo. Están organizando una asamblea para discutir medidas frente a la actual situación de la Ley de Financiamiento Universitario.",
+  "texto": "La devolución de la profe no llega como una nota.\n\nPrimero marca una parte del trabajo con una lapicera.\n\n\"Acá hicieron algo interesante. Vieron que esta aparente división no explicaba por completo los intereses en juego.\"\n\nSeñala el mapa de actores.\n\n\"En política, muchas veces el desafío no es identificar quién está de cada lado, sino comprender cómo se construyen y articulan sus posiciones.\"\n\nAl salir del aula escuchás a un grupo de estudiantes hablando en el pasillo. Están organizando una asamblea para discutir medidas de cara a la actual situación de la Ley de Financiamiento Universitario.",
   "opciones": [
     {
       "texto": "Te acercás a escuchar qué medidas proponen y por qué.",
       "efectos": { "confianza": 1, "energia": -1 },
       "intereses": { "politica": 1, "social": 1 },
-      "banderaSet": ["interes_participacion", "participo_actividad_estudiantil", "actividad_resuelta"]
+        "banderaSet": [
+    "interes_participacion",
+    "participo_actividad_estudiantil",
+    "actividad_actores_pendiente"
+  ]
     },
     {
       "texto": "Seguís de largo.",
       "efectos": { "progreso": 1, "energia": 1 },
       "banderaSet": ["priorizo_estudio", "actividad_resuelta"]
+    }
+  ]
+},
+    {
+  "id": "politica_actividad_actores_cierre_01",
+  "carrera": "politica",
+  "orden": 30.1,
+  "omitirSiNoCumple": true,
+  "requiere": {
+    "banderas": [
+      "actividad_actores_pendiente"
+    ]
+  },
+  "texto": "—Podemos sumarnos a la movilización del miércoles —dice alguien.\n\n—También tendríamos que hacer una clase pública acá —responde otra persona.\n\nAparecen otras propuestas. Alguien pide que formulen las mociones para que se voten.\n\nCuando termina la reunión, la hoja queda sobre la mesa con las medidas y algunas tachaduras.\n\nTe quedás mirándola un segundo antes de volver a clase.",
+  "opciones": [
+    {
+      "texto": "Volver a clase.",
+      "efectos": {},
+      "banderaSet": [
+        "actividad_resuelta"
+      ]
     }
   ]
 },
@@ -156,7 +182,10 @@
       "texto": "Entrar y sumarte a la conversación.",
       "efectos": { "confianza": 1, "energia": -1 },
       "intereses": { "comunicacion": 1, "politica": 1 },
-      "banderaSet": ["interes_opinion_publica", "actividad_resuelta"]
+      "banderaSet": ["interes_opinion_publica", "actividad_resuelta"],
+      "resultado": {
+        "texto": "—¡Banquen! —decís, dejando la mochila al piso—. Nosotros tuvimos ESA MISMA discusión ayer.\n\nLos dos te miran.\n\nContás lo del dato que encontraron, el debate que se armó en el grupo cuando tu compañero dijo \"mejor lo dejamos afuera\". Terminás mostrándoles lo que armaron. Ellos te muestran su TP.\n\nEn un momento están los tres hablando al mismo tiempo, no se entiende nada y se ríen por eso. Se quedan sin argumentos casi a la vez.\n\nUno mira la hora.\n\n—Che, vamos a tomar una birra. ¿Venís?\n\nAgarrás la mochila y salís con ellos."
+      }
     },
     {
       "texto": "Seguir caminando. Ya tenés bastante con la cursada.",
@@ -312,7 +341,7 @@
     "variables": { "exploracion": { "min": 1 } },
     "banderas": ["primer_parcial_resuelto", "duda_carrera"]
   },
-  "texto": "Quizás hay otros caminos.\n\nVioleta, una compañera, te cuenta que tiene un amigo que estudia otra carrera en la UNR. Está participando de una actividad de extensión en un centro de salud público y te ofrece acompañarla.\n\nNo tenés que decidir nada todavía. Es simplemente una oportunidad para mirar qué hay del otro lado.",
+  "texto": "Quizás hay otros caminos.\n\nVioleta, una compañera, te cuenta que tiene un amigo que estudia Medicina en la UNR. Está participando de una actividad de extensión en un centro de salud público y te ofrece acompañarla.\n\nNo tenés que decidir nada todavía. Es simplemente una oportunidad para mirar qué hay del otro lado.",
   "opciones": [
     {
       "texto": "Sí, voy.",
@@ -375,54 +404,22 @@
     { "texto": "Seguir con la actividad.", "banderaSet": ["experiencia_salud_completada"] }
   ]
 },
-
 {
   "id": "politica_exploracion_decision_01",
   "carrera": "politica",
   "orden": 70.4,
   "omitirSiNoCumple": true,
   "requiere": { "banderas": ["experiencia_salud_completada"] },
-  "texto": "Cuando están volviendo, Violeta te pregunta:\n\n—¿Vos qué hubieras hecho? Con la señora, digo.\n\nPensás un segundo.\n\nNo sabés bien qué responder.",
-  "opciones": [
-    {
-      "texto": "Me quedé pensando en eso. No sé bien. Me gustaría volver a ver algo así.",
-      "efectos": { "exploracion": 1 },
-      "banderaSet": ["deriva_medicina"]
-    },
-    {
-      "texto": "Y... Hubiera tratado de resolverlo, pero no sé si me veo haciendo esto todos los días.",
-      "efectos": { "confianza": 1 },
-      "banderaSet": ["retoma_politica"]
+"texto": "Cuando están volviendo, se quedan un rato parados en una esquina, esperando que cambie un semáforo que no tiene ningún apuro.\n\nVioleta putea por lo bajo, como si eso fuera a acelerarlo.\n\n—Como todo, ¿no? —dice, sin mirarte—. En algún lado siempre hay un cartelito que dice 'en trámite'.\n\nTe reís. El semáforo cambia justo en ese momento.",
+"opciones": [
+  {
+    "texto": "Seguir caminando.",
+    "efectos": { "confianza": 1 },
+    "banderaSet": ["retoma_politica"]
     }
   ]
-},
-{
-    "id": "politica_bifurcacion_medicina_01",
-    "carrera": "politica",
-    "orden": 70.5,
-    "omitirSiNoCumple": true,
-    "requiere": {
-      "banderas": [
-        "deriva_medicina"
-      ]
-    },
-    "texto": "Pasaron varias semanas.\n\nSeguiste cursando, entregando trabajos, hablando con tus compañeros. Pero cada tanto volvías a pensar en Medicina.\n\nUna noche, mientras ordenabas apuntes, te pusiste a mirar las fechas de inscripción.\n\nLa inscripción todavía estaba abierta.",
-    "opciones": [
-      {
-        "texto": "Anotarte en Medicina.",
-        "cambiarCarrera": "medicina",
-        "banderaSet": [
-          "dejo_politica"
-        ]
-      },
-      {
-        "texto": "Quedarte en Ciencia Política.",
-        "banderaSet": [
-          "retoma_politica"
-        ]
-      }
-    ]
-  },
+}
+,
   {
     "id": "politica_pasantia_01",
     "carrera": "politica",
@@ -484,7 +481,7 @@
   "requiere": {
     "banderas": ["tiene_trabajo", "conocio_sector_publico"]
   },
-  "texto": "El primer día te explican algunas cosas, te muestran dónde sentarte y te presentan a la gente del área.\n\nRevisás pedidos, informes y situaciones que llegan desde distintos centros de salud.\n\nEse día te asignan una tarea bastante concreta: revisar algunos casos en los que una prestación de salud no llegó a resolverse como estaba previsto.\n\nEntre los casos aparece uno que te llama la atención.\n\nUna persona fue varias veces a un centro de salud para acceder a una medicación. La prestación estaba indicada y autorizada, pero algo en el circuito hizo que nunca llegara a resolverse.\n\nVolvés a leer el caso. La autorización está, tiene fecha, tiene número. Pero el sistema que debía avisarle al centro de salud nunca se actualizó.",
+  "texto": "El primer día te explican algunas cosas, te muestran dónde sentarte y te presentan a la gente del área.\n\nRevisás pedidos, informes y situaciones que llegan desde distintos centros de salud.\n\nEse día te asignan una tarea bastante concreta: revisar algunos casos en los que una prestación de salud no llegó a resolverse como estaba previsto.\n\nEntre los casos aparece uno que te llama la atención.\n\nUna persona fue varias veces a un centro de salud para acceder a una medicación. La prestación estaba indicada y autorizada, pero algo en el circuito hizo que nunca llegara a resolverse.",
   "opciones": [
     {
       "texto": "Revisar el caso con más atención.",
@@ -495,32 +492,58 @@
 },
 
 {
-  "id": "politica_pasantia_investigacion_01",
+  "id": "politica_pasantia_investigacion_actores_01",
   "carrera": "politica",
   "orden": 82,
   "omitirSiNoCumple": true,
   "requiere": {
-    "banderas": ["reviso_caso_medicacion"]
+    "banderas": ["reviso_caso_medicacion", "camino_actores"]
   },
   "texto": "—¿Pudiste fijarte qué pasó? —te dice la persona que trabaja con vos.",
   "opciones": [
     {
-      "texto": "Ver qué actores institucionales intervinieron en la demora.",
+      "texto": "Ver qué actores institucionales intervinieron desde el principio del caso hasta ahora.",
       "efectos": {},
-      "intereses": {
-        "politica": 1,
-        "social": 1
-      },
+      "intereses": { "politica": 1, "social": 1 },
       "banderaSet": ["camino_actores_pasantia"]
-    },
+    }
+  ]
+},
+
+{
+  "id": "politica_pasantia_investigacion_investigacion_01",
+  "carrera": "politica",
+  "orden": 82,
+  "omitirSiNoCumple": true,
+  "requiere": {
+    "banderas": ["reviso_caso_medicacion", "camino_investigacion"]
+  },
+  "texto": "—¿Pudiste fijarte qué pasó? —te dice la persona que trabaja con vos.",
+  "opciones": [
     {
-      "texto": "Reconstruir el circuito de la prestación y ver dónde se frena el acceso a la política pública.",
+      "texto": "Buscar si hay más casos parecidos y comparar qué pasó en cada uno antes de mirar este a fondo.",
       "efectos": {},
-      "intereses": {
-        "politica": 1,
-        "investigacion": 1
-      },
-      "banderaSet": ["camino_circuito_pasantia"]
+      "intereses": { "politica": 1, "investigacion": 1 },
+      "banderaSet": ["camino_investigacion_pasantia"]
+    }
+  ]
+},
+
+{
+  "id": "politica_pasantia_investigacion_datos_01",
+  "carrera": "politica",
+  "orden": 82,
+  "omitirSiNoCumple": true,
+  "requiere": {
+    "banderas": ["reviso_caso_medicacion", "camino_datos"]
+  },
+  "texto": "—¿Pudiste fijarte qué pasó? —te dice la persona que trabaja con vos.",
+  "opciones": [
+    {
+      "texto": "Reconstruir el circuito de la prestación: fechas, números, quién cargó qué.",
+      "efectos": {},
+      "intereses": { "politica": 1, "investigacion": 1 },
+      "banderaSet": ["camino_datos_pasantia"]
     }
   ]
 },
@@ -533,7 +556,25 @@
   "requiere": {
     "banderas": ["camino_actores_pasantia"]
   },
-  "texto": "Reconstruís quién tocó el caso en cada paso.\n\nNadie negó la prestación. El centro de salud la pidió. La obra social la autorizó. Pero quedó esperando una confirmación que ningún actor sintió que le tocaba resolver a él.\n\nNo hay una decisión que revertir. Hay una espera que nadie cerró.",
+  "texto": "Averiguas quién actúo en cada paso.\n\nNadie negó la prestación. El centro de salud la pidió y fue autorizada. Pero quedó esperando una confirmación. No hay una decisión que revertir. Hay una espera que nunca se cerró durante el trámite.",
+  "opciones": [
+    {
+      "texto": "Seguir revisando el caso.",
+      "efectos": {},
+      "banderaSet": ["pasantia_caso_resuelto"]
+    }
+  ]
+},
+
+{
+  "id": "politica_pasantia_investigacion_02",
+  "carrera": "politica",
+  "orden": 82.1,
+  "omitirSiNoCumple": true,
+  "requiere": {
+    "banderas": ["camino_investigacion_pasantia"]
+  },
+  "texto": "Hay casos parecidos — varios, en realidad — con el mismo patrón: una autorización que queda esperando una confirmación que nunca llega.\n\nNo es la excepción. Es, probablemente, la regla.",
   "opciones": [
     {
       "texto": "Seguir revisando el caso.",
@@ -549,9 +590,9 @@
   "orden": 82.1,
   "omitirSiNoCumple": true,
   "requiere": {
-    "banderas": ["camino_circuito_pasantia"]
+    "banderas": ["camino_datos_pasantia"]
   },
-  "texto": "Reconstruís el recorrido del trámite paso a paso.\n\nLa prestación fue autorizada hace semanas. Pero el sistema que debía notificar al centro de salud nunca se actualizó. La política \"funcionó\" en el papel y se perdió en la ejecución.\n\nNo hay una decisión que revertir. Hay un aviso que nunca llegó.",
+  "texto": "Repasás los registros del caso: fechas, números de autorización, la casilla que debía marcarse cuando el centro de salud confirmara la recepción, pero que nunca se completó.\n\nNo es una decisión que alguien tomó: es información que nadie volvió a chequear.\n\nLa prestación existe en el sistema. Pero para la persona que la necesitaba, nunca llegó.",
   "opciones": [
     {
       "texto": "Seguir revisando el caso.",
@@ -567,9 +608,28 @@
   "orden": 83,
   "omitirSiNoCumple": true,
   "requiere": {
-    "banderas": ["pasantia_caso_resuelto"]
+    "banderas": ["pasantia_caso_resuelto", "experiencia_salud_completada"]
   },
-  "texto": "Seguís el recorrido del trámite.\n\nEl programa está definido, la prestación está autorizada, el pedido fue realizado. Pero cada parte depende de otra para que finalmente llegue a quien la necesita. En el medio aparecen demoras, información que no se actualiza y áreas que tendrían que coordinarse entre sí y no lo hacen.\n\nPor primera vez entendés qué significa implementar una política pública: no alcanza con que algo esté autorizado. Alguien, en algún punto del circuito, tiene que sostenerlo hasta que llegue.",
+  "texto": "Seguís el recorrido del trámite.\n\nEl programa está definido, la prestación está autorizada, el pedido fue realizado. Pero cada parte depende de otra para que finalmente llegue a quien la necesita. En el medio aparecen demoras, información que no se actualiza y áreas que tendrían que coordinarse entre sí y no lo hacen.\n\nTe acordás del semáforo con Violeta.\n\nNo alcanza con que algo esté autorizado. Alguien, en algún punto del circuito, tiene que sostenerlo hasta que llegue.\n\nPor primera vez entendés qué significa implementar una política pública.",
+  "opciones": [
+    {
+      "texto": "Seguir.",
+      "efectos": {},
+      "banderaSet": ["pasantia_medicina_resuelta"]
+    }
+  ]
+},
+
+{
+  "id": "politica_pasantia_cierre_02",
+  "carrera": "politica",
+  "orden": 83,
+  "omitirSiNoCumple": true,
+  "requiere": {
+    "banderas": ["pasantia_caso_resuelto"],
+    "banderas_no": ["experiencia_salud_completada"]
+  },
+  "texto": "Seguís el recorrido del trámite.\n\nEl programa está definido, la prestación está autorizada, el pedido fue realizado. Pero cada parte depende de otra para que finalmente llegue a quien la necesita. En el medio aparecen demoras, información que no se actualiza y áreas que tendrían que coordinarse entre sí y no lo hacen.\n\nNo alcanza con que algo esté autorizado. Alguien, en algún punto del circuito, tiene que sostenerlo hasta que llegue.\n\nPor primera vez entendés qué significa implementar una política pública.",
   "opciones": [
     {
       "texto": "Seguir.",

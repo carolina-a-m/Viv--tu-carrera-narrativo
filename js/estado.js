@@ -47,6 +47,14 @@ function estadoInicial() {
 
     // Eventos ya vistos.
     eventosVistos: [],
+    
+    // Procedencia de cada bandera activa: indica si la "funcion"
+    // del evento que la seteó está habilitada para la IA.
+    procedenciaBanderas: {},
+
+    // Decisiones tomadas, con marca de seguridad heredada del
+    // evento de origen. Reemplaza a decisionesTexto.
+    decisiones: [],
 
     // Cantidad total de decisiones tomadas.
     turno: 0,
@@ -114,7 +122,32 @@ function obtenerGrupoDeBandera(estado, bandera) {
   return null;
 }
 
-function setearBanderas(estado, banderas = []) {
+// ------------------------------------------------------------
+// FRONTERA IA: FUNCIONES NARRATIVAS SEGURAS
+// ------------------------------------------------------------
+//
+// Lista blanca. Todo lo que no esté acá queda excluido por
+// defecto del contexto que recibe la IA, incluidos eventos
+// transversales nuevos aún no clasificados.
+//
+// Los eventos principales (no transversales) son seguros por
+// definición: son la trayectoria pública del juego.
+//
+const FUNCIONES_SEGURAS_IA = new Set([
+  // vacío por ahora. Agregar acá la "funcion" de un transversal
+  // SOLO si su contenido puede analizarse sin riesgo narrativo.
+]);
+
+function esFuncionSeguraParaIA(funcion, tipoEvento) {
+
+  if (tipoEvento !== 'transversal') {
+    return true;
+  }
+
+  return FUNCIONES_SEGURAS_IA.has(funcion);
+}
+
+function setearBanderas(estado, banderas = [], origen = null) {
   for (const bandera of banderas) {
 
     const grupo = obtenerGrupoDeBandera(estado, bandera);
@@ -123,11 +156,17 @@ function setearBanderas(estado, banderas = []) {
       for (const otra of grupo) {
         if (otra !== bandera) {
           delete estado.banderas[otra];
+          delete estado.procedenciaBanderas[otra];
         }
       }
     }
 
     estado.banderas[bandera] = true;
+
+    if (origen) {
+      estado.procedenciaBanderas[bandera] =
+        esFuncionSeguraParaIA(origen.funcion, origen.tipo);
+    }
   }
 }
 
@@ -146,6 +185,32 @@ function aplicarIntereses(estado, intereses = {}) {
   }
 }
 
+function registrarDecision(estado, texto, origen) {
+
+  if (!texto) return;
+
+  estado.decisiones.push({
+    texto,
+    segura: esFuncionSeguraParaIA(origen?.funcion, origen?.tipo)
+  });
+}
+
+
+function obtenerContextoSeguroIA(estado) {
+
+  const banderasSeguras =
+    Object.entries(estado.procedenciaBanderas)
+      .filter(([, segura]) => segura)
+      .map(([bandera]) => bandera)
+      .filter(bandera => estado.banderas[bandera]);
+
+  const decisionesSeguras =
+    (estado.decisiones || [])
+      .filter(decision => decision.segura)
+      .map(decision => decision.texto);
+
+  return { banderasSeguras, decisionesSeguras };
+}
 
 function marcarExploracion(estado, carreraId) {
   if (!carreraId) return;
@@ -278,5 +343,7 @@ export {
   registrarCarreraActiva,
   registrarEvento,
   registrarTransversalProcesado,
-  transversalYaProcesado
+  transversalYaProcesado,
+  registrarDecision,
+  obtenerContextoSeguroIA
 };

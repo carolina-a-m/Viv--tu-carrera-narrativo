@@ -346,7 +346,8 @@ function obtenerSiguienteOrden(
 
 function resolverResultadoAleatorio(
   estado,
-  config
+  config,
+  origen = null
 ) {
 
   if (!config) {
@@ -373,7 +374,8 @@ function resolverResultadoAleatorio(
 
   setearBanderas(
     estado,
-    [exito ? config.banderaExito : config.banderaFracaso]
+    [exito ? config.banderaExito : config.banderaFracaso],
+    origen
   );
 
   return exito;
@@ -1030,7 +1032,8 @@ function evaluarConsecuencia(
 
   setearBanderas(
     estado,
-    consecuencia.banderaSet || []
+    consecuencia.banderaSet || [],
+    { funcion: evento.funcion, tipo: evento.tipo }
   );
 
 
@@ -1084,12 +1087,18 @@ function evaluarResultadoOpcion(
 
 function elegirOpcionConsecuencia(
   estado,
-  opcion
+  opcion,
+  eventoOrigen = null
 ) {
 
   if (!opcion) {
     return { estado, resultadoOpcion: null, consecuencia: null };
   }
+
+  const origen =
+    eventoOrigen
+      ? { funcion: eventoOrigen.funcion, tipo: eventoOrigen.tipo }
+      : null;
 
   aplicarEfectos(
     estado,
@@ -1098,7 +1107,8 @@ function elegirOpcionConsecuencia(
 
   setearBanderas(
     estado,
-    opcion.banderaSet || []
+    opcion.banderaSet || [],
+    origen
   );
 
   const resultadoOpcion =
@@ -1109,7 +1119,7 @@ function elegirOpcionConsecuencia(
   const consecuencia =
     evaluarConsecuencia(
       estado,
-      opcion
+      eventoOrigen || opcion
     );
 
   return { estado, resultadoOpcion, consecuencia };
@@ -1136,10 +1146,10 @@ function elegirOpcion(
     opcion.efectos || {}
   );
 
-
-  setearBanderas(
+    setearBanderas(
     estado,
-    opcion.banderaSet || []
+    opcion.banderaSet || [],
+    { funcion: evento.funcion, tipo: evento.tipo }
   );
 
 
@@ -1173,11 +1183,13 @@ function elegirOpcion(
     );
 
   }
-if (opcion.resultadoAleatorio) {
+
+  if (opcion.resultadoAleatorio) {
 
     resolverResultadoAleatorio(
       estado,
-      opcion.resultadoAleatorio
+      opcion.resultadoAleatorio,
+      { funcion: evento.funcion, tipo: evento.tipo }
     );
 
   }
