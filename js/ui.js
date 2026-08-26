@@ -14,9 +14,26 @@ const HITOS = [
   { icono: ASSETS + 'icono-personas.svg' },
   { icono: ASSETS + 'icono-libro.svg' },
   { icono: ASSETS + 'icono-datos.svg' },
-  { icono: ASSETS + 'icono-globo.svg', opaco: true }
+  { icono: ASSETS + 'icono-maletin.svg', opaco: true }
 ];
 
+
+import { RANGOS_VARIABLES } from './config-variables.js';
+
+function crearArcoGauge(porcentaje, grosor = 6) {
+  const pct = Math.min(100, Math.max(0, porcentaje));
+  const angulo = 180 - (pct / 100) * 180;
+  const rad = (angulo * Math.PI) / 180;
+  const cx = 50, cy = 50, r = 45;
+  const x = cx + r * Math.cos(rad);
+  const y = cy - r * Math.sin(rad);
+  return `
+    <svg viewBox="0 0 100 55" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}" fill="none" stroke="#707070" stroke-width="${grosor}" stroke-linecap="round" />
+      ${pct > 0 ? `<path d="M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${x} ${y}" fill="none" stroke="var(--verde)" stroke-width="${grosor}" stroke-linecap="round" />` : ''}
+    </svg>
+  `;
+}
 
 function renderEvento(evento, onElegir, estado) {
   const contenedor = document.getElementById('juego');
@@ -127,8 +144,10 @@ function crearPanelIndicadores(resumen) {
 
   const promedio = document.createElement('div');
   promedio.className = 'decision-promedio';
-  promedio.innerHTML = `
-    <img src="${ASSETS}gauge-promedio.svg" alt="">
+  const rangoInteres = RANGOS_VARIABLES.interes_disciplina;
+  const porcentajeInteres = ((resumen.interes ?? rangoInteres.min) - rangoInteres.min) / (rangoInteres.max - rangoInteres.min) * 100;
+ promedio.innerHTML = `
+    <div class="decision-promedio-arco">${crearArcoGauge(porcentajeInteres, 4)}</div>
     <div class="decision-promedio-valor">
       <div class="decision-promedio-num">
         <strong>${(resumen.interes ?? 0).toFixed(1)}</strong>
@@ -149,12 +168,13 @@ function crearPanelIndicadores(resumen) {
 
   Object.keys(etiquetas).forEach((clave) => {
     const valor = variables[clave] ?? 0;
-    const gauge = valor >= 60 ? 'gauge-75.svg' : 'gauge-50.svg';
+    const rango = RANGOS_VARIABLES[clave] ?? { min: 0, max: 100 };
+    const porcentaje = ((valor - rango.min) / (rango.max - rango.min)) * 100;
     const item = document.createElement('div');
     item.className = 'decision-competencia';
     item.innerHTML = `
       <div class="decision-competencia-valor">
-        <img src="${ASSETS}${gauge}" alt="">
+        <div class="decision-competencia-arco">${crearArcoGauge(porcentaje)}</div>
         <span>${valor}</span>
       </div>
       <p class="decision-competencia-label">${etiquetas[clave]}</p>
@@ -162,8 +182,7 @@ function crearPanelIndicadores(resumen) {
     filaComp.appendChild(item);
   });
 
-
-    competencias.appendChild(filaComp);
+  competencias.appendChild(filaComp);
   filaStats.appendChild(competencias);
   datos.appendChild(filaStats);
 
@@ -200,14 +219,18 @@ function crearPanelIndicadores(resumen) {
   barraWrap.querySelector('.decision-barra-fondo').appendChild(barraProgreso);
   objetivos.appendChild(barraWrap);
 
+
   const hitos = document.createElement('div');
   hitos.className = 'decision-hitos';
-  HITOS.forEach(h => {
+  const totalHitos = HITOS.length;
+  HITOS.forEach((h, index) => {
+    const umbral = ((index + 1) / (totalHitos + 1)) * 100;
+    const activo = (resumen.progreso ?? 0) >= umbral;
     const hito = document.createElement('div');
-    hito.className = 'decision-hito' + (h.opaco ? ' opaco' : '');
+    hito.className = 'decision-hito' + (h.opaco ? ' opaco' : '') + (activo ? ' activo' : '');
     hito.innerHTML = `
       <div class="decision-hito-linea"></div>
-      <div class="decision-hito-icono"><img src="${h.icono}" alt=""></div>
+      <div class="decision-hito-icono" style="-webkit-mask-image:url('${h.icono}'); mask-image:url('${h.icono}');"></div>
     `;
     hitos.appendChild(hito);
   });
@@ -350,6 +373,16 @@ function renderResultadoOpcion(resultado, onContinuar) {
   contenedor.appendChild(boton);
 }
 
+function renderCargandoIntervencionIA() {
+  const contenedor = document.getElementById('juego');
+  if (!contenedor) return;
+  contenedor.innerHTML = '';
+
+  const parrafo = document.createElement('p');
+  parrafo.className = 'intervencion-ia-cargando';
+  parrafo.innerHTML = 'Preparando tu comentario personalizado con IA <span class="emoji-carga">🪄</span>';
+  contenedor.appendChild(parrafo);
+}
 
 function renderIntervencionIA(texto, onContinuar) {
   const contenedor = document.getElementById('juego');
@@ -637,5 +670,6 @@ export {
   renderInicio,
   renderFinDeEventos,
   renderIntervencionIA,
+  renderCargandoIntervencionIA,
   renderDebugEstado
 };

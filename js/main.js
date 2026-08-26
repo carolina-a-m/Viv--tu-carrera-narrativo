@@ -50,7 +50,8 @@ import {
   renderInicio,
   renderFinDeEventos,
   renderDebugEstado,
-  renderIntervencionIA
+  renderIntervencionIA,
+  renderCargandoIntervencionIA
 } from './ui.js';
 
 let estado;
@@ -649,6 +650,8 @@ if (
   ) {
 
     estado.banderas.intervencion_ia_vista = true;
+
+    renderCargandoIntervencionIA();
 
     pedirIntervencionIA(estado).then((texto) => {
 
