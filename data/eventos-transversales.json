@@ -4,13 +4,16 @@
   "tipo": "transversal",
   "ventana": [ "consecuencias"],
   "funcion": "acompanamiento_y_bienestar",
+  "contexto": "🌙 El mensaje de Gime",
   "requiere": {
     "variables": { "energia": { "max": 1 } }
   },
   "texto": "Hace más de una semana que no vas a la facu.\n\nSilenciaste el grupo hace unos días, sin pensarlo mucho.\n\nEstás en tu cuarto, de noche, con el celular en la mano.\n\nTe llega un mensaje de Gime:\n\n\"Che, ¿todo bien? ¿no estás yendo más a cursar?\"\n\n¿Qué le contestás?",
   "opciones": [
     {
+      "icono": "💬",
       "texto": "Contarle que la venís pasando mal en serio y que no tenés ganas de nada.",
+      "descripcion": "Abrirte de verdad con Gime, sin bajarle el tono a cómo la estás pasando.",
       "efectos": { "confianza": 1, "energia": 1 },
       "banderaSet": ["abrio_conversacion", "conocio_salud_mental"],
       "resultado": {
@@ -23,7 +26,9 @@
       }
     },
     {
+      "icono": "🙂",
       "texto": "\"Todo bien, un quilombo personal nomás.\"",
+      "descripcion": "Restarle importancia y cortar la conversación ahí, sin dar más detalles.",
       "efectos": { "energia": -1 },
       "banderaSet": ["minimizo", "no_abrio_con_gime"],
       "resultado": {
@@ -31,7 +36,9 @@
       }
     },
     {
+      "icono": "🔇",
       "texto": "No contestar.",
+      "descripcion": "Dejar el mensaje sin responder y quedarte con el celular en la mano.",
       "efectos": { "energia": -1, "confianza": -1 },
       "banderaSet": ["evito", "no_abrio_con_gime"]
     }
@@ -40,6 +47,7 @@
     "requiere": {
       "banderas": ["no_abrio_con_gime"]
     },
+    "contexto": "🏥 La sala de espera",
     "texto": "Estás en la sala de espera del Centro de Salud \"Dr. Arturo Illia\" en la Siberia, esperando que te llamen para el certificado que te piden en el área de Deportes de la facultad. Hace poco empezaste a entrenar para despejarte un poco y levantar el ánimo.\n\nMientras esperás, mirás alrededor.\n\nEn una pared hay información sobre las distintas formas de atención del centro. Entre ellas, encontrás una referencia al acompañamiento en salud mental.\n\nNo sabías que también podías consultar por eso ahí.\n\nTe quedás mirando el cartel un segundo más.\n\nDespués escuchás tu nombre. Te llaman para el certificado.\n\nSabés que podés volver si alguna vez lo necesitás.",
     "efectos": { "confianza": 1 },
     "banderaSet": ["conocio_salud_mental"]
@@ -55,17 +63,22 @@
     "tipo": "transversal",
     "ventana": ["mitad"],
     "funcion": "acompanamiento_economico",
+    "contexto": "🍽️ ¿Comemos algo?",
     "texto": "Son las dos de la tarde. Todavía te quedan varias horas de cursada y tenés la plata justa para volver a casa.\n\nMale te pregunta:\n\n—¿Comemos algo?\n\nSabés que si la gastás te tenés que volver caminando.\n\n¿Qué hacés?",
     "opciones": [
       {
+        "icono": "🙅",
         "texto": "Aguantar y decirle: \"No amiga, tranqui. No tengo hambre.\"",
+        "descripcion": "Guardarte la plata del viaje y bancarte el resto de la tarde sin comer.",
         "efectos": { "energia": -1 },
         "resultado": {
           "texto": "La tarde se hace larga y en la última clase te cuesta concentrarte. Llegás a tu casa y comés apenas entrás."
         }
       },
       {
+        "icono": "🤲",
         "texto": "Pedirle plata prestada.",
+        "descripcion": "Contarle a Male que andás justo de plata y pedirle que te preste para comer.",
         "efectos": { "confianza": 1, "energia": 1 },
         "banderaSet": ["conocio_comedor"],
         "resultado": {
@@ -82,11 +95,14 @@
       "requiere": {
         "banderas": ["conocio_comedor"]
       },
+      "contexto": "📱 El QR",
       "texto": "Durante las siguientes semanas seguís yendo al comedor cuando podés. Pero este mes perdés algunas horas de trabajo debido al cursado, y empezás a tener que ajustar otros gastos para llegar a fin de mes.\n\nUn día, mientras estás esperando tu menú, ves un QR cerca de la caja.\n\n¿Qué hacés?",
       "efectos": { "dinero": -1 },
       "opciones": [
         {
+          "icono": "📱",
           "texto": "Escanear el QR.",
+          "descripcion": "Escanear el código para ver qué es y de qué se trata.",
           "efectos": { "dinero": 1, "confianza": 1 },
           "banderaSet": ["conocio_beca_alimentos"],
           "resultado": {
@@ -98,11 +114,14 @@
             }
           },
           "consecuencia": {
+            "contexto": "🤝 Orientación Estudiantil",
             "texto": "Pasa el tiempo y la situación económica empieza a afectar tu cursada. Ya no se trata solo de ajustar gastos: necesitás tomar más horas de trabajo y empezás a faltar a algunas clases. Te das cuenta de que, si la situación sigue así, cada vez te va a costar más sostener la carrera.\n\nAlguien de Orientación Estudiantil te cuenta sobre la Beca de Asistencia Integral.\n\n¿Qué hacés?",
             "efectos": { "energia": -1 },
             "opciones": [
               {
+                "icono": "🔎",
                 "texto": "Averiguar si podés acceder a ese acompañamiento.",
+                "descripcion": "Preguntar en Orientación Estudiantil si cumplís los requisitos para esa beca.",
                 "efectos": { "confianza": 1, "dinero": 1 },
                 "banderaSet": ["averiguo_asistencia_integral"],
                 "resultado": {
@@ -114,7 +133,9 @@
                 }
               },
               {
+                "icono": "💪",
                 "texto": "Intentar seguir resolviéndolo por tu cuenta.",
+                "descripcion": "No pedir ayuda todavía e intentar bancar la situación económica solo/a.",
                 "efectos": { "energia": -1 },
                 "banderaSet": ["sostiene_problema_economico"]
               }
@@ -122,7 +143,9 @@
           }
         },
         {
+          "icono": "⏳",
           "texto": "Seguir esperando.",
+          "descripcion": "No prestarle atención al QR y quedarte esperando tu turno como siempre.",
           "efectos": { },
           "banderaSet": ["mantiene_solucion_comedor"]
         }
@@ -134,10 +157,13 @@
     "tipo": "transversal",
     "ventana": ["actividad"],
     "funcion": "acompanamiento_academico",
+    "contexto": "🎤 Salir del papel",
     "texto": "Pasaron algunos días. Tenés que presentar oralmente un trabajo en clase. Arrancás bien. Después te hacen una pregunta. Sabés la respuesta, pero no logras formularla.\n\nTe trabas.\n\nMirás tus apuntes.\n\nIntentás volver a explicar.\n\nCuando finalmente terminás, sentís que no salió tan mal. Pero tampoco salió como lo habías imaginado.\n\nAfuera del aula, te cruzás con Fede.\n\n—¿Cómo te fue?\n\n—No sé. Me había estudiado todo. Pero cuando tuve que explicarlo me quedé en blanco.\n\nFede se ríe.\n\n—A mí me pasaba lo mismo.\n\n—¿Y qué hiciste?\n\n—Y... la verdad que solo, releyendo, no me entra nada. Yo empecé a ir con un tutor de Codo a Codo. Me ayudó a encontrar otra forma de estudiar, a organizarme y a preparar mejor las exposiciones. Me obliga a no quedarme solamente leyendo. Si querés te paso los horarios.\n\n¿Qué hacés?", 
     "opciones": [
       {
+        "icono": "🤝",
         "texto": "Dale. Quiero probar.",
+        "descripcion": "Aceptar la propuesta de Fede y anotarte en Codo a Codo.",
         "efectos": { "confianza": 1, "energia": -1, "interes_disciplina": 1 },
         "banderaSet": ["flag_codo_a_codo"],
         "resultado": {
@@ -150,7 +176,9 @@
         }
       },
       {
+        "icono": "📖",
         "texto": "Nah, para la próxima cambio algunas cosas y estudio más horas.",
+        "descripcion": "Confiar en tu propio método y resolverlo metiéndole más horas de estudio.",
         "efectos": { "progreso": 1, "energia": -1 },
         "banderaSet": ["flag_metodo_propio"],
         "resultado": {
@@ -159,11 +187,14 @@
       }
     ],
     "consecuencia": {
+     "contexto": "🗓️ Demasiado para una semana",
      "texto": "Semanas después:\n\nLa estrategia nueva te sirvió.\n\nPero ahora aparece otro problema.\n\nTenés tres materias encima, dos trabajos prácticos y un parcial la semana siguiente. Abrís el calendario y no sabés por dónde empezar.\n\nEn la fotocopiadora escuchás a un compañero comentar:\n\n—Yo antes iba a las tutorías cuando no entendía una materia. Pero me di cuenta de que no era solamente que no entendía. No sabía cómo organizarme con todo.\n\n—¿Y qué hiciste?\n\n—Fui a Orientación Estudiantil.\n\nTe quedás pensando si tu problema también es ese.\n\n¿Qué hacés?", 
       "efectos": { "energia": -1 },
       "opciones": [
         {
+          "icono": "🧭",
           "texto": "Ir a Orientación Estudiantil.",
+          "descripcion": "Acercarte a Orientación Estudiantil para ver cómo organizarte mejor con todo.",
           "efectos": { "confianza": 1, "progreso": 1 },
           "banderaSet": ["flag_orientacion_estudiantil"],
           "resultado": {
@@ -175,7 +206,9 @@
           }
         },
         {
+          "icono": "🚶",
           "texto": "Seguir por tu cuenta.",
+          "descripcion": "No pedir ayuda todavía e intentar organizarte solo/a con lo que tenés.",
           "efectos": { "energia": -1 },
           "banderaSet": ["flag_autogestion_estudio"]
         }

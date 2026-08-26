@@ -4,22 +4,29 @@
   "carrera": "politica",
   "orden": 10,
   "permiteTransversal": false,
+  "contexto": "🗳️ Primera semana",
   "texto": "Es tu primera semana cursando Ciencia Política. En una actividad de Introducción a la Ciencia Política, la docente divide a la clase en grupos.\n\n\"Les voy a dar un caso real. Mañana tienen que presentar un análisis.\"\n\n{{CONFLICTO_RESUMEN}}\n\nEn tu grupo aparecen tres ideas distintas.",
   "opciones": [
     {
-      "texto": "Armar un mapa de los actores: quiénes intervienen, qué intereses tienen y qué capacidad tienen para imponer o negociar sus posiciones.",
+      "icono": "🧩",
+      "texto": "Mapear los actores",
+      "descripcion": "Armar un mapa de los actores: quiénes intervienen, qué intereses tienen y qué capacidad tienen para imponer o negociar sus posiciones.",
       "efectos": { "interes_disciplina": 1, "confianza": 1, "exploracion": 1 },
       "intereses": { "politica": 1, "social": 1 },
       "banderaSet": ["inicio_politica", "interes_participacion", "conocio_actores", "camino_actores", "inicio_resuelto"]
     },
     {
-      "texto": "Buscar antecedentes, decisiones y conflictos anteriores que puedan explicar la situación actual.",
+      "icono": "📚",
+      "texto": "Buscar antecedentes",
+      "descripcion": "Buscar antecedentes, decisiones y conflictos anteriores que puedan explicar la situación actual.",
       "efectos": { "interes_disciplina": 1 },
       "intereses": { "politica": 1, "investigacion": 1 },
       "banderaSet": ["inicio_politica", "interes_investigacion", "conocio_investigacion", "camino_investigacion", "inicio_resuelto"]
     },
     {
-      "texto": "Contrastar las distintas versiones con los datos disponibles: qué se afirma y qué evidencia lo sostiene.",
+      "icono": "📊",
+      "texto": "Contrastar con datos",
+      "descripcion": "Contrastar las distintas versiones con los datos disponibles: qué se afirma y qué evidencia lo sostiene.",
       "efectos": { "interes_disciplina": 1, "exploracion": 1 },
       "intereses": { "politica": 1, "comunicacion": 1 },
       "banderaSet": ["inicio_politica", "interes_opinion_publica", "conocio_datos", "camino_datos", "inicio_resuelto"]
@@ -31,22 +38,29 @@
   "carrera": "politica",
   "orden": 20,
   "requiere": { "banderas": ["camino_actores"] },
+  "contexto": "🧩 El mapa de actores",
   "texto": "Mientras armás el mapa de actores, descubrís algo que no esperabas: los dos sectores que parecían inicialmente enfrentados tienen un interés importante en común. Ahora vos y tu grupo tienen que decidir cómo representar esa contradicción.",
   "opciones": [
     {
-      "texto": "Reformular el mapa para mostrar dónde se enfrentan y dónde coinciden los intereses de los actores involucrados.",
+      "icono": "🔀",
+      "texto": "Reformular",
+      "descripcion": "Reformular el mapa para mostrar dónde se enfrentan y dónde coinciden los intereses de los actores involucrados.",
       "efectos": { "interes_disciplina": 1, "confianza": 1, "energia": -1, "progreso": 1 },
       "intereses": { "politica": 1, "social": 1 },
       "banderaSet": ["conocio_actores", "conflicto_resuelto"]
     },
     {
-      "texto": "Separar lo central de lo secundario: preguntarse si ese interés en común afecta realmente cómo se juega el conflicto.",
+      "icono": "⚖️",
+      "texto": "Separar",
+      "descripcion": "Separar lo central de lo secundario: preguntarse si ese interés en común afecta realmente cómo se juega el conflicto.",
       "efectos": { "progreso": 1, "energia": 1 },
       "intereses": { "organizacion": 1 },
       "banderaSet": ["conocio_actores", "conflicto_resuelto"]
     },
     {
-      "texto": "Jerarquizar en el mapa a los actores según su capacidad real para imponer su posición.",
+      "icono": "📶",
+      "texto": "Jerarquizar",
+      "descripcion": "Jerarquizar en el mapa a los actores según su capacidad real para imponer su posición.",
       "efectos": { "confianza": 1, "progreso": 1 },
       "intereses": { "politica": 1 },
       "banderaSet": ["conocio_actores", "conflicto_resuelto"]
@@ -59,16 +73,21 @@
   "carrera": "politica",
   "orden": 20,
   "requiere": { "banderas": ["camino_investigacion"] },
+  "contexto": "📚 Antecedentes",
   "texto": "Te quedás hasta tarde buscando antecedentes. Encontrás una situación que parece idéntica.\n\nCuando empezás a leer, aparece un problema: el contexto social y político cambió desde ese entonces, y la situación actual ocurre en condiciones completamente diferentes.\n\nTenés poco tiempo para decidir qué hacer con ese descubrimiento.",
   "opciones": [
     {
-      "texto": "Usar el caso anterior como punto de comparación.",
+      "icono": "🔗",
+      "texto": "Comparar",
+      "descripcion": "Usar el caso anterior como punto de comparación.",
       "efectos": { "energia": -1, "confianza": 1, "progreso": 1 },
       "intereses": { "investigacion": 1 },
       "banderaSet": ["interes_investigacion", "conflicto_resuelto"]
     },
     {
-      "texto": "Descartar la analogía y seguir buscando. Si el caso no encaja podría llevarte a una conclusión errada. Quizás todavía no encontraron el antecedente correcto.",
+      "icono": "✋",
+      "texto": "Descartar",
+      "descripcion": "Descartar la analogía y seguir buscando. Si el caso no encaja podría llevarte a una conclusión errada. Quizás todavía no encontraron el antecedente correcto.",
       "efectos": { "energia": -1, "exploracion": 1, "progreso": 1 },
       "intereses": { "investigacion": 1 },
       "banderaSet": ["interes_investigacion", "conflicto_resuelto"]
@@ -81,22 +100,29 @@
   "carrera": "politica",
   "orden": 20,
   "requiere": { "banderas": ["camino_datos"] },
+  "contexto": "📊 El dato incómodo",
   "texto": "Encontrás un dato que contradice una de las afirmaciones más repetidas sobre el conflicto.\n\nLo compartís en el grupo.\n\nSilencio.\n\n\"Por ahí conviene dejarlo afuera para no complicarnos.\", dice tu compañero.\n\nOtra integrante del grupo responde:\n\"Capaz nos sirve para replantear el análisis.\"\n\nLa diferencia no es menor: según cómo interpreten ese dato, la conclusión del trabajo cambia.",
   "opciones": [
     {
-      "texto": "Defender el dato: revisar qué evidencia hay detrás y sostenerlo aunque contradiga el relato más difundido.",
+      "icono": "🛡️",
+      "texto": "Defenderlo",
+      "descripcion": "Defender el dato: revisar qué evidencia hay detrás y sostenerlo aunque contradiga el relato más difundido.",
       "efectos": { "confianza": 1, "progreso": 1 },
       "intereses": { "comunicacion": 1, "politica": 1 },
       "banderaSet": ["conflicto_resuelto"]
     },
     {
-      "texto": "Investigar quién produjo ese dato, cómo se obtuvo y qué podría estar dejando afuera.",
+      "icono": "🔎",
+      "texto": "Investigarlo",
+      "descripcion": "Investigar quién produjo ese dato, cómo se obtuvo y qué podría estar dejando afuera.",
       "efectos": { "exploracion": 1, "progreso": 1 },
       "intereses": { "investigacion": 1 },
       "banderaSet": ["conflicto_resuelto", "cuestiono_fuente_datos"]
     },
     {
-      "texto": "Poner las dos versiones en tensión y hacer de esa contradicción una parte central del análisis.",
+      "icono": "⚡",
+      "texto": "Tensionarlo",
+      "descripcion": "Poner las dos versiones en tensión y hacer de esa contradicción una parte central del análisis.",
       "efectos": { "exploracion": 1, "progreso": 1 },
       "intereses": { "politica": 1, "investigacion": 1 },
       "banderaSet": ["conflicto_resuelto"]
@@ -110,10 +136,13 @@
   "orden": 30,
   "permiteTransversal": false,
   "requiere": { "banderas": ["conflicto_resuelto", "camino_actores"] },
+  "contexto": "📌 La devolución",
   "texto": "La devolución de la profe no llega como una nota.\n\nPrimero marca una parte del trabajo con una lapicera.\n\n\"Acá hicieron algo interesante. Vieron que esta aparente división no explicaba por completo los intereses en juego.\"\n\nSeñala el mapa de actores.\n\n\"En política, muchas veces el desafío no es identificar quién está de cada lado, sino comprender cómo se construyen y articulan sus posiciones.\"\n\nAl salir del aula escuchás a un grupo de estudiantes hablando en el pasillo. Están organizando una asamblea para discutir medidas de cara a la actual situación de la Ley de Financiamiento Universitario.",
   "opciones": [
     {
-      "texto": "Te acercás a escuchar qué medidas proponen y por qué.",
+      "icono": "👂",
+      "texto": "Acercarte a escuchar",
+      "descripcion": "Te acercás a escuchar qué medidas proponen y por qué.",
       "efectos": { "confianza": 1, "energia": -1 },
       "intereses": { "politica": 1, "social": 1 },
         "banderaSet": [
@@ -123,7 +152,9 @@
   ]
     },
     {
-      "texto": "Seguís de largo.",
+      "icono": "🚶",
+      "texto": "Seguir de largo",
+      "descripcion": "Esta vez preferís irte.",
       "efectos": { "progreso": 1, "energia": 1 },
       "banderaSet": ["priorizo_estudio", "actividad_resuelta"]
     }
@@ -139,10 +170,13 @@
       "actividad_actores_pendiente"
     ]
   },
+  "contexto": "📣 La asamblea",
   "texto": "—Podemos sumarnos a la movilización del miércoles —dice alguien.\n\n—También tendríamos que hacer una clase pública acá —responde otra persona.\n\nAparecen otras propuestas. Alguien pide que formulen las mociones para que se voten.\n\nCuando termina la reunión, la hoja queda sobre la mesa con las medidas y algunas tachaduras.\n\nTe quedás mirándola un segundo antes de volver a clase.",
   "opciones": [
     {
-      "texto": "Volver a clase.",
+      "icono": "🚪",
+      "texto": "Volver a clase",
+      "descripcion": "Te  toca seguir cursando.",
       "efectos": {},
       "banderaSet": [
         "actividad_resuelta"
@@ -156,41 +190,68 @@
   "carrera": "politica",
   "orden": 30,
   "requiere": { "banderas": ["conflicto_resuelto", "camino_investigacion"] },
+  "contexto": "📌 La devolución",
   "texto": "La profe mira el trabajo y vuelve varias veces sobre la misma parte.\n\n\"Acá podrían haberse quedado con el primer antecedente, pero siguieron buscando.\"\n\nTe devuelve la hoja.\n\n\"Una buena explicación política no se limita a un caso particular. También requiere ponerlo en relación con otros similares para reconocer qué procesos y decisiones se ponen en juego y qué nos permiten comprender en conjunto.\"\n\nAl salir del aula ves un cartel pegado en una pared:\n\nProyecto de investigación\n\"Paridad de papel: cumplimiento y resistencias a la ley de paridad de género en los concejos deliberantes de Santa Fe (2023-2026)\"\nConvocatoria a estudiantes.\n\nHay un mail abajo.",
   "opciones": [
     {
-      "texto": "Anotar el contacto.",
+      "icono": "✏️",
+      "texto": "Anotar el contacto",
+      "descripcion": "Anotar el contacto.",
       "efectos": {},
       "intereses": { "investigacion": 1, "politica": 1 },
       "banderaSet": ["interes_investigacion", "conocio_investigacion", "actividad_resuelta"]
     },
     {
-      "texto": "Seguir de largo. Preferís ver primero cómo te va con las demás materias.",
+      "icono": "🚶",
+      "texto": "Seguir de largo",
+      "descripcion": "Preferís ver primero cómo te va con las demás materias.",
       "efectos": { "progreso": 1, "energia": 1 },
       "banderaSet": ["priorizo_estudio", "actividad_resuelta"]
     }
   ]
 },
-  {
-  "id": "politica_actividad_datos_01",
+  {"id": "politica_actividad_datos_01",
   "carrera": "politica",
   "orden": 30,
+  "permiteTransversal": false,
   "requiere": { "banderas": ["conflicto_resuelto", "camino_datos"] },
+  "contexto": "📌 La devolución",
   "texto": "La docente lee la última parte del informe.\n\n\"Lo más valioso no es que hayan encontrado un dato, sino que se hayan detenido a preguntarse qué significa, cómo fue producido, qué permite o no afirmar y cómo se relaciona con otras posibles interpretaciones. En política, contar con información es un punto de partida. Explicar supone interpretarla, ponerla en contexto y reconocer sus alcances y límites.\"\n\nAl salir, escuchás una discusión en un aula cercana. Dos compañeros hablan sobre el análisis que también tuvieron que armar para esta materia.\n\nUno dice:\n\"La información objetiva es que...\"\n\nEl otro lo interrumpe.\n\"No. La información nunca es objetiva, está condicionada por la interpretación.\"\n\nLa puerta queda abierta.",
   "opciones": [
-    {
-      "texto": "Entrar y sumarte a la conversación.",
+      {
+      "icono": "💬",
+      "texto": "Sumarte a la conversación",
+      "descripcion": "Entrar y sumarte a la conversación.",
       "efectos": { "confianza": 1, "energia": -1 },
       "intereses": { "comunicacion": 1, "politica": 1 },
-      "banderaSet": ["interes_opinion_publica", "actividad_resuelta"],
-      "resultado": {
-        "texto": "—¡Banquen! —decís, dejando la mochila al piso—. Nosotros tuvimos ESA MISMA discusión ayer.\n\nLos dos te miran.\n\nContás lo del dato que encontraron, el debate que se armó en el grupo cuando tu compañero dijo \"mejor lo dejamos afuera\". Terminás mostrándoles lo que armaron. Ellos te muestran su TP.\n\nEn un momento están los tres hablando al mismo tiempo, no se entiende nada y se ríen por eso. Se quedan sin argumentos casi a la vez.\n\nUno mira la hora.\n\n—Che, vamos a tomar una birra. ¿Venís?\n\nAgarrás la mochila y salís con ellos."
-      }
+      "banderaSet": ["interes_opinion_publica", "actividad_datos_pendiente"]
     },
     {
-      "texto": "Seguir caminando. Ya tenés bastante con la cursada.",
+      "icono": "🚶",
+      "texto": "Seguir caminando",
+      "descripcion": "Ya tenés bastante con la cursada.",
       "efectos": { "progreso": 1, "energia": 1 },
       "banderaSet": ["priorizo_estudio", "actividad_resuelta"]
+    }
+  ]
+},
+{
+  "id": "politica_actividad_datos_cierre_01",
+  "carrera": "politica",
+  "orden": 30.2,
+  "omitirSiNoCumple": true,
+  "requiere": {
+    "banderas": ["actividad_datos_pendiente"]
+  },
+  "contexto": "🍻 La birra",
+  "texto": "—¡Banquen! —decís, dejando la mochila al piso—. Nosotros tuvimos ESA MISMA discusión ayer.\n\nLos dos te miran.\n\nContás lo del dato que encontraron, el debate que se armó en el grupo cuando tu compañero dijo \"mejor lo dejamos afuera\". Terminás mostrándoles lo que armaron. Ellos te muestran su TP.\n\nEn un momento están los tres hablando al mismo tiempo, no se entiende nada y se ríen por eso. Se quedan sin argumentos casi a la vez.\n\nUno mira la hora.\n\n—Che, vamos a tomar una birra. ¿Venís?\n\n",
+  "opciones": [
+    {
+      "icono": "🚪",
+      "texto": "Ir",
+      "descripcion": "Agarrás la mochila y salís con ellos.",
+      "efectos": {},
+      "banderaSet": ["actividad_resuelta"]
     }
   ]
 },
@@ -203,10 +264,13 @@
       "actividad_resuelta"
     ]
   },
+  "contexto": "📝 El primer parcial",
   "texto": "Llegó el momento del primer parcial.\n\nEntrás al aula y mirás las preguntas. Algunas te resultan familiares; otras te obligan a pensar más de lo que esperabas.\n\nCuando terminás, entregás la hoja. Ahora solo queda esperar la nota.",
   "opciones": [
     {
-      "texto": "Esperar el resultado.",
+      "icono": "⏳",
+      "texto": "Esperar el resultado",
+      "descripcion": "Esperar el resultado.",
       "efectos": {},
       "banderaSet": [
         "primer_parcial_realizado"
@@ -228,15 +292,20 @@
   "requiere": {
     "banderas": ["primer_parcial_realizado", "aprobo_primer_parcial"]
     },
+  "contexto": "✅ Las notas",
   "texto": "Publican las notas.\n\nTe fue bien. No fue fácil, pero sentís que empezás a entender cómo funciona la carrera.\n\nSalís del aula bastante conforme.",
   "opciones": [
     {
-      "texto": "Aprovechar el envión y empezar a buscar alguna actividad nueva.",
+      "icono": "🚀",
+      "texto": "Buscar algo nuevo",
+      "descripcion": "Aprovechar el envión y empezar a buscar alguna actividad nueva.",
       "efectos": { "exploracion": 1 },
       "banderaSet": ["primer_parcial_resuelto", "aprobo_primer_parcial"]
     },
     {
-      "texto": "Mantener el ritmo y seguir priorizando las materias.",
+      "icono": "📖",
+      "texto": "Mantener el ritmo",
+      "descripcion": "Mantener el ritmo y seguir priorizando las materias.",
       "efectos": { "progreso": 1 },
       "banderaSet": ["priorizo_estudio", "primer_parcial_resuelto", "aprobo_primer_parcial"]
     }
@@ -252,10 +321,13 @@
         "primer_parcial_realizado",
         "desaprobo_primer_parcial"
       ]  },
+    "contexto": "😬 Las notas",
     "texto": "Publican las notas.\n\nMirás la tuya una segunda vez: 3.\n\nNo esperabas que te fuera tan mal.\n\nTus compañeros ya están hablando del recuperatorio.",
     "opciones": [
       {
-        "texto": "Pedir ayuda y armar un grupo de estudio.",
+        "icono": "🤝",
+        "texto": "Armar grupo de estudio",
+        "descripcion": "Pedir ayuda y armar un grupo de estudio.",
         "efectos": {
           "confianza": 1
         }, 
@@ -266,7 +338,9 @@
         ]
       },
       {
-        "texto": "Cambiar tu forma de estudiar y volver a intentarlo.",
+        "icono": "🔁",
+        "texto": "Cambiar de método",
+        "descripcion": "Cambiar tu forma de estudiar y volver a intentarlo.",
         "efectos": {
           "progreso": 1,
           "confianza": 1
@@ -277,7 +351,9 @@
         ]
       },
       {
-        "texto": "Empezar a preguntarte si la carrera realmente era como imaginabas.",
+        "icono": "❓",
+        "texto": "Dudar de la carrera",
+        "descripcion": "Empezar a preguntarte si la carrera realmente era como imaginabas.",
         "efectos": {
           "exploracion": 1
         },
@@ -297,11 +373,12 @@
   "requiere": {
     "banderas": ["primer_parcial_resuelto", "desaprobo_primer_parcial", "tiene_grupo_estudio"]
   },
+  "contexto": "🔄 A mitad de camino",
   "texto": "Ya pasaron varios meses desde que empezaste.\n\nTodavía te acordás del 3. No fue solo una nota: fue la primera vez que sentiste que algo no estaba funcionando como pensabas.\n\nSeguiste juntándote con el grupo de estudio.\n\nAhora tenés una experiencia concreta de la carrera, no solo una idea. También ves que varios compañeros empezaron a dejarla.",
   "opciones": [
-    { "texto": "No era exactamente lo que imaginaba, pero cada vez encuentro más cosas que me interesan.", "efectos": { "confianza": 1, "interes_disciplina": 1 }, "banderaSet": ["retoma_politica"] },
-    { "texto": "Hay cosas que me gustan, pero otras no tienen nada que ver con lo que esperaba.", "efectos": { "exploracion": 1 }, "intereses": { "politica": 1 }, "banderaSet": ["duda_carrera"] },
-    { "texto": "Quiero conocer qué otras cosas puedo hacer antes de decidir.", "efectos": { "exploracion": 2 }, "banderaSet": ["duda_carrera"] }
+    { "icono": "💚", "texto": "Cada vez me interesa más", "descripcion": "No era exactamente lo que imaginaba, pero cada vez encuentro más cosas que me interesan.", "efectos": { "confianza": 1, "interes_disciplina": 1 }, "banderaSet": ["retoma_politica"] },
+    { "icono": "🤔", "texto": "Hay cosas que no esperaba", "descripcion": "Hay cosas que me gustan, pero otras no tienen nada que ver con lo que esperaba.", "efectos": { "exploracion": 1 }, "intereses": { "politica": 1 }, "banderaSet": ["duda_carrera"] },
+    { "icono": "🧭", "texto": "Quiero explorar otras cosas", "descripcion": "Quiero conocer qué otras cosas puedo hacer antes de decidir.", "efectos": { "exploracion": 2 }, "banderaSet": ["duda_carrera"] }
   ]
 },
 {
@@ -311,11 +388,12 @@
   "requiere": {
     "banderas": ["primer_parcial_resuelto", "desaprobo_primer_parcial"]
   },
+  "contexto": "🔄 A mitad de camino",
   "texto": "Ya pasaron varios meses desde que empezaste.\n\nTodavía te acordás del 3. No fue solo una nota: fue la primera vez que sentiste que algo no estaba funcionando como pensabas.\n\nSeguiste con la cursada.\n\nAhora tenés una experiencia concreta de la carrera, no solo una idea. También ves que varios compañeros empezaron a dejarla.",
   "opciones": [
-    { "texto": "No era exactamente lo que imaginaba, pero cada vez encuentro más cosas que me interesan.", "efectos": { "confianza": 1, "interes_disciplina": 1 }, "banderaSet": ["retoma_politica"] },
-    { "texto": "Hay cosas que me gustan, pero otras no tienen nada que ver con lo que esperaba.", "efectos": { "exploracion": 1 }, "intereses": { "politica": 1 }, "banderaSet": ["duda_carrera"] },
-    { "texto": "Quiero conocer qué otras cosas puedo hacer antes de decidir.", "efectos": { "exploracion": 2 }, "banderaSet": ["duda_carrera"] }
+    { "icono": "💚", "texto": "Cada vez me interesa más", "descripcion": "No era exactamente lo que imaginaba, pero cada vez encuentro más cosas que me interesan.", "efectos": { "confianza": 1, "interes_disciplina": 1 }, "banderaSet": ["retoma_politica"] },
+    { "icono": "🤔", "texto": "Hay cosas que no esperaba", "descripcion": "Hay cosas que me gustan, pero otras no tienen nada que ver con lo que esperaba.", "efectos": { "exploracion": 1 }, "intereses": { "politica": 1 }, "banderaSet": ["duda_carrera"] },
+    { "icono": "🧭", "texto": "Quiero explorar otras cosas", "descripcion": "Quiero conocer qué otras cosas puedo hacer antes de decidir.", "efectos": { "exploracion": 2 }, "banderaSet": ["duda_carrera"] }
   ]
 },
 {
@@ -325,11 +403,12 @@
   "requiere": {
     "banderas": ["primer_parcial_resuelto", "aprobo_primer_parcial"]
   },
+  "contexto": "🔄 A mitad de camino",
   "texto": "Ya pasaron varios meses desde que empezaste.\n\nCuando te anotaste en Ciencia Política tenías una idea de cómo iba a ser. Ahora tenés una experiencia concreta. También ves que varios compañeros empezaron a dejar la carrera.",
   "opciones": [
-    { "texto": "No era exactamente lo que imaginaba, pero cada vez encuentro más cosas que me interesan.", "efectos": { "confianza": 1, "interes_disciplina": 1 }, "banderaSet": ["retoma_politica"] },
-    { "texto": "Hay cosas que me gustan, pero otras no tienen nada que ver con lo que esperaba.", "efectos": { "exploracion": 1 }, "intereses": { "politica": 1 }, "banderaSet": ["duda_carrera"] },
-    { "texto": "Quiero conocer qué otras cosas puedo hacer antes de decidir.", "efectos": { "exploracion": 2 }, "banderaSet": ["duda_carrera"] }
+    { "icono": "💚", "texto": "Cada vez me interesa más", "descripcion": "No era exactamente lo que imaginaba, pero cada vez encuentro más cosas que me interesan.", "efectos": { "confianza": 1, "interes_disciplina": 1 }, "banderaSet": ["retoma_politica"] },
+    { "icono": "🤔", "texto": "Hay cosas que no esperaba", "descripcion": "Hay cosas que me gustan, pero otras no tienen nada que ver con lo que esperaba.", "efectos": { "exploracion": 1 }, "intereses": { "politica": 1 }, "banderaSet": ["duda_carrera"] },
+    { "icono": "🧭", "texto": "Quiero explorar otras cosas", "descripcion": "Quiero conocer qué otras cosas puedo hacer antes de decidir.", "efectos": { "exploracion": 2 }, "banderaSet": ["duda_carrera"] }
   ]
 },
 {
@@ -341,15 +420,20 @@
     "variables": { "exploracion": { "min": 1 } },
     "banderas": ["primer_parcial_resuelto", "duda_carrera"]
   },
+  "contexto": "🔍 Otro camino posible",
   "texto": "Quizás hay otros caminos.\n\nVioleta, una compañera, te cuenta que tiene un amigo que estudia Medicina en la UNR. Está participando de una actividad de extensión en un centro de salud público y te ofrece acompañarla.\n\nNo tenés que decidir nada todavía. Es simplemente una oportunidad para mirar qué hay del otro lado.",
   "opciones": [
     {
-      "texto": "Sí, voy.",
+      "icono": "✅",
+      "texto": "Sí, voy",
+      "descripcion": "Sí, voy.",
       "efectos": { "exploracion": 1 },
       "banderaSet": ["exploracion_salud_iniciada"]
     },
     {
-      "texto": "Mejor otro día.",
+      "icono": "🚫",
+      "texto": "Mejor otro día",
+      "descripcion": "Mejor otro día.",
       "efectos": { "confianza": 1 },
       "banderaSet": ["exploracion_salud_rechazada"]
     }
@@ -361,20 +445,27 @@
   "orden": 70.1,
   "omitirSiNoCumple": true,
   "requiere": { "banderas": ["exploracion_salud_iniciada"] },
+  "contexto": "🏥 En el centro de salud",
   "texto": "Llegás al centro de salud con Violeta. Mientras ella habla con otros estudiantes, vos te quedás cerca del mostrador.\n\nUna mujer llega con una receta.\n\n—Vengo a retirar esto.\n\nLa persona que la atiende revisa la pantalla.\n\n—Todavía no me figura.\n\n—Pero el mes pasado me lo dieron.\n\nVuelve a revisar. Antes de que la mujer se ponga más nerviosa, alguien del equipo se acerca:\n\n—Dejame ver. A veces el sistema tarda en actualizar, pero probemos otra cosa.\n\nLa mujer se relaja un poco. Vos seguís mirando.",
   "opciones": [
     {
-      "texto": "Te acercás para preguntar qué está fallando en el sistema.",
+      "icono": "🖥️",
+      "texto": "Preguntar por el sistema",
+      "descripcion": "Te acercás para preguntar qué está fallando en el sistema.",
       "intereses": { "tecnico": 1 },
       "banderaSet": ["presencio_problema_salud"]
     },
     {
-      "texto": "Le preguntás a la mujer cómo está, más allá del trámite.",
+      "icono": "💛",
+      "texto": "Preguntar cómo está ella",
+      "descripcion": "Le preguntás a la mujer cómo está, más allá del trámite.",
       "intereses": { "social": 1 },
       "banderaSet": ["presencio_problema_salud"]
     },
     {
-      "texto": "Te quedás viendo cómo el equipo trata de resolverlo.",
+      "icono": "👀",
+      "texto": "Observar cómo lo resuelven",
+      "descripcion": "Te quedás viendo cómo el equipo trata de resolverlo.",
       "intereses": { "organizacion": 1 },
       "banderaSet": ["presencio_problema_salud"]
     }
@@ -387,9 +478,10 @@
   "orden": 70.2,
   "omitirSiNoCumple": true,
   "requiere": { "banderas": ["presencio_problema_salud"] },
+  "contexto": "⏳ La espera",
   "texto": "Violeta vuelve. Están revisando otro registro y haciendo una llamada.\n\nPensás que, si nadie insiste, la mujer se termina yendo sin nada.",
   "opciones": [
-    { "texto": "¿No alcanza con la receta?", "banderaSet": ["entendio_problema_salud"] }
+    { "icono": "❓", "texto": "¿No alcanza con la receta?", "descripcion": "¿No alcanza con la receta?", "banderaSet": ["entendio_problema_salud"] }
   ]
 },
 
@@ -399,9 +491,10 @@
   "orden": 70.3,
   "omitirSiNoCumple": true,
   "requiere": { "banderas": ["entendio_problema_salud"] },
+  "contexto": "🤝 La resolución",
   "texto": "—Hay que verificar la autorización.\n\nDespués de unos minutos encuentran cómo resolverlo. Antes de que la mujer se vaya, la persona del equipo le explica qué hacer la próxima vez y a quién consultar si le vuelve a pasar.\n\nLa mujer agradece y se va. La actividad continúa.\n\nMás tarde, Violeta comenta, como al pasar:\n\n—Pensé que iba a ser más fácil. Hay un montón de cosas que no ves hasta que estás acá.",
   "opciones": [
-    { "texto": "Seguir con la actividad.", "banderaSet": ["experiencia_salud_completada"] }
+    { "icono": "➡️", "texto": "Seguir con la actividad", "descripcion": "Seguir con la actividad.", "banderaSet": ["experiencia_salud_completada"] }
   ]
 },
 {
@@ -410,10 +503,13 @@
   "orden": 70.4,
   "omitirSiNoCumple": true,
   "requiere": { "banderas": ["experiencia_salud_completada"] },
+"contexto": "🚦 El semáforo",
 "texto": "Cuando están volviendo, se quedan un rato parados en una esquina, esperando que cambie un semáforo que no tiene ningún apuro.\n\nVioleta putea por lo bajo, como si eso fuera a acelerarlo.\n\n—Como todo, ¿no? —dice, sin mirarte—. En algún lado siempre hay un cartelito que dice 'en trámite'.\n\nTe reís. El semáforo cambia justo en ese momento.",
 "opciones": [
   {
-    "texto": "Seguir caminando.",
+    "icono": "🚶",
+    "texto": "Seguir caminando",
+    "descripcion": "Seguir caminando.",
     "efectos": { "confianza": 1 },
     "banderaSet": ["retoma_politica"]
     }
@@ -429,10 +525,13 @@
         "primer_parcial_resuelto"
       ]
     },
+    "contexto": "💼 La pasantía",
     "texto": "Pasaron algunos años desde tu primer día de cursado.\n\nA medida que fuiste avanzando en la carrera empezaron a abrirse algunas puertas.\n\nTenés la oportunidad de inscribirte en una pasantía. Te va a demandar tiempo extra, pero te permite conocer un ámbito laboral y sumar un ingreso.",
     "opciones": [
       {
-        "texto": "Quiero hacer la pasantía en el Ministerio de Salud de la Provincia.",
+        "icono": "🏛️",
+        "texto": "Ministerio de Salud",
+        "descripcion": "Quiero hacer la pasantía en el Ministerio de Salud de la Provincia.",
         "efectos": {
           "dinero": 1,
           "energia": -2
@@ -447,7 +546,9 @@
         ]
       },
       {
-        "texto": "Quiero hacer la pasantía en una consultora de opinión pública.",
+        "icono": "📈",
+        "texto": "Consultora de opinión pública",
+        "descripcion": "Quiero hacer la pasantía en una consultora de opinión pública.",
         "efectos": {
           "dinero": 1,
           "energia": -2
@@ -462,7 +563,9 @@
         ]
       },
       {
-        "texto": "Prefiero seguir enfocándome en la carrera y no sumar más responsabilidades.",
+        "icono": "📚",
+        "texto": "Priorizar la carrera",
+        "descripcion": "Prefiero seguir enfocándome en la carrera y no sumar más responsabilidades.",
         "efectos": {
           "progreso": 1,
           "energia": 1
@@ -481,10 +584,13 @@
   "requiere": {
     "banderas": ["tiene_trabajo", "conocio_sector_publico"]
   },
+  "contexto": "🗂️ El primer caso",
   "texto": "El primer día te explican algunas cosas, te muestran dónde sentarte y te presentan a la gente del área.\n\nRevisás pedidos, informes y situaciones que llegan desde distintos centros de salud.\n\nEse día te asignan una tarea bastante concreta: revisar algunos casos en los que una prestación de salud no llegó a resolverse como estaba previsto.\n\nEntre los casos aparece uno que te llama la atención.\n\nUna persona fue varias veces a un centro de salud para acceder a una medicación. La prestación estaba indicada y autorizada, pero algo en el circuito hizo que nunca llegara a resolverse.",
   "opciones": [
     {
-      "texto": "Revisar el caso con más atención.",
+      "icono": "🔍",
+      "texto": "Revisar el caso",
+      "descripcion": "Revisar el caso con más atención.",
       "efectos": {},
       "banderaSet": ["reviso_caso_medicacion"]
     }
@@ -499,10 +605,13 @@
   "requiere": {
     "banderas": ["reviso_caso_medicacion", "camino_actores"]
   },
+  "contexto": "🧩 ¿Qué pasó?",
   "texto": "—¿Pudiste fijarte qué pasó? —te dice la persona que trabaja con vos.",
   "opciones": [
     {
-      "texto": "Ver qué actores institucionales intervinieron desde el principio del caso hasta ahora.",
+      "icono": "🧩",
+      "texto": "Ver los actores institucionales",
+      "descripcion": "Ver qué actores institucionales intervinieron desde el principio del caso hasta ahora.",
       "efectos": {},
       "intereses": { "politica": 1, "social": 1 },
       "banderaSet": ["camino_actores_pasantia"]
@@ -518,10 +627,13 @@
   "requiere": {
     "banderas": ["reviso_caso_medicacion", "camino_investigacion"]
   },
+  "contexto": "📚 ¿Qué pasó?",
   "texto": "—¿Pudiste fijarte qué pasó? —te dice la persona que trabaja con vos.",
   "opciones": [
     {
-      "texto": "Buscar si hay más casos parecidos y comparar qué pasó en cada uno antes de mirar este a fondo.",
+      "icono": "📚",
+      "texto": "Buscar casos parecidos",
+      "descripcion": "Buscar si hay más casos parecidos y comparar qué pasó en cada uno antes de mirar este a fondo.",
       "efectos": {},
       "intereses": { "politica": 1, "investigacion": 1 },
       "banderaSet": ["camino_investigacion_pasantia"]
@@ -537,10 +649,13 @@
   "requiere": {
     "banderas": ["reviso_caso_medicacion", "camino_datos"]
   },
+  "contexto": "📊 ¿Qué pasó?",
   "texto": "—¿Pudiste fijarte qué pasó? —te dice la persona que trabaja con vos.",
   "opciones": [
     {
-      "texto": "Reconstruir el circuito de la prestación: fechas, números, quién cargó qué.",
+      "icono": "📊",
+      "texto": "Reconstruir el circuito",
+      "descripcion": "Reconstruir el circuito de la prestación: fechas, números, quién cargó qué.",
       "efectos": {},
       "intereses": { "politica": 1, "investigacion": 1 },
       "banderaSet": ["camino_datos_pasantia"]
@@ -556,10 +671,13 @@
   "requiere": {
     "banderas": ["camino_actores_pasantia"]
   },
+  "contexto": "🧩 Los actores",
   "texto": "Averiguas quién actúo en cada paso.\n\nNadie negó la prestación. El centro de salud la pidió y fue autorizada. Pero quedó esperando una confirmación. No hay una decisión que revertir. Hay una espera que nunca se cerró durante el trámite.",
   "opciones": [
     {
-      "texto": "Seguir revisando el caso.",
+      "icono": "➡️",
+      "texto": "Seguir revisando el caso",
+      "descripcion": "Seguir revisando el caso.",
       "efectos": {},
       "banderaSet": ["pasantia_caso_resuelto"]
     }
@@ -574,10 +692,13 @@
   "requiere": {
     "banderas": ["camino_investigacion_pasantia"]
   },
+  "contexto": "📚 El patrón",
   "texto": "Hay casos parecidos — varios, en realidad — con el mismo patrón: una autorización que queda esperando una confirmación que nunca llega.\n\nNo es la excepción. Es, probablemente, la regla.",
   "opciones": [
     {
-      "texto": "Seguir revisando el caso.",
+      "icono": "➡️",
+      "texto": "Seguir revisando el caso",
+      "descripcion": "Seguir revisando el caso.",
       "efectos": {},
       "banderaSet": ["pasantia_caso_resuelto"]
     }
@@ -592,10 +713,13 @@
   "requiere": {
     "banderas": ["camino_datos_pasantia"]
   },
+  "contexto": "📊 El circuito",
   "texto": "Repasás los registros del caso: fechas, números de autorización, la casilla que debía marcarse cuando el centro de salud confirmara la recepción, pero que nunca se completó.\n\nNo es una decisión que alguien tomó: es información que nadie volvió a chequear.\n\nLa prestación existe en el sistema. Pero para la persona que la necesitaba, nunca llegó.",
   "opciones": [
     {
-      "texto": "Seguir revisando el caso.",
+      "icono": "➡️",
+      "texto": "Seguir revisando el caso",
+      "descripcion": "Seguir revisando el caso.",
       "efectos": {},
       "banderaSet": ["pasantia_caso_resuelto"]
     }
@@ -610,10 +734,13 @@
   "requiere": {
     "banderas": ["pasantia_caso_resuelto", "experiencia_salud_completada"]
   },
+  "contexto": "🔗 Implementar",
   "texto": "Seguís el recorrido del trámite.\n\nEl programa está definido, la prestación está autorizada, el pedido fue realizado. Pero cada parte depende de otra para que finalmente llegue a quien la necesita. En el medio aparecen demoras, información que no se actualiza y áreas que tendrían que coordinarse entre sí y no lo hacen.\n\nTe acordás del semáforo con Violeta.\n\nNo alcanza con que algo esté autorizado. Alguien, en algún punto del circuito, tiene que sostenerlo hasta que llegue.\n\nPor primera vez entendés qué significa implementar una política pública.",
   "opciones": [
     {
-      "texto": "Seguir.",
+      "icono": "➡️",
+      "texto": "Seguir",
+      "descripcion": "Seguir.",
       "efectos": {},
       "banderaSet": ["pasantia_medicina_resuelta"]
     }
@@ -629,10 +756,13 @@
     "banderas": ["pasantia_caso_resuelto"],
     "banderas_no": ["experiencia_salud_completada"]
   },
+  "contexto": "🔗 Implementar",
   "texto": "Seguís el recorrido del trámite.\n\nEl programa está definido, la prestación está autorizada, el pedido fue realizado. Pero cada parte depende de otra para que finalmente llegue a quien la necesita. En el medio aparecen demoras, información que no se actualiza y áreas que tendrían que coordinarse entre sí y no lo hacen.\n\nNo alcanza con que algo esté autorizado. Alguien, en algún punto del circuito, tiene que sostenerlo hasta que llegue.\n\nPor primera vez entendés qué significa implementar una política pública.",
   "opciones": [
     {
-      "texto": "Seguir.",
+      "icono": "➡️",
+      "texto": "Seguir",
+      "descripcion": "Seguir.",
       "efectos": {},
       "banderaSet": ["pasantia_medicina_resuelta"]
     }
@@ -647,10 +777,13 @@
         "primer_parcial_resuelto"
       ]
     },
+    "contexto": "⚖️ Una oportunidad",
     "texto": "Estás en cuarto año.\n\nTe ofrecen una oportunidad laboral que realmente te interesa.\n\nPero hay un problema: el horario se superpone con los primeros 30 minutos de una materia importante.\n\nNo hay una opción perfecta.",
     "opciones": [
       {
-        "texto": "Aceptar la oportunidad. Puede no volver a aparecer.",
+        "icono": "🚀",
+        "texto": "Aceptar la oportunidad",
+        "descripcion": "Aceptar la oportunidad. Puede no volver a aparecer.",
         "efectos": {
           "exploracion": 2,
           "confianza": 1,
@@ -663,7 +796,9 @@
         ]
       },
       {
-        "texto": "Mantener tu camino actual y priorizar la carrera.",
+        "icono": "📚",
+        "texto": "Priorizar la carrera",
+        "descripcion": "Mantener tu camino actual y priorizar la carrera.",
         "efectos": {
           "progreso": 1,
           "confianza": 1,
@@ -674,7 +809,9 @@
         ]
       },
       {
-        "texto": "Intentar combinar ambas cosas.",
+        "icono": "⚖️",
+        "texto": "Combinar ambas cosas",
+        "descripcion": "Intentar combinar ambas cosas.",
         "efectos": {
           "energia": -2,
           "exploracion": 1,
@@ -699,10 +836,13 @@
         "acepto_oportunidad"
       ]
     },
+    "contexto": "📈 Más responsabilidad",
     "texto": "Tu trabajo empieza a ocupar cada vez más lugar en tu vida, y ya no es tan fácil hacer convivir las dos cosas.\n\nUnos meses después, tu jefe te llama a la oficina.\n\n\"Necesito a alguien que se haga cargo del nuevo equipo. Vengo pensando en vos.\"\n\nSon más horas, más responsabilidad y menos margen para la facultad.\n\nUn compañero de la cursada, que ya casi no te ve, te dice de pasada:\n\"¿Seguís cursando?\"",
     "opciones": [
       {
-        "texto": "Aceptar el nuevo desafío.",
+        "icono": "💼",
+        "texto": "Aceptar el nuevo desafío",
+        "descripcion": "Aceptar el nuevo desafío.",
         "efectos": {
           "dinero": 1,
           "exploracion": 1,
@@ -713,7 +853,9 @@
         ]
       },
       {
-        "texto": "Mantener el equilibrio y no sumar más responsabilidades por ahora.",
+        "icono": "⚖️",
+        "texto": "Mantener el equilibrio",
+        "descripcion": "Mantener el equilibrio y no sumar más responsabilidades por ahora.",
         "efectos": {
           "confianza": 1,
           "energia": 1
@@ -740,10 +882,13 @@
         }
       }
     },
+    "contexto": "🔬 Una propuesta",
     "texto": "Unos meses después, una docente te propone participar en un proyecto de investigación.\n\nTu decisión de priorizar la carrera te permitió profundizar en un área que ya había despertado tu interés al comienzo.",
     "opciones": [
       {
-        "texto": "Aceptar y participar del proyecto.",
+        "icono": "🔬",
+        "texto": "Participar del proyecto",
+        "descripcion": "Aceptar y participar del proyecto.",
         "efectos": {
           "progreso": 1,
           "exploracion": 1
@@ -756,7 +901,9 @@
         ]
       },
       {
-        "texto": "Agradecer la propuesta y mantener el foco en la cursada.",
+        "icono": "📚",
+        "texto": "Mantener el foco en la cursada",
+        "descripcion": "Agradecer la propuesta y mantener el foco en la cursada.",
         "efectos": {
           "progreso": 1
         }
@@ -773,10 +920,13 @@
         "intento_combinar"
       ]
     },
+    "contexto": "🔥 Semana de parciales",
     "texto": "Semana de parciales.\n\nSon las 23:30. Mañana tenés un parcial. También tenés una entrega del trabajo.\n\nMirás el calendario: trabajo, cursada, parcial y entrega están prácticamente juntos.\n\nEstás agotado/a.\n\nTu celular vibra.\n\n\"¿Llegás mañana a la reunión del trabajo?\"\n\nUn segundo mensaje aparece:\n\n\"¿Alguien quiere juntarse a repasar antes del parcial?\"",
     "opciones": [
       {
-        "texto": "Organizarte y priorizar lo urgente.",
+        "icono": "🗂️",
+        "texto": "Organizar y priorizar",
+        "descripcion": "Organizarte y priorizar lo urgente.",
         "efectos": {
           "energia": -1,
           "confianza": 1
@@ -786,7 +936,9 @@
         ]
       },
       {
-        "texto": "Intentar hacer todo al mismo tiempo.",
+        "icono": "🔥",
+        "texto": "Intentar hacer todo",
+        "descripcion": "Intentar hacer todo al mismo tiempo.",
         "efectos": {
           "energia": -1
         },
@@ -795,7 +947,9 @@
         ]
       },
       {
-        "texto": "Bajar una actividad para llegar mejor al parcial.",
+        "icono": "💚",
+        "texto": "Bajar una actividad",
+        "descripcion": "Bajar una actividad para llegar mejor al parcial.",
         "efectos": {
           "energia": 1,
           "progreso": 1
@@ -816,10 +970,13 @@
     "banderas_no": ["acepto_oportunidad", "intento_combinar"],
     "intereses": { "investigacion": { "max": 1 } }
   },
+  "contexto": "➡️ Sin sobresaltos",
   "texto": "Seguiste avanzando materia por materia, sin apurarte a definirte por un camino en particular.\n\nNo hubo una única experiencia que marcara el rumbo. Tu recorrido se fue construyendo, sobre todo, en la cursada misma.",
   "opciones": [
     {
-      "texto": "Seguir así.",
+      "icono": "➡️",
+      "texto": "Seguir así",
+      "descripcion": "Seguir así.",
       "efectos": { "progreso": 1 }
     }
   ]
@@ -839,10 +996,13 @@
         "conocio_investigacion"
       ]
     },
+    "contexto": "🎓 Tu trayectoria",
     "texto": "Tu trayectoria.\n\nComenzaste Ciencia Política intentando entender los conflictos desde sus antecedentes.\n\nA lo largo de la carrera te acercaste a la investigación y al análisis.\n\nTu recorrido estuvo marcado por la búsqueda de información, la interpretación de problemas políticos y la construcción de argumentos.",
     "opciones": [
       {
-        "texto": "Ver mi recorrido.",
+        "icono": "🎓",
+        "texto": "Ver mi recorrido",
+        "descripcion": "Ver mi recorrido.",
         "efectos": {}
       }
     ]
@@ -863,10 +1023,13 @@
         "participo_actividad_estudiantil"
       ]
     },
+    "contexto": "🎓 Tu trayectoria",
     "texto": "Tu trayectoria.\n\nDesde tus primeras semanas te interesó entender quiénes participan en los conflictos y qué intereses están en juego.\n\nDurante la carrera te involucraste en actividades estudiantiles y experiencias vinculadas con distintos actores.\n\nTu recorrido estuvo marcado por la participación y el trabajo con problemas colectivos.",
     "opciones": [
       {
-        "texto": "Ver mi recorrido.",
+        "icono": "🎓",
+        "texto": "Ver mi recorrido",
+        "descripcion": "Ver mi recorrido.",
         "efectos": {}
       }
     ]
@@ -888,10 +1051,13 @@
         }
       }
     },
+    "contexto": "🎓 Tu trayectoria",
     "texto": "Tu trayectoria.\n\nTus experiencias te llevaron progresivamente hacia el trabajo con problemas concretos.\n\nUna pasantía te permitió conocer desde adentro cómo se analiza y se implementa una política pública.\n\nTu recorrido terminó orientándose hacia el ámbito público y la gestión de problemas colectivos.",
     "opciones": [
       {
-        "texto": "Ver mi recorrido.",
+        "icono": "🎓",
+        "texto": "Ver mi recorrido",
+        "descripcion": "Ver mi recorrido.",
         "efectos": {}
       }
     ]
@@ -908,10 +1074,13 @@
         }
       }
     },
+    "contexto": "🎓 Tu trayectoria",
     "texto": "Tu trayectoria.\n\nProbaste distintas experiencias, conociste otros espacios y descubriste que algunas de las cosas que más te interesaban no aparecían necesariamente donde las imaginabas al principio.\n\nMás que encontrar una única respuesta, tu experiencia te llevó a explorar distintas posibilidades.",
     "opciones": [
       {
-        "texto": "Ver mi recorrido.",
+        "icono": "🎓",
+        "texto": "Ver mi recorrido",
+        "descripcion": "Ver mi recorrido.",
         "efectos": {}
       }
     ]
@@ -920,10 +1089,13 @@
   "id": "politica_final_general",
   "carrera": "politica",
   "orden": 110,
+  "contexto": "🎓 Tu trayectoria",
   "texto": "Tu trayectoria.\n\nA lo largo de la carrera fuiste avanzando de forma constante, materia por materia, sin apurarte a definirte por un camino en particular.\n\nNo hubo un único interés que se impusiera sobre los demás, ni una experiencia puntual que marcara el rumbo. Tu recorrido se construyó, sobre todo, en la cursada misma.",
   "opciones": [
     {
-      "texto": "Ver mi recorrido.",
+      "icono": "🎓",
+      "texto": "Ver mi recorrido",
+      "descripcion": "Ver mi recorrido.",
       "efectos": {}
     }
   ]
