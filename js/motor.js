@@ -999,11 +999,12 @@ function cambiarTrayectoria(
 
 function evaluarConsecuencia(
   estado,
-  evento
+  fuenteConsecuencia,
+  origen = null
 ) {
 
   const consecuencia =
-    evento.consecuencia;
+    fuenteConsecuencia.consecuencia;
 
   if (!consecuencia) {
     return null;
@@ -1030,18 +1031,22 @@ function evaluarConsecuencia(
   );
 
 
+  const origenFinal =
+    origen ||
+    { funcion: fuenteConsecuencia.funcion, tipo: fuenteConsecuencia.tipo };
+
   setearBanderas(
     estado,
     consecuencia.banderaSet || [],
-    { funcion: evento.funcion, tipo: evento.tipo }
+    origenFinal
   );
 
 
   return {
     texto: consecuencia.texto,
-    recurso: evento.recurso || null,
+    recurso: fuenteConsecuencia.recurso || null,
     recursoSecundario:
-      evento.recurso_secundario || null,
+      fuenteConsecuencia.recurso_secundario || null,
     opciones: consecuencia.opciones || null
   };
 }
@@ -1119,7 +1124,8 @@ function elegirOpcionConsecuencia(
   const consecuencia =
     evaluarConsecuencia(
       estado,
-      eventoOrigen || opcion
+      opcion,
+      origen
     );
 
   return { estado, resultadoOpcion, consecuencia };

@@ -485,7 +485,8 @@ function mostrarSiguiente() {
             registrarDecision(
         estado,
         opcion.texto,
-        { funcion: evento.funcion, tipo: evento.tipo }
+        { funcion: evento.funcion, tipo: evento.tipo },
+        opcion.intereses || {}
       );
 
       if (

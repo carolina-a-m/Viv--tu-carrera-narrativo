@@ -185,12 +185,13 @@ function aplicarIntereses(estado, intereses = {}) {
   }
 }
 
-function registrarDecision(estado, texto, origen) {
+function registrarDecision(estado, texto, origen, intereses = {}) {
 
   if (!texto) return;
 
   estado.decisiones.push({
     texto,
+    intereses,
     segura: esFuncionSeguraParaIA(origen?.funcion, origen?.tipo)
   });
 }
@@ -207,7 +208,10 @@ function obtenerContextoSeguroIA(estado) {
   const decisionesSeguras =
     (estado.decisiones || [])
       .filter(decision => decision.segura)
-      .map(decision => decision.texto);
+      .map(decision => ({
+        texto: decision.texto,
+        intereses: decision.intereses || {}
+      }));
 
   return { banderasSeguras, decisionesSeguras };
 }
