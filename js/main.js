@@ -45,10 +45,9 @@ import {
 
 import {
   renderEvento,
-  renderConsecuencia,
-  renderResultadoOpcion,
   renderInicio,
   renderFinDeEventos,
+  renderResultadoFinal,
   renderDebugEstado,
   renderIntervencionIA,
   renderCargandoIntervencionIA
@@ -56,7 +55,6 @@ import {
 
 let estado;
 let eventos;
-let eventosTransversales;
 let facultades;
 let conflictoActual = null;
 
@@ -219,6 +217,51 @@ function construirResumenJugador(estado, facultades) {
     variables: estado.variables
   };
 }
+
+function renderConsecuenciaComoEvento(consecuencia, onElegirOpcion) {
+
+  const opciones =
+    Array.isArray(consecuencia.opciones) && consecuencia.opciones.length > 0
+      ? consecuencia.opciones
+      : [{ icono: '➡️', texto: 'Continuar', efectos: {}, banderaSet: [] }];
+
+  renderEvento(
+    {
+      contexto: consecuencia.contexto || null,
+      texto: consecuencia.texto,
+      recurso: consecuencia.recurso || null,
+      recursoSecundario: consecuencia.recursoSecundario || null,
+      opciones
+    },
+    onElegirOpcion,
+    construirResumenJugador(estado, facultades)
+  );
+}
+
+function renderResultadoOpcionComoEvento(resultado, onContinuar) {
+
+  const opcionContinuar =
+    resultado.opcion || {};
+
+  renderEvento(
+    {
+      contexto: null,
+      texto: resultado.texto,
+      recurso: resultado.recurso || null,
+      recursoSecundario: resultado.recursoSecundario || null,
+      opciones: [{
+        icono: opcionContinuar.icono || '➡️',
+        texto: opcionContinuar.texto || 'Continuar',
+        descripcion: opcionContinuar.descripcion,
+        efectos: {},
+        banderaSet: []
+      }]
+    },
+    () => onContinuar(),
+    construirResumenJugador(estado, facultades)
+  );
+}
+
 // ------------------------------------------------------------
 // INICIO
 // ------------------------------------------------------------
@@ -227,16 +270,8 @@ async function iniciar() {
 
   try {
 
-const [
-      respTransversales,
-      respFacultades
-    ] = await Promise.all([
-
-      fetch('./data/eventos-transversales.json'),
-
-      fetch('./data/careers.json')
-
-    ]);
+const respFacultades =
+      await fetch('./data/careers.json');
 
     await cargarConflictoActual();
 
@@ -244,12 +279,6 @@ const [
     // ----------------------------------------------------------
     // VALIDAR CARGA
     // ----------------------------------------------------------
-
-    if (!respTransversales.ok) {
-      throw new Error(
-        'No se pudo cargar eventos-transversales.json'
-      );
-    }
 
     if (!respFacultades.ok) {
       throw new Error(
@@ -262,9 +291,6 @@ const [
     // LEER JSON
     // ----------------------------------------------------------
 
-    eventosTransversales =
-      await respTransversales.json();
-
     facultades =
       await respFacultades.json();
 
@@ -273,14 +299,6 @@ const [
     // VALIDACIÓN BÁSICA
     // ----------------------------------------------------------
 
-    if (!Array.isArray(eventosTransversales)) {
-
-      throw new Error(
-        'eventos-transversales.json no contiene un array de eventos.'
-      );
-
-    }
-
     if (!Array.isArray(facultades)) {
 
       throw new Error(
@@ -288,11 +306,6 @@ const [
       );
 
     }
-
-
-    console.log(
-      `Eventos transversales cargados: ${eventosTransversales.length}`
-    );
 
 
   } catch (error) {
@@ -412,10 +425,10 @@ renderInicio(
 
 function mostrarSiguiente() {
 
-  if (
+
+    if (
     !estado ||
-    !eventos ||
-    !eventosTransversales
+    !eventos
   ) {
     return;
   }
@@ -428,8 +441,7 @@ function mostrarSiguiente() {
   const evento =
     siguienteEvento(
       eventos,
-      estado,
-      eventosTransversales
+      estado
     );
 
 
@@ -439,7 +451,9 @@ function mostrarSiguiente() {
 
   if (!evento) {
 
-    renderFinDeEventos();
+    renderResultadoFinal(
+      construirResumenJugador(estado, facultades)
+    );
 
     renderDebugEstado(
       estado
@@ -474,19 +488,18 @@ function mostrarSiguiente() {
         estado.carreraActiva;
 
 
-      const resultado =
+            const resultado =
         elegirOpcion(
           estado,
           evento,
-          opcion,
-          eventos
+          opcion
         );
 
 
-            registrarDecision(
+                  registrarDecision(
         estado,
         opcion.texto,
-        { funcion: evento.funcion, tipo: evento.tipo },
+        { funcion: evento.funcion },
         opcion.intereses || {}
       );
 
@@ -563,9 +576,8 @@ function mostrarSiguiente() {
                 resultadoConsecuencia.consecuencia
               ) {
 
-                renderConsecuencia(
+          renderConsecuenciaComoEvento(
                   resultadoConsecuencia.consecuencia,
-                  continuar,
                   manejarOpcionConsecuencia
                 );
 
@@ -582,7 +594,7 @@ function mostrarSiguiente() {
               resultadoConsecuencia.resultadoOpcion
             ) {
 
-              renderResultadoOpcion(
+              renderResultadoOpcionComoEvento(
                 resultadoConsecuencia.resultadoOpcion,
                 continuarOMostrarSiguienteNivel
               );
@@ -595,12 +607,10 @@ function mostrarSiguiente() {
 
           };
 
-          renderConsecuencia(
+          renderConsecuenciaComoEvento(
             resultado.consecuencia,
-            continuar,
             manejarOpcionConsecuencia
           );
-
         } else {
 
           continuar();
@@ -624,7 +634,7 @@ function mostrarSiguiente() {
         resultado.resultadoOpcion
       ) {
 
-        renderResultadoOpcion(
+        renderResultadoOpcionComoEvento(
           resultado.resultadoOpcion,
           mostrarConsecuenciaSiHay
         );
@@ -655,16 +665,31 @@ if (
 
     pedirIntervencionIA(estado).then((texto) => {
 
-      renderIntervencionIA(
+         renderIntervencionIA(
         texto || '...',
-        () => renderEvento({ ...evento, texto: aplicarConflictoATexto(evento.texto) }, manejarEleccion, construirResumenJugador(estado, facultades))
+        () => renderEvento(
+          {
+            contexto: evento.contexto,
+            texto: aplicarConflictoATexto(evento.texto),
+            opciones: evento.opciones
+          },
+          manejarEleccion,
+          construirResumenJugador(estado, facultades)
+        )
       );
 
     });
 
   } else {
-
-    renderEvento({ ...evento, texto: aplicarConflictoATexto(evento.texto) }, manejarEleccion, construirResumenJugador(estado, facultades))
+        renderEvento(
+      {
+        contexto: evento.contexto,
+        texto: aplicarConflictoATexto(evento.texto),
+        opciones: evento.opciones
+      },
+      manejarEleccion,
+      construirResumenJugador(estado, facultades)
+    )
 
   }
 

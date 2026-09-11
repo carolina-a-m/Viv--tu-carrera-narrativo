@@ -2,6 +2,8 @@
 // Único dueño del estado del jugador.
 // Nadie más muta este objeto directamente.
 
+import { RANGOS_VARIABLES } from './config-variables.js';
+
 const ESQUEMA_VERSION = 3;
 
 
@@ -13,6 +15,11 @@ function estadoInicial() {
 
     // Carrera que el jugador está explorando actualmente.
     carreraActiva: null,
+
+    // Indica si en este momento del recorrido puede aparecer
+    // un evento condicionado (transversal). Se actualiza en
+    // cada elegirOpcion según la opción elegida.
+    permiteTransversal: true,
 
     variables: {
       interes_disciplina: 0,
@@ -59,22 +66,22 @@ function estadoInicial() {
     // Cantidad total de decisiones tomadas.
     turno: 0,
 
-    // ----------------------------------------------------------
-    // CONTROL DE EVENTOS TRANSVERSALES
+        // ----------------------------------------------------------
+    // CONTROL DE EVENTOS CONDICIONADOS (rangoOrden)
     // ----------------------------------------------------------
     //
-    // Guarda, por carrera, qué ventanas ya tuvieron una
-    // oportunidad transversal.
+    // Guarda, por carrera, qué rangos ya tuvieron una
+    // oportunidad de disparar un evento condicionado.
     //
     // Ejemplo:
     //
-    // { politica: ["inicio", "actividad"], medicina: ["inicio"] }
+    // { politica: ["50-100", "30-40"], medicina: ["10-20"] }
     //
-    // Esto evita que la misma ventana, dentro de la misma
-    // carrera, dispare acontecimientos secundarios indefinidamente
-    // — sin bloquear esas mismas ventanas en otra carrera.
+    // Esto evita que el mismo rango, dentro de la misma carrera,
+    // dispare eventos indefinidamente — sin bloquear ese mismo
+    // rango en otra carrera.
     //
-    transversalesProcesados: {}
+    rangosCondicionadosProcesados: {}
   };
 }
 
@@ -89,7 +96,19 @@ function aplicarEfectos(estado, efectos = {}) {
       continue;
     }
 
-    estado.variables[variable] += delta;
+    const rango = RANGOS_VARIABLES[variable];
+
+    let nuevoValor =
+      estado.variables[variable] + delta;
+
+    if (rango) {
+      nuevoValor = Math.min(
+        rango.max,
+        Math.max(rango.min, nuevoValor)
+      );
+    }
+
+    estado.variables[variable] = nuevoValor;
   }
 }
 
@@ -138,9 +157,9 @@ const FUNCIONES_SEGURAS_IA = new Set([
   // SOLO si su contenido puede analizarse sin riesgo narrativo.
 ]);
 
-function esFuncionSeguraParaIA(funcion, tipoEvento) {
+function esFuncionSeguraParaIA(funcion) {
 
-  if (tipoEvento !== 'transversal') {
+  if (!funcion) {
     return true;
   }
 
@@ -162,10 +181,9 @@ function setearBanderas(estado, banderas = [], origen = null) {
     }
 
     estado.banderas[bandera] = true;
-
     if (origen) {
       estado.procedenciaBanderas[bandera] =
-        esFuncionSeguraParaIA(origen.funcion, origen.tipo);
+        esFuncionSeguraParaIA(origen.funcion);
     }
   }
 }
@@ -185,6 +203,10 @@ function aplicarIntereses(estado, intereses = {}) {
   }
 }
 
+function actualizarPermiteTransversal(estado, permite) {
+  estado.permiteTransversal = permite !== false;
+}
+
 function registrarDecision(estado, texto, origen, intereses = {}) {
 
   if (!texto) return;
@@ -192,7 +214,7 @@ function registrarDecision(estado, texto, origen, intereses = {}) {
   estado.decisiones.push({
     texto,
     intereses,
-    segura: esFuncionSeguraParaIA(origen?.funcion, origen?.tipo)
+    segura: esFuncionSeguraParaIA(origen?.funcion)
   });
 }
 
@@ -275,45 +297,51 @@ function registrarEvento(
 
 
 // ------------------------------------------------------------
-// TRANSVERSALES
+// EVENTOS CONDICIONADOS (rangoOrden)
 // ------------------------------------------------------------
 
-function registrarTransversalProcesado(
+function claveRango(rangoOrden) {
+  return rangoOrden.join('-');
+}
+
+function registrarRangoProcesado(
   estado,
-  ventana
+  rangoOrden
 ) {
 
-  if (!ventana) return;
+  if (!rangoOrden) return;
 
   const carrera =
     estado.carreraActiva;
 
   if (!carrera) return;
 
-  if (!estado.transversalesProcesados[carrera]) {
-    estado.transversalesProcesados[carrera] = [];
+  const clave = claveRango(rangoOrden);
+
+  if (!estado.rangosCondicionadosProcesados[carrera]) {
+    estado.rangosCondicionadosProcesados[carrera] = [];
   }
 
   if (
-    !estado.transversalesProcesados[carrera].includes(
-      ventana
+    !estado.rangosCondicionadosProcesados[carrera].includes(
+      clave
     )
   ) {
 
-    estado.transversalesProcesados[carrera].push(
-      ventana
+    estado.rangosCondicionadosProcesados[carrera].push(
+      clave
     );
 
   }
 }
 
 
-function transversalYaProcesado(
+function rangoYaProcesado(
   estado,
-  ventana
+  rangoOrden
 ) {
 
-  if (!ventana) {
+  if (!rangoOrden) {
     return false;
   }
 
@@ -324,15 +352,15 @@ function transversalYaProcesado(
     return false;
   }
 
-  const procesadas =
-    estado.transversalesProcesados[carrera];
+  const procesados =
+    estado.rangosCondicionadosProcesados[carrera];
 
-  if (!procesadas) {
+  if (!procesados) {
     return false;
   }
 
-  return procesadas.includes(
-    ventana
+  return procesados.includes(
+    claveRango(rangoOrden)
   );
 }
 
@@ -343,11 +371,12 @@ export {
   aplicarEfectos,
   setearBanderas,
   aplicarIntereses,
+  actualizarPermiteTransversal,
   marcarExploracion,
   registrarCarreraActiva,
   registrarEvento,
-  registrarTransversalProcesado,
-  transversalYaProcesado,
+  registrarRangoProcesado,
+  rangoYaProcesado,
   registrarDecision,
   obtenerContextoSeguroIA
 };

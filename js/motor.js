@@ -21,9 +21,11 @@
 // 90 → consecuencias
 // 100+ → final
 //
-// EVENTOS TRANSVERSALES:
+// EVENTOS CONDICIONADOS:
 //
-// Son acontecimientos secundarios.
+// Son acontecimientos secundarios que declaran rangoOrden en vez
+// de orden fijo. Pueden aparecer en cualquier punto de ese rango,
+// sujetos a su "requiere" (igual que cualquier otro evento).
 // Nunca modifican "orden".
 // Nunca reemplazan una etapa principal.
 // Nunca pueden hacer retroceder la historia.
@@ -35,46 +37,10 @@ import {
   marcarExploracion,
   registrarCarreraActiva,
   registrarEvento,
-  registrarTransversalProcesado,
-  transversalYaProcesado
+  registrarRangoProcesado,
+  rangoYaProcesado,
+  actualizarPermiteTransversal
 } from './estado.js';
-
-
-// ============================================================
-// VENTANAS TRANSVERSALES
-// ============================================================
-
-const VENTANAS_TRANSVERSALES = {
-
-  politica: {
-
-    inicio: { desde: 10, hasta: 20 },
-    actividad: { desde: 30, hasta: 40 },
-    parcial: { desde: 40, hasta: 50 },
-    mitad: { desde: 50, hasta: 60 },
-    exploracion: { desde: 60, hasta: 70 },
-    pasantia: { desde: 70, hasta: 80 },
-    oportunidad: { desde: 80, hasta: 90 },
-    consecuencias: { desde: 90, hasta: 100 },
-    final: { desde: 100, hasta: Infinity }
-
-  },
-
-  _default: {
-
-    inicio: { desde: 10, hasta: 20 },
-    actividad: { desde: 30, hasta: 40 },
-    parcial: { desde: 40, hasta: 50 },
-    mitad: { desde: 50, hasta: 60 },
-    exploracion: { desde: 60, hasta: 70 },
-    pasantia: { desde: 70, hasta: 80 },
-    oportunidad: { desde: 80, hasta: 90 },
-    consecuencias: { desde: 90, hasta: 100 },
-    final: { desde: 100, hasta: Infinity }
-
-  }
-
-};
 
 
 // ============================================================
@@ -229,12 +195,6 @@ function cumplePrecondiciones(
 // ============================================================
 // REQUISITOS SUELTOS (sin evento completo)
 // ============================================================
-//
-// Reutiliza cumplePrecondiciones para evaluar un bloque
-// "requiere" que no pertenece a un evento con id propio,
-// como el de evento.consecuencia.
-//
-// ============================================================
 
 function cumpleRequisitos(
   requiere,
@@ -337,12 +297,6 @@ function obtenerSiguienteOrden(
 // ============================================================
 // RESULTADO ALEATORIO EN PARCIAL
 // ============================================================
-//
-// Resuelve un chequeo probabilístico UNA sola vez, en el
-// momento en que se elige la opción, y fija el resultado como
-// bandera. El resto del motor no vuelve a evaluar azar.
-//
-// ============================================================
 
 function resolverResultadoAleatorio(
   estado,
@@ -428,7 +382,7 @@ function especificidadEvento(
 
 
 // ============================================================
-// EVENTO PRINCIPAL
+// EVENTO PRINCIPAL (orden fijo)
 // ============================================================
 
 function siguienteEventoPrincipal(
@@ -477,13 +431,6 @@ function siguienteEventoPrincipal(
           return false;
         }
 
-        if (
-          evento.tipo ===
-          'transversal'
-        ) {
-          return false;
-        }
-
         return cumplePrecondiciones(
           evento,
           estado
@@ -520,8 +467,7 @@ candidatos.sort(
 
     const eventosDeEstaOrden =
       eventos.filter(evento =>
-        evento.orden === orden &&
-        evento.tipo !== 'transversal'
+        evento.orden === orden
       );
 
 
@@ -551,104 +497,17 @@ candidatos.sort(
 
 
 // ============================================================
-// VENTANA
+// CANDIDATOS CONDICIONADOS
 // ============================================================
 
-function obtenerNombreVentanaActual(
-  evento,
-  ordenActual,
+function obtenerCandidatosCondicionados(
+  eventos,
   estado
 ) {
 
-  if (!evento.ventana) {
-    return null;
-  }
-
-  const ventanas =
-    Array.isArray(evento.ventana)
-      ? evento.ventana
-      : [evento.ventana];
-
-
-  for (const nombre of ventanas) {
-
-    const tablaVentanas =
-      VENTANAS_TRANSVERSALES[estado.carreraActiva] ||
-      VENTANAS_TRANSVERSALES._default;
-
-    const ventana =
-      tablaVentanas[
-        nombre
-      ];
-
-    if (!ventana) {
-      continue;
-    }
-
-    if (
-      ordenActual >= ventana.desde &&
-      ordenActual < ventana.hasta
-    ) {
-
-      return nombre;
-
-    }
-
-  }
-
-  return null;
-}
-
-
-// ============================================================
-// VENTANA TRANSVERSAL
-// ============================================================
-
-function cumpleVentanaTransversal(
-  evento,
-  ordenActual,
-  estado
-) {
-
-  return (
-    obtenerNombreVentanaActual(
-      evento,
-      ordenActual,
-      estado
-    ) !== null
-  );
-}
-
-function obtenerUltimoEventoPrincipal(eventosPrincipales, estado) {
-
-  for (let i = estado.eventosVistos.length - 1; i >= 0; i--) {
-
-    const evento = eventosPrincipales.find(
-      e => e.id === estado.eventosVistos[i]
-    );
-
-    if (evento && typeof evento.orden === 'number') {
-      return evento;
-    }
-
-  }
-
-  return null;
-}
-
-// ============================================================
-// CANDIDATOS TRANSVERSALES
-// ============================================================
-
-function obtenerCandidatosTransversales(
-  eventosTransversales,
-  eventosPrincipales,
-  estado
-) {
-
-const ordenActual =
+  const ordenActual =
     obtenerOrdenActual(
-      eventosPrincipales,
+      eventos,
       estado
     );
 
@@ -656,196 +515,83 @@ const ordenActual =
     return [];
   }
 
-  const ultimoEvento =
-    obtenerUltimoEventoPrincipal(eventosPrincipales, estado);
-
-  if (ultimoEvento && ultimoEvento.permiteTransversal === false) {
+  if (estado.permiteTransversal === false) {
     return [];
   }
 
-  return eventosTransversales
-    .filter(evento => {
+  return eventos.filter(evento => {
 
-      if (
-        evento.tipo !==
-        'transversal'
-      ) {
-        return false;
-      }
+    if (!evento.rangoOrden) {
+      return false;
+    }
 
-
-      if (
-        estado.eventosVistos.includes(
-          evento.id
-        )
-      ) {
-        return false;
-      }
-
-
-      if (
-        !cumplePrecondiciones(
-          evento,
-          estado
-        )
-      ) {
-        return false;
-      }
-
-
-      return cumpleVentanaTransversal(
-        evento,
-        ordenActual,
-        estado
-      );
-
-    })
-    .map(evento => ({
-
-      evento,
-
-      ventana:
-        obtenerNombreVentanaActual(
-          evento,
-          ordenActual,
-          estado
-        )
-
-    }))
-    .filter(item =>
-      !transversalYaProcesado(
-        estado,
-        item.ventana
+    if (
+      estado.eventosVistos.includes(
+        evento.id
       )
+    ) {
+      return false;
+    }
+
+    const [desde, hasta] = evento.rangoOrden;
+
+    if (
+      ordenActual < desde ||
+      ordenActual >= hasta
+    ) {
+      return false;
+    }
+
+    if (
+      rangoYaProcesado(
+        estado,
+        evento.rangoOrden
+      )
+    ) {
+      return false;
+    }
+
+    return cumplePrecondiciones(
+      evento,
+      estado
     );
+
+  });
 }
 
 
 // ============================================================
-// SIGUIENTE TRANSVERSAL
+// SIGUIENTE CONDICIONADO
 // ============================================================
 //
-// Regla:
-//
-// Máximo UN transversal por ventana narrativa.
-//
-// Una vez que aparece uno:
-//
-// ventana → procesada
-//
-// Los demás transversales de esa misma ventana quedan para
-// futuras partidas, pero no compiten dentro de la actual.
+// Regla: máximo un evento condicionado por rango, por partida.
+// Una vez que aparece uno, ese rango queda procesado y no vuelve
+// a competir dentro de la misma partida.
 //
 // ============================================================
 
-function siguienteEventoTransversal(
-  eventosTransversales,
-  eventosPrincipales,
+function siguienteEventoCondicionado(
+  eventos,
   estado
 ) {
 
-  if (
-    !Array.isArray(
-      eventosTransversales
-    ) ||
-    eventosTransversales.length === 0
-  ) {
-    return null;
-  }
-
-
   const candidatos =
-    obtenerCandidatosTransversales(
-      eventosTransversales,
-      eventosPrincipales,
+    obtenerCandidatosCondicionados(
+      eventos,
       estado
     );
 
-
-  if (
-    candidatos.length === 0
-  ) {
+  if (candidatos.length === 0) {
     return null;
   }
-
 
   candidatos.sort(
     (a, b) =>
-      especificidadEvento(
-        b.evento
-      ) -
-      especificidadEvento(
-        a.evento
-      )
+      especificidadEvento(b) -
+      especificidadEvento(a)
   );
 
-
-  return candidatos[0].evento;
-}
-
-
-// ============================================================
-// PUEDE APARECER TRANSVERSAL
-// ============================================================
-
-function puedeAparecerTransversal(
-  evento,
-  eventosPrincipales,
-  estado
-) {
-
-  if (
-    !evento ||
-    evento.tipo !==
-    'transversal'
-  ) {
-    return false;
-  }
-
-
-  if (
-    estado.eventosVistos.includes(
-      evento.id
-    )
-  ) {
-    return false;
-  }
-
-
-  const ordenActual =
-    obtenerOrdenActual(
-      eventosPrincipales,
-      estado
-    );
-
-
-  const ventana =
-    obtenerNombreVentanaActual(
-      evento,
-      ordenActual,
-      estado
-    );
-
-
-  if (!ventana) {
-    return false;
-  }
-
-
-  if (
-    transversalYaProcesado(
-      estado,
-      ventana
-    )
-  ) {
-    return false;
-  }
-
-
-  return cumplePrecondiciones(
-    evento,
-    estado
-  );
+  return candidatos[0];
 }
 
 
@@ -855,32 +601,18 @@ function puedeAparecerTransversal(
 
 function siguienteEvento(
   eventos,
-  estado,
-  eventosTransversales = []
+  estado
 ) {
 
-  // ----------------------------------------------------------
-  // TRANSVERSAL
-  // ----------------------------------------------------------
-
-  const transversal =
-    siguienteEventoTransversal(
-      eventosTransversales,
+  const condicionado =
+    siguienteEventoCondicionado(
       eventos,
       estado
     );
 
-
-  if (transversal) {
-
-    return transversal;
-
+  if (condicionado) {
+    return condicionado;
   }
-
-
-  // ----------------------------------------------------------
-  // PRINCIPAL
-  // ----------------------------------------------------------
 
   return siguienteEventoPrincipal(
     eventos,
@@ -985,17 +717,6 @@ function cambiarTrayectoria(
 // ============================================================
 // CONSECUENCIA DIFERIDA
 // ============================================================
-//
-// Algunos eventos (sobre todo transversales) tienen un bloque
-// "consecuencia": un desenlace narrativo que se muestra
-// inmediatamente después de resolver la opción elegida, si el
-// estado resultante cumple su propio "requiere".
-//
-// No es un evento nuevo dentro de la trayectoria: no suma un
-// "orden", no se guarda en eventosVistos, no compite por
-// especificidad. Es un remate narrativo de UN evento puntual.
-//
-// ============================================================
 
 function evaluarConsecuencia(
   estado,
@@ -1033,7 +754,7 @@ function evaluarConsecuencia(
 
   const origenFinal =
     origen ||
-    { funcion: fuenteConsecuencia.funcion, tipo: fuenteConsecuencia.tipo };
+    { funcion: fuenteConsecuencia.funcion };
 
   setearBanderas(
     estado,
@@ -1043,22 +764,17 @@ function evaluarConsecuencia(
 
 
   return {
+    contexto: consecuencia.contexto || null,
     texto: consecuencia.texto,
     recurso: fuenteConsecuencia.recurso || null,
     recursoSecundario:
       fuenteConsecuencia.recurso_secundario || null,
     opciones: consecuencia.opciones || null
   };
-}
+  }
 
 // ============================================================
 // RESULTADO DE OPCIÓN
-// ============================================================
-//
-// Algunas opciones tienen una respuesta narrativa inmediata
-// propia (no condicionada, no compartida con otras opciones
-// del mismo evento). Se muestra apenas se elige esa opción.
-//
 // ============================================================
 
 function evaluarResultadoOpcion(
@@ -1080,15 +796,6 @@ function evaluarResultadoOpcion(
 // ============================================================
 // OPCIÓN DE CONSECUENCIA
 // ============================================================
-//
-// Cuando una consecuencia diferida tiene su propio array de
-// opciones (ej. una segunda decisión encadenada dentro de la
-// misma escena transversal), esta función aplica los efectos
-// de la opción elegida. No registra un evento nuevo: sigue
-// siendo parte del mismo remate narrativo, no de la
-// progresión principal.
-//
-// ============================================================
 
 function elegirOpcionConsecuencia(
   estado,
@@ -1102,7 +809,7 @@ function elegirOpcionConsecuencia(
 
   const origen =
     eventoOrigen
-      ? { funcion: eventoOrigen.funcion, tipo: eventoOrigen.tipo }
+      ? { funcion: eventoOrigen.funcion }
       : null;
 
   aplicarEfectos(
@@ -1138,8 +845,7 @@ function elegirOpcionConsecuencia(
 function elegirOpcion(
   estado,
   evento,
-  opcion,
-  eventosPrincipales = []
+  opcion
 ) {
 
   if (!opcion) {
@@ -1155,13 +861,28 @@ function elegirOpcion(
     setearBanderas(
     estado,
     opcion.banderaSet || [],
-    { funcion: evento.funcion, tipo: evento.tipo }
+    { funcion: evento.funcion }
   );
 
 
   aplicarIntereses(
     estado,
     opcion.intereses || {}
+  );
+
+
+  const permiteTransversal =
+    opcion.permiteTransversal !== undefined
+      ? opcion.permiteTransversal
+      : (
+          evento.permiteTransversal !== undefined
+            ? evento.permiteTransversal
+            : true
+        );
+
+  actualizarPermiteTransversal(
+    estado,
+    permiteTransversal
   );
 
 
@@ -1195,7 +916,7 @@ function elegirOpcion(
     resolverResultadoAleatorio(
       estado,
       opcion.resultadoAleatorio,
-      { funcion: evento.funcion, tipo: evento.tipo }
+      { funcion: evento.funcion }
     );
 
   }
@@ -1211,46 +932,14 @@ function elegirOpcion(
 
 
   // ----------------------------------------------------------
-  // REGISTRAR TRANSVERSAL
+  // REGISTRAR RANGO CONDICIONADO
   // ----------------------------------------------------------
-  //
-  // El transversal no cambia el orden principal.
-  //
-  // Solamente marcamos que la ventana ya tuvo su acontecimiento.
-  //
 
-  if (
-    evento.tipo ===
-    'transversal'
-  ) {
+  if (evento.rangoOrden) {
 
-    const ventana =
-      obtenerNombreVentanaActual(
-        evento,
-        obtenerOrdenActual(
-          eventosPrincipales,
-          estado
-        ),
-        estado
-      );
-
-
-    // Si no podemos determinarla por orden,
-    // usamos la primera ventana declarada.
-    const ventanaFinal =
-      ventana ||
-      (
-        Array.isArray(
-          evento.ventana
-        )
-          ? evento.ventana[0]
-          : evento.ventana
-      );
-
-
-    registrarTransversalProcesado(
+    registrarRangoProcesado(
       estado,
-      ventanaFinal
+      evento.rangoOrden
     );
 
   }
@@ -1259,11 +948,6 @@ function elegirOpcion(
   // ----------------------------------------------------------
   // CONSECUENCIA DIFERIDA
   // ----------------------------------------------------------
-  //
-  // Se evalúa DESPUÉS de aplicar todo lo anterior, para que
-  // pueda depender de banderas/variables recién actualizadas
-  // por la opción elegida (ej. "busco_beneficios_unr").
-  //
 
   const consecuencia =
     evaluarConsecuencia(
@@ -1343,36 +1027,35 @@ function obtenerProgresoNarrativo(
 }
 
 
-function obtenerEstadoTransversales(
-  eventosPrincipales,
-  eventosTransversales,
+function obtenerEstadoCondicionados(
+  eventos,
   estado
 ) {
 
   const ordenActual =
     obtenerOrdenActual(
-      eventosPrincipales,
+      eventos,
       estado
     );
 
 
   const candidatos =
-    obtenerCandidatosTransversales(
-      eventosTransversales,
-      eventosPrincipales,
+    obtenerCandidatosCondicionados(
+      eventos,
       estado
     );
 
 
   const disponibles =
     candidatos.map(
-      item => item.evento.id
+      evento => evento.id
     );
 
 
   const vistos =
-    eventosTransversales
+    eventos
       .filter(evento =>
+        evento.rangoOrden &&
         estado.eventosVistos.includes(
           evento.id
         )
@@ -1386,8 +1069,8 @@ function obtenerEstadoTransversales(
     ordenActual,
     disponibles,
     vistos,
-    transversalesProcesados:
-      estado.transversalesProcesados || []
+    rangosCondicionadosProcesados:
+      estado.rangosCondicionadosProcesados || {}
   };
 }
 
@@ -1406,9 +1089,7 @@ export {
 
   siguienteEventoPrincipal,
 
-  siguienteEventoTransversal,
-
-  puedeAparecerTransversal,
+  siguienteEventoCondicionado,
 
   elegirOpcion,
 
@@ -1434,7 +1115,7 @@ export {
 
   obtenerProgresoNarrativo,
 
-  obtenerEstadoTransversales,
+  obtenerEstadoCondicionados,
 
   resolverResultadoAleatorio,
 

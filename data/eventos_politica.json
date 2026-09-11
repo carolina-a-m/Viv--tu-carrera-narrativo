@@ -134,7 +134,6 @@
   "id": "politica_actividad_actores_01",
   "carrera": "politica",
   "orden": 30,
-  "permiteTransversal": false,
   "requiere": { "banderas": ["conflicto_resuelto", "camino_actores"] },
   "contexto": "📌 La devolución",
   "texto": "La devolución de la profe no llega como una nota.\n\nPrimero marca una parte del trabajo con una lapicera.\n\n\"Acá hicieron algo interesante. Vieron que esta aparente división no explicaba por completo los intereses en juego.\"\n\nSeñala el mapa de actores.\n\n\"En política, muchas veces el desafío no es identificar quién está de cada lado, sino comprender cómo se construyen y articulan sus posiciones.\"\n\nAl salir del aula escuchás a un grupo de estudiantes hablando en el pasillo. Están organizando una asamblea para discutir medidas de cara a la actual situación de la Ley de Financiamiento Universitario.",
@@ -145,6 +144,7 @@
       "descripcion": "Te acercás a escuchar qué medidas proponen y por qué.",
       "efectos": { "confianza": 1, "energia": -1 },
       "intereses": { "politica": 1, "social": 1 },
+      "permiteTransversal": false,
         "banderaSet": [
     "interes_participacion",
     "participo_actividad_estudiantil",
@@ -196,7 +196,7 @@
     {
       "icono": "✏️",
       "texto": "Anotar el contacto",
-      "descripcion": "Anotar el contacto.",
+      "descripcion": "El tema te llama la atención. Quizá sea una buena oportunidad para acercarte a la investigación.",
       "efectos": {},
       "intereses": { "investigacion": 1, "politica": 1 },
       "banderaSet": ["interes_investigacion", "conocio_investigacion", "actividad_resuelta"]
@@ -213,17 +213,17 @@
   {"id": "politica_actividad_datos_01",
   "carrera": "politica",
   "orden": 30,
-  "permiteTransversal": false,
   "requiere": { "banderas": ["conflicto_resuelto", "camino_datos"] },
   "contexto": "📌 La devolución",
   "texto": "La docente lee la última parte del informe.\n\n\"Lo más valioso no es que hayan encontrado un dato, sino que se hayan detenido a preguntarse qué significa, cómo fue producido, qué permite o no afirmar y cómo se relaciona con otras posibles interpretaciones. En política, contar con información es un punto de partida. Explicar supone interpretarla, ponerla en contexto y reconocer sus alcances y límites.\"\n\nAl salir, escuchás una discusión en un aula cercana. Dos compañeros hablan sobre el análisis que también tuvieron que armar para esta materia.\n\nUno dice:\n\"La información objetiva es que...\"\n\nEl otro lo interrumpe.\n\"No. La información nunca es objetiva, está condicionada por la interpretación.\"\n\nLa puerta queda abierta.",
   "opciones": [
-      {
+        {
       "icono": "💬",
       "texto": "Sumarte a la conversación",
       "descripcion": "Entrar y sumarte a la conversación.",
       "efectos": { "confianza": 1, "energia": -1 },
       "intereses": { "comunicacion": 1, "politica": 1 },
+      "permiteTransversal": false,
       "banderaSet": ["interes_opinion_publica", "actividad_datos_pendiente"]
     },
     {
@@ -355,7 +355,8 @@
         "texto": "Dudar de la carrera",
         "descripcion": "Empezar a preguntarte si la carrera realmente era como imaginabas.",
         "efectos": {
-          "exploracion": 1
+          "exploracion": 1,
+          "confianza": -1
         },
         "banderaSet": [
           "desaprobo_primer_parcial",
@@ -375,10 +376,10 @@
   },
   "contexto": "🔄 A mitad de camino",
   "texto": "Ya pasaron varios meses desde que empezaste.\n\nTodavía te acordás del 3. No fue solo una nota: fue la primera vez que sentiste que algo no estaba funcionando como pensabas.\n\nSeguiste juntándote con el grupo de estudio.\n\nAhora tenés una experiencia concreta de la carrera, no solo una idea. También ves que varios compañeros empezaron a dejarla.",
-  "opciones": [
-    { "icono": "💚", "texto": "Cada vez me interesa más", "descripcion": "No era exactamente lo que imaginaba, pero cada vez encuentro más cosas que me interesan.", "efectos": { "confianza": 1, "interes_disciplina": 1 }, "banderaSet": ["retoma_politica"] },
-    { "icono": "🤔", "texto": "Hay cosas que no esperaba", "descripcion": "Hay cosas que me gustan, pero otras no tienen nada que ver con lo que esperaba.", "efectos": { "exploracion": 1 }, "intereses": { "politica": 1 }, "banderaSet": ["duda_carrera"] },
-    { "icono": "🧭", "texto": "Quiero explorar otras cosas", "descripcion": "Quiero conocer qué otras cosas puedo hacer antes de decidir.", "efectos": { "exploracion": 2 }, "banderaSet": ["duda_carrera"] }
+    "opciones": [
+    { "icono": "💚", "texto": "Cada vez me interesa más", "descripcion": "No era exactamente lo que imaginaba, pero cada vez encuentro más cosas que me interesan.", "efectos": { "confianza": 1, "interes_disciplina": 1, "exploracion": -1 }, "banderaSet": ["retoma_politica"] },
+    { "icono": "🤔", "texto": "Hay cosas que no esperaba", "descripcion": "Hay cosas que me gustan, pero otras no tienen nada que ver con lo que esperaba.", "efectos": { "exploracion": 1, "confianza": -1 }, "intereses": { "politica": 1 }, "banderaSet": ["duda_carrera"] },
+    { "icono": "🧭", "texto": "Quiero explorar otras cosas", "descripcion": "Quiero conocer qué otras cosas puedo hacer antes de decidir.", "efectos": { "exploracion": 2, "confianza": -2 }, "banderaSet": ["duda_carrera"] }
   ]
 },
 {
@@ -391,9 +392,9 @@
   "contexto": "🔄 A mitad de camino",
   "texto": "Ya pasaron varios meses desde que empezaste.\n\nTodavía te acordás del 3. No fue solo una nota: fue la primera vez que sentiste que algo no estaba funcionando como pensabas.\n\nSeguiste con la cursada.\n\nAhora tenés una experiencia concreta de la carrera, no solo una idea. También ves que varios compañeros empezaron a dejarla.",
   "opciones": [
-    { "icono": "💚", "texto": "Cada vez me interesa más", "descripcion": "No era exactamente lo que imaginaba, pero cada vez encuentro más cosas que me interesan.", "efectos": { "confianza": 1, "interes_disciplina": 1 }, "banderaSet": ["retoma_politica"] },
-    { "icono": "🤔", "texto": "Hay cosas que no esperaba", "descripcion": "Hay cosas que me gustan, pero otras no tienen nada que ver con lo que esperaba.", "efectos": { "exploracion": 1 }, "intereses": { "politica": 1 }, "banderaSet": ["duda_carrera"] },
-    { "icono": "🧭", "texto": "Quiero explorar otras cosas", "descripcion": "Quiero conocer qué otras cosas puedo hacer antes de decidir.", "efectos": { "exploracion": 2 }, "banderaSet": ["duda_carrera"] }
+    { "icono": "💚", "texto": "Cada vez me interesa más", "descripcion": "No era exactamente lo que imaginaba, pero cada vez encuentro más cosas que me interesan.", "efectos": { "confianza": 1, "interes_disciplina": 1, "exploracion": -1 }, "banderaSet": ["retoma_politica"] },
+    { "icono": "🤔", "texto": "Hay cosas que no esperaba", "descripcion": "Hay cosas que me gustan, pero otras no tienen nada que ver con lo que esperaba.", "efectos": { "exploracion": 1, "confianza": -1 }, "intereses": { "politica": 1 }, "banderaSet": ["duda_carrera"] },
+    { "icono": "🧭", "texto": "Quiero explorar otras cosas", "descripcion": "Quiero conocer qué otras cosas puedo hacer antes de decidir.", "efectos": { "exploracion": 2, "confianza": -2 }, "banderaSet": ["duda_carrera"] }
   ]
 },
 {
@@ -406,9 +407,9 @@
   "contexto": "🔄 A mitad de camino",
   "texto": "Ya pasaron varios meses desde que empezaste.\n\nCuando te anotaste en Ciencia Política tenías una idea de cómo iba a ser. Ahora tenés una experiencia concreta. También ves que varios compañeros empezaron a dejar la carrera.",
   "opciones": [
-    { "icono": "💚", "texto": "Cada vez me interesa más", "descripcion": "No era exactamente lo que imaginaba, pero cada vez encuentro más cosas que me interesan.", "efectos": { "confianza": 1, "interes_disciplina": 1 }, "banderaSet": ["retoma_politica"] },
-    { "icono": "🤔", "texto": "Hay cosas que no esperaba", "descripcion": "Hay cosas que me gustan, pero otras no tienen nada que ver con lo que esperaba.", "efectos": { "exploracion": 1 }, "intereses": { "politica": 1 }, "banderaSet": ["duda_carrera"] },
-    { "icono": "🧭", "texto": "Quiero explorar otras cosas", "descripcion": "Quiero conocer qué otras cosas puedo hacer antes de decidir.", "efectos": { "exploracion": 2 }, "banderaSet": ["duda_carrera"] }
+    { "icono": "💚", "texto": "Cada vez me interesa más", "descripcion": "No era exactamente lo que imaginaba, pero cada vez encuentro más cosas que me interesan.", "efectos": { "confianza": 1, "interes_disciplina": 1, "exploracion": -1 }, "banderaSet": ["retoma_politica"] },
+    { "icono": "🤔", "texto": "Hay cosas que no esperaba", "descripcion": "Hay cosas que me gustan, pero otras no tienen nada que ver con lo que esperaba.", "efectos": { "exploracion": 1, "confianza": -1 }, "intereses": { "politica": 1 }, "banderaSet": ["duda_carrera"] },
+    { "icono": "🧭", "texto": "Quiero explorar otras cosas", "descripcion": "Quiero conocer qué otras cosas puedo hacer antes de decidir.", "efectos": { "exploracion": 2, "confianza": -2 }, "banderaSet": ["duda_carrera"] }
   ]
 },
 {
@@ -481,16 +482,41 @@
   "contexto": "⏳ La espera",
   "texto": "Violeta vuelve. Están revisando otro registro y haciendo una llamada.\n\nPensás que, si nadie insiste, la mujer se termina yendo sin nada.",
   "opciones": [
-    { "icono": "❓", "texto": "¿No alcanza con la receta?", "descripcion": "¿No alcanza con la receta?", "banderaSet": ["entendio_problema_salud"] }
+    {
+      "icono": "❓",
+      "texto": "Preguntar",
+      "descripcion": "¿No alcanza con la receta?",
+      "efectos": { "confianza": 1 },
+      "banderaSet": ["intervino_salud"]
+    },
+    {
+      "icono": "👀",
+      "texto": "No hacer nada",
+      "descripcion": "Quedarte mirando.",
+      "efectos": {},
+      "banderaSet": ["observo_en_silencio"]
+    }
   ]
 },
 
 {
-  "id": "politica_exploracion_experiencia_03",
+  "id": "politica_exploracion_experiencia_03_a",
   "carrera": "politica",
   "orden": 70.3,
   "omitirSiNoCumple": true,
-  "requiere": { "banderas": ["entendio_problema_salud"] },
+  "requiere": { "banderas": ["intervino_salud"] },
+  "contexto": "🤝 La resolución",
+  "texto": "—Hay que verificar la autorización.\n\nDespués de unos minutos encuentran cómo resolverlo. Antes de que la mujer se vaya, la persona del equipo le explica qué hacer la próxima vez y a quién consultar si le vuelve a pasar.\n\nLa mujer agradece y se va. La actividad continúa.\n\nMás tarde, Violeta comenta, como al pasar:\n\n—Vos preguntaste. Yo me quedé ahí, mirando.",
+  "opciones": [
+    { "icono": "➡️", "texto": "Seguir con la actividad", "descripcion": "Seguir con la actividad.", "banderaSet": ["experiencia_salud_completada"] }
+  ]
+},
+{
+  "id": "politica_exploracion_experiencia_03_b",
+  "carrera": "politica",
+  "orden": 70.3,
+  "omitirSiNoCumple": true,
+  "requiere": { "banderas": ["observo_en_silencio"] },
   "contexto": "🤝 La resolución",
   "texto": "—Hay que verificar la autorización.\n\nDespués de unos minutos encuentran cómo resolverlo. Antes de que la mujer se vaya, la persona del equipo le explica qué hacer la próxima vez y a quién consultar si le vuelve a pasar.\n\nLa mujer agradece y se va. La actividad continúa.\n\nMás tarde, Violeta comenta, como al pasar:\n\n—Pensé que iba a ser más fácil. Hay un montón de cosas que no ves hasta que estás acá.",
   "opciones": [
@@ -508,8 +534,8 @@
 "opciones": [
   {
     "icono": "🚶",
-    "texto": "Seguir caminando",
-    "descripcion": "Seguir caminando.",
+    "texto": "Cruzar",
+    "descripcion": "Cruzar y volver a casa.",
     "efectos": { "confianza": 1 },
     "banderaSet": ["retoma_politica"]
     }
@@ -589,7 +615,7 @@
   "opciones": [
     {
       "icono": "🔍",
-      "texto": "Revisar el caso",
+      "texto": "Comenzar",
       "descripcion": "Revisar el caso con más atención.",
       "efectos": {},
       "banderaSet": ["reviso_caso_medicacion"]
@@ -598,89 +624,57 @@
 },
 
 {
-  "id": "politica_pasantia_investigacion_actores_01",
+  "id": "politica_pasantia_hipotesis_01",
   "carrera": "politica",
-  "orden": 82,
+  "orden": 81.1,
   "omitirSiNoCumple": true,
-  "requiere": {
-    "banderas": ["reviso_caso_medicacion", "camino_actores"]
-  },
-  "contexto": "🧩 ¿Qué pasó?",
-  "texto": "—¿Pudiste fijarte qué pasó? —te dice la persona que trabaja con vos.",
+  "requiere": { "banderas": ["reviso_caso_medicacion"] },
+  "contexto": "🤔 Antes de mirar",
+  "texto": "—¿Qué pensás que pasó? —te pregunta la chica que trabaja con vos.",
   "opciones": [
-    {
-      "icono": "🧩",
-      "texto": "Ver los actores institucionales",
-      "descripcion": "Ver qué actores institucionales intervinieron desde el principio del caso hasta ahora.",
-      "efectos": {},
-      "intereses": { "politica": 1, "social": 1 },
-      "banderaSet": ["camino_actores_pasantia"]
-    }
+    { "icono": "🧑", "texto": "Alguien se olvidó de algo", "descripcion": "Seguro alguien se olvidó de algo.", "efectos": {}, "banderaSet": ["hipotesis_persona"] },
+    { "icono": "🏛️", "texto": "Faltó coordinación", "descripcion": "Seguro faltó coordinación entre áreas.", "efectos": {}, "banderaSet": ["hipotesis_coordinacion"] },
+    { "icono": "🖥️", "texto": "Algo mal cargado", "descripcion": "Seguro algo quedó mal cargado en algún lado.", "efectos": {}, "banderaSet": ["hipotesis_sistema"] }
   ]
 },
-
 {
-  "id": "politica_pasantia_investigacion_investigacion_01",
+  "id": "politica_pasantia_metodo_01",
   "carrera": "politica",
   "orden": 82,
   "omitirSiNoCumple": true,
-  "requiere": {
-    "banderas": ["reviso_caso_medicacion", "camino_investigacion"]
-  },
-  "contexto": "📚 ¿Qué pasó?",
-  "texto": "—¿Pudiste fijarte qué pasó? —te dice la persona que trabaja con vos.",
+  "requiere": { "banderas": ["reviso_caso_medicacion"] },
+  "contexto": "🔍 Por dónde empezar",
+  "texto": "¿Por dónde empezás a investigar el caso?",
   "opciones": [
-    {
-      "icono": "📚",
-      "texto": "Buscar casos parecidos",
-      "descripcion": "Buscar si hay más casos parecidos y comparar qué pasó en cada uno antes de mirar este a fondo.",
-      "efectos": {},
-      "intereses": { "politica": 1, "investigacion": 1 },
-      "banderaSet": ["camino_investigacion_pasantia"]
-    }
+    { "icono": "🧩", "texto": "Ver los actores institucionales", "descripcion": "Ver qué actores institucionales intervinieron desde el principio del caso hasta ahora.", "efectos": { "energia": -1 }, "banderaSet": ["camino_actores_pasantia"] },
+    { "icono": "📚", "texto": "Buscar casos parecidos", "descripcion": "Buscar si hay más casos parecidos y comparar qué pasó en cada uno antes de mirar este a fondo.", "efectos": { "energia": -1 }, "banderaSet": ["camino_investigacion_pasantia"] },
+    { "icono": "📊", "texto": "Reconstruir el circuito", "descripcion": "Reconstruir el circuito de la prestación: fechas, números, quién cargó qué.", "efectos": { "energia": -1 }, "banderaSet": ["camino_datos_pasantia"] }
   ]
-},
-
+}
+,
 {
-  "id": "politica_pasantia_investigacion_datos_01",
+  "id": "politica_pasantia_actores_01_social",
   "carrera": "politica",
-  "orden": 82,
+  "orden": 82.1,
+  "prioridad": 1,
   "omitirSiNoCumple": true,
-  "requiere": {
-    "banderas": ["reviso_caso_medicacion", "camino_datos"]
-  },
-  "contexto": "📊 ¿Qué pasó?",
-  "texto": "—¿Pudiste fijarte qué pasó? —te dice la persona que trabaja con vos.",
+  "requiere": { "banderas": ["camino_actores_pasantia"], "intereses": { "social": { "min": 1 } } },
+  "contexto": "🧩 Los actores",
+  "texto": "Averiguás quién actuó en cada paso. Nadie negó la prestación. El centro de salud la pidió y fue autorizada. Pero quedó esperando una confirmación. No hay una decisión que revertir. Hay una espera que nunca se cerró.\n\nTe acordás de la mujer del centro de salud, esperando en el mostrador. Acá también hay alguien del otro lado, esperando.",
   "opciones": [
-    {
-      "icono": "📊",
-      "texto": "Reconstruir el circuito",
-      "descripcion": "Reconstruir el circuito de la prestación: fechas, números, quién cargó qué.",
-      "efectos": {},
-      "intereses": { "politica": 1, "investigacion": 1 },
-      "banderaSet": ["camino_datos_pasantia"]
-    }
+    { "icono": "➡️", "texto": "Seguir revisando el caso", "descripcion": "Un detalle no termina de cerrar. Podés seguirlo antes de sacar conclusiones.", "efectos": {}, "banderaSet": ["pasantia_1er_hallazgo"] }
   ]
 },
-
 {
   "id": "politica_pasantia_actores_01",
   "carrera": "politica",
   "orden": 82.1,
   "omitirSiNoCumple": true,
-  "requiere": {
-    "banderas": ["camino_actores_pasantia"]
-  },
+  "requiere": { "banderas": ["camino_actores_pasantia"] },
   "contexto": "🧩 Los actores",
-  "texto": "Averiguas quién actúo en cada paso.\n\nNadie negó la prestación. El centro de salud la pidió y fue autorizada. Pero quedó esperando una confirmación. No hay una decisión que revertir. Hay una espera que nunca se cerró durante el trámite.",
+  "texto": "Averiguás quién actuó en cada paso. Nadie negó la prestación. El centro de salud la pidió y fue autorizada. Pero quedó esperando una confirmación. No hay una decisión que revertir. Hay una espera que nunca se cerró.",
   "opciones": [
-    {
-      "icono": "➡️",
-      "texto": "Seguir revisando el caso",
-      "descripcion": "Seguir revisando el caso.",
-      "efectos": {},
-      "banderaSet": ["pasantia_caso_resuelto"]
-    }
+    { "icono": "➡️", "texto": "Seguir revisando el caso", "descripcion": "Un detalle no termina de cerrar. Podés seguirlo antes de sacar conclusiones.", "efectos": {}, "banderaSet": ["pasantia_1er_hallazgo"] }
   ]
 },
 
@@ -689,85 +683,251 @@
   "carrera": "politica",
   "orden": 82.1,
   "omitirSiNoCumple": true,
-  "requiere": {
-    "banderas": ["camino_investigacion_pasantia"]
-  },
+  "requiere": { "banderas": ["camino_investigacion_pasantia"] },
   "contexto": "📚 El patrón",
-  "texto": "Hay casos parecidos — varios, en realidad — con el mismo patrón: una autorización que queda esperando una confirmación que nunca llega.\n\nNo es la excepción. Es, probablemente, la regla.",
+  "texto": "Hay casos parecidos — varios, en realidad — con el mismo patrón: una autorización que queda esperando una confirmación que nunca llega. No es la excepción. Es, probablemente, la regla.",
   "opciones": [
-    {
-      "icono": "➡️",
-      "texto": "Seguir revisando el caso",
-      "descripcion": "Seguir revisando el caso.",
-      "efectos": {},
-      "banderaSet": ["pasantia_caso_resuelto"]
-    }
+    { "icono": "➡️", "texto": "Seguir revisando el caso", "descripcion": "Un detalle no termina de cerrar. Podés seguirlo antes de sacar conclusiones.", "efectos": {}, "banderaSet": ["pasantia_1er_hallazgo"] }
   ]
 },
 
+{
+  "id": "politica_pasantia_circuito_01_tecnico",
+  "carrera": "politica",
+  "orden": 82.1,
+  "prioridad": 1,
+  "omitirSiNoCumple": true,
+  "requiere": { "banderas": ["camino_datos_pasantia"], "intereses": { "tecnico": { "min": 1 } } },
+  "contexto": "📊 El circuito",
+  "texto": "Repasás los registros del caso: fechas, números de autorización, la casilla que debía marcarse cuando el centro de salud confirmara la recepción, pero que nunca se completó. No es una decisión que alguien tomó: es información que nadie volvió a chequear.\n\nEs la misma pantalla en que 'todavía no figuraba' aquella vez en el centro de salud.",
+  "opciones": [
+    { "icono": "➡️", "texto": "Seguir revisando el caso", "descripcion": "Un detalle no termina de cerrar. Podés seguirlo antes de sacar conclusiones.", "efectos": {}, "banderaSet": ["pasantia_1er_hallazgo"] }
+  ]
+},
 {
   "id": "politica_pasantia_circuito_01",
   "carrera": "politica",
   "orden": 82.1,
   "omitirSiNoCumple": true,
-  "requiere": {
-    "banderas": ["camino_datos_pasantia"]
-  },
+  "requiere": { "banderas": ["camino_datos_pasantia"] },
   "contexto": "📊 El circuito",
-  "texto": "Repasás los registros del caso: fechas, números de autorización, la casilla que debía marcarse cuando el centro de salud confirmara la recepción, pero que nunca se completó.\n\nNo es una decisión que alguien tomó: es información que nadie volvió a chequear.\n\nLa prestación existe en el sistema. Pero para la persona que la necesitaba, nunca llegó.",
+  "texto": "Repasás los registros del caso: fechas, números de autorización, la casilla que debía marcarse cuando el centro de salud confirmara la recepción, pero que nunca se completó. No es una decisión que alguien tomó: es información que nadie volvió a chequear.",
+  "opciones": [
+    { "icono": "➡️", "texto": "Seguir revisando el caso", "descripcion": "Un detalle no termina de cerrar. Podés seguirlo antes de sacar conclusiones.", "efectos": {}, "banderaSet": ["pasantia_1er_hallazgo"] }
+  ]
+},
+{
+  "id": "politica_pasantia_seguir_01",
+  "carrera": "politica",
+  "orden": 82.2,
+  "omitirSiNoCumple": true,
+  "requiere": { "banderas": ["pasantia_1er_hallazgo"] },
+  "contexto": "🕐 ¿Seguís mirando?",
+  "texto": "Todavía te queda un rato antes de irte.\n\n¿Seguís con esto, o lo dejás así por hoy?",
+  "opciones": [
+    { "icono": "🔎", "texto": "Seguir mirando", "descripcion": "Todavía estás manija.", "efectos": { "energia": -1 }, "banderaSet": ["pasantia_investigo_a_fondo"] },
+    { "icono": "🚪", "texto": "Dejarlo así por hoy", "descripcion": "Te emboló. Querés terminar lo antes posible.", "efectos": {}, "banderaSet": ["pasantia_investigo_una_via"] }
+  ]
+},
+{
+  "id": "politica_pasantia_seguir_actores_01",
+  "carrera": "politica",
+  "orden": 82.3,
+  "omitirSiNoCumple": true,
+  "requiere": { "banderas": ["pasantia_investigo_a_fondo", "camino_actores_pasantia"], "banderas_no": ["camino_investigacion_pasantia", "camino_datos_pasantia"] },
+  "contexto": "🕐 Una cosa más",
+  "texto": "Te queda tiempo para una cosa más.",
   "opciones": [
     {
-      "icono": "➡️",
-      "texto": "Seguir revisando el caso",
-      "descripcion": "Seguir revisando el caso.",
+      "icono": "📚",
+      "texto": "Buscar casos parecidos",
+      "descripcion": "Buscar si hay más casos parecidos.",
       "efectos": {},
-      "banderaSet": ["pasantia_caso_resuelto"]
+      "banderaSet": ["camino_investigacion_pasantia"],
+      "resultado": {
+        "texto": "Hay casos parecidos — varios, en realidad — con el mismo patrón: una autorización que queda esperando una confirmación que nunca llega. No es la excepción. Es, probablemente, la regla.",
+        "opcion": { "icono": "➡️", "texto": "Seguir revisando el caso", "descripcion": "Un detalle no termina de cerrar. Podés seguirlo antes de sacar conclusiones." }
+      }
+    },
+    {
+      "icono": "📊",
+      "texto": "Reconstruir el circuito",
+      "descripcion": "Reconstruir el circuito de la prestación: fechas, números, quién cargó qué.",
+      "efectos": {},
+      "banderaSet": ["camino_datos_pasantia"],
+      "resultado": {
+        "texto": "Repasás los registros del caso: fechas, números de autorización, la casilla que debía marcarse cuando el centro de salud confirmara la recepción, pero que nunca se completó. No es una decisión que alguien tomó: es información que nadie volvió a chequear.",
+        "opcion": { "icono": "➡️", "texto": "Seguir revisando el caso", "descripcion": "Un detalle no termina de cerrar. Podés seguirlo antes de sacar conclusiones." }
+      },
+      "consecuencia": {
+        "requiere": { "intereses": { "tecnico": { "min": 1 } } },
+        "texto": "Es la misma pantalla que 'todavía no figuraba' aquella vez en el centro de salud.",
+        "efectos": {}
+      }
     }
+  ]
+},
+{
+  "id": "politica_pasantia_seguir_investigacion_01",
+  "carrera": "politica",
+  "orden": 82.3,
+  "omitirSiNoCumple": true,
+  "requiere": { "banderas": ["pasantia_investigo_a_fondo", "camino_investigacion_pasantia"], "banderas_no": ["camino_actores_pasantia", "camino_datos_pasantia"] },
+  "contexto": "🕐 Una cosa más",
+  "texto": "Te queda tiempo para una cosa más.",
+  "opciones": [
+    {
+      "icono": "🧩",
+      "texto": "Ver los actores institucionales",
+      "descripcion": "Ver qué actores institucionales intervinieron.",
+      "efectos": {},
+      "banderaSet": ["camino_actores_pasantia"],
+      "resultado": {
+        "texto": "Averiguás quién actuó en cada paso. Nadie negó la prestación. El centro de salud la pidió y fue autorizada. Pero quedó esperando una confirmación. No hay una decisión que revertir. Hay una espera que nunca se cerró.",
+        "opcion": { "icono": "➡️", "texto": "Seguir revisando el caso", "descripcion": "Un detalle no termina de cerrar. Podés seguirlo antes de sacar conclusiones." }
+      },
+      "consecuencia": {
+        "requiere": { "intereses": { "social": { "min": 1 } } },
+        "texto": "Te acordás de la mujer del centro de salud, esperando en el mostrador. Acá también hay alguien del otro lado, esperando.",
+        "efectos": {}
+      }
+    },
+    {
+      "icono": "📊",
+      "texto": "Reconstruir el circuito",
+      "descripcion": "Reconstruir el circuito de la prestación: fechas, números, quién cargó qué.",
+      "efectos": {},
+      "banderaSet": ["camino_datos_pasantia"],
+      "resultado": { "texto": "Repasás los registros del caso: fechas, números de autorización, la casilla que debía marcarse cuando el centro de salud confirmara la recepción, pero que nunca se completó. No es una decisión que alguien tomó: es información que nadie volvió a chequear." },
+      "consecuencia": {
+        "requiere": { "intereses": { "tecnico": { "min": 1 } } },
+        "texto": "Es la misma pantalla en que 'todavía no figuraba' aquella vez en el centro de salud.",
+        "efectos": {}
+      }
+    }
+  ]
+},
+{
+  "id": "politica_pasantia_seguir_datos_01",
+  "carrera": "politica",
+  "orden": 82.3,
+  "omitirSiNoCumple": true,
+  "requiere": { "banderas": ["pasantia_investigo_a_fondo", "camino_datos_pasantia"], "banderas_no": ["camino_actores_pasantia", "camino_investigacion_pasantia"] },
+  "contexto": "🕐 Una cosa más",
+  "texto": "Te queda tiempo para una cosa más.",
+  "opciones": [
+    {
+      "icono": "🧩",
+      "texto": "Ver los actores institucionales",
+      "descripcion": "Ver qué actores institucionales intervinieron.",
+      "efectos": {},
+      "banderaSet": ["camino_actores_pasantia"],
+      "resultado": {
+        "texto": "Averiguás quién actuó en cada paso. Nadie negó la prestación. El centro de salud la pidió y fue autorizada. Pero quedó esperando una confirmación. No hay una decisión que revertir. Hay una espera que nunca se cerró.",
+        "opcion": { "icono": "➡️", "texto": "Seguir revisando el caso", "descripcion": "Un detalle no termina de cerrar. Podés seguirlo antes de sacar conclusiones." }
+      },
+      "consecuencia": {
+        "requiere": { "intereses": { "social": { "min": 1 } } },
+        "texto": "Te acordás de la mujer del centro de salud, esperando en el mostrador. Acá también hay alguien del otro lado, esperando.",
+        "efectos": {}
+      }
+    },
+    {
+      "icono": "📚",
+      "texto": "Buscar casos parecidos",
+      "descripcion": "Buscar si hay más casos parecidos.",
+      "efectos": {},
+      "banderaSet": ["camino_investigacion_pasantia"],
+      "resultado": {
+        "texto": "Hay casos parecidos — varios, en realidad — con el mismo patrón: una autorización que queda esperando una confirmación que nunca llega. No es la excepción. Es, probablemente, la regla.",
+        "opcion": { "icono": "➡️", "texto": "Seguir revisando el caso", "descripcion": "Un detalle no termina de cerrar. Podés seguirlo antes de sacar conclusiones." }
+      }
+    }
+  ]
+},
+{
+  "id": "politica_pasantia_cierre_una_actores",
+  "carrera": "politica", "orden": 83, "omitirSiNoCumple": true,
+  "requiere": { "banderas": ["pasantia_investigo_una_via", "camino_actores_pasantia"] },
+  "contexto": "🔗 Implementar",
+  "texto": "Volvés a armar la trayectoria de la prestación con lo que tenés.\n\nSabés quién tendría que haber cerrado esto. Todavía no sabés si es la primera vez que pasa.",
+  "opciones": [{ "icono": "➡️", "texto": "Armar el informe.", "descripcion": "Ordenar lo que encontraste para dejar registro del caso.", "efectos": {}, "banderaSet": [] }]
+},
+{
+  "id": "politica_pasantia_cierre_una_investigacion",
+  "carrera": "politica", "orden": 83, "omitirSiNoCumple": true,
+  "requiere": { "banderas": ["pasantia_investigo_una_via", "camino_investigacion_pasantia"] },
+  "contexto": "🔗 Implementar",
+  "texto": "Volvés a armar la trayectoria de la prestación con lo que tenés.\n\nSabés que esto se repite. Todavía no sabés, en este caso puntual, quién tendría que haber actuado.",
+  "opciones": [{ "icono": "➡️", "texto": "Armar el informe.", "descripcion": "Ordenar lo que encontraste para dejar registro del caso.", "efectos": {}, "banderaSet": [] }]
+},
+{
+  "id": "politica_pasantia_cierre_una_datos",
+  "carrera": "politica", "orden": 83, "omitirSiNoCumple": true,
+  "requiere": { "banderas": ["pasantia_investigo_una_via", "camino_datos_pasantia"] },
+  "contexto": "🔗 Implementar",
+  "texto": "Volvés a armar la trayectoria de la prestación con lo que tenés.\n\nSabés exactamente dónde se cortó. Todavía no sabés si fue a propósito, por error, o porque nadie lo pidió.",
+  "opciones": [{ "icono": "➡️", "texto": "Armar el informe.", "descripcion": "Ordenar lo que encontraste para dejar registro del caso.", "efectos": {}, "banderaSet": [] }]
+},
+{
+  "id": "politica_pasantia_cierre_fondo_actores_datos",
+  "carrera": "politica", "orden": 83, "omitirSiNoCumple": true,
+  "requiere": { "banderas": ["pasantia_investigo_a_fondo", "camino_actores_pasantia", "camino_datos_pasantia"] },
+  "contexto": "🔗 Implementar",
+  "texto": "Volvés a armar la trayectoria de la prestación con lo que tenés.\n\nSabés quién tendría que haber cerrado esto, y sabés exactamente dónde se cortó. Lo único que te falta es si pasa siempre, o si esta vez fue distinto.",
+  "opciones": [{ "icono": "➡️", "texto": "Armar el informe.", "descripcion": "Ordenar lo que encontraste para dejar registro del caso.", "efectos": {}, "banderaSet": [] }]
+},
+{
+  "id": "politica_pasantia_cierre_fondo_actores_investigacion",
+  "carrera": "politica", "orden": 83, "omitirSiNoCumple": true,
+  "requiere": { "banderas": ["pasantia_investigo_a_fondo", "camino_actores_pasantia", "camino_investigacion_pasantia"] },
+  "contexto": "🔗 Implementar",
+  "texto": "Volvés a armar la trayectoria de la prestación con lo que tenés.\n\nSabés quién tendría que haber cerrado esto, y sabés que esto se repite. Lo único que te falta es dónde, exactamente, se corta cada vez.",
+  "opciones": [{ "icono": "➡️", "texto": "Armar el informe.", "descripcion": "Ordenar lo que encontraste para dejar registro del caso.", "efectos": {}, "banderaSet": [] }]
+},
+{
+  "id": "politica_pasantia_cierre_fondo_datos_investigacion",
+  "carrera": "politica", "orden": 83, "omitirSiNoCumple": true,
+  "requiere": { "banderas": ["pasantia_investigo_a_fondo", "camino_datos_pasantia", "camino_investigacion_pasantia"] },
+  "contexto": "🔗 Implementar",
+  "texto": "Volvés a armar la trayectoria de la prestación con lo que tenés.\n\nSabés dónde se cortó, y sabés que esto se repite. Lo único que te falta es de quién dependía cerrarlo.",
+  "opciones": [{ "icono": "➡️", "texto": "Armar el informe.", "descripcion": "Ordenar lo que encontraste para dejar registro del caso.", "efectos": {}, "banderaSet": [] }]
+},
+{
+  "id": "politica_pasantia_hipotesis_persona_no",
+  "carrera": "politica", "orden": 83.1, "omitirSiNoCumple": true,
+  "requiere": { "banderas": ["hipotesis_persona"], "banderas_no": ["camino_actores_pasantia"] },
+  "contexto": "🔗 Implementar",
+  "texto": "Pensaste que alguien se había olvidado de algo. No fue así: nadie decidió mal. Simplemente nadie volvió a mirar.",
+  "opciones": [{ "icono": "➡️", "texto": "Identificar dónde se perdió el seguimiento.", "descripcion": "Registrar qué pasó entre la última intervención y el momento en que el caso quedó sin seguimiento.", "efectos": {}, "banderaSet": [] }]
+},
+{
+  "id": "politica_pasantia_hipotesis_coordinacion_no",
+  "carrera": "politica", "orden": 83.1, "omitirSiNoCumple": true,
+  "requiere": { "banderas": ["hipotesis_coordinacion"], "banderas_no": ["camino_actores_pasantia"] },
+  "contexto": "🔗 Implementar",
+  "texto": "Pensaste que dos áreas no se habían coordinado. Nadie se hizo cargo, directamente.",
+  "opciones": [{ "icono": "➡️", "texto": "Dejar constancia del problema.", "descripcion": "Dejar constancia de lo que encontraste: nadie asumió el seguimiento del caso.", "efectos": {}, "banderaSet": [] }]
+},
+{
+  "id": "politica_pasantia_hipotesis_sistema_no",
+  "carrera": "politica", "orden": 83.1, "omitirSiNoCumple": true,
+  "requiere": { "banderas": ["hipotesis_sistema"], "banderas_no": ["camino_datos_pasantia"] },
+  "contexto": "🔗 Implementar",
+  "texto": "Pensaste que algo había quedado mal cargado. Puede ser. Lo que encontraste vos fue otra cosa.",
+  "opciones": [{ "icono": "➡️", "texto": "Cambiar de hipótesis.", "descripcion": "Un problema en la carga no alcanza para explicar lo que encontraste.", "efectos": {}, "banderaSet": [] }]
+},
+{
+  "id": "politica_pasantia_cierre_final",
+  "carrera": "politica", "orden": 83.2, "omitirSiNoCumple": true,
+  "requiere": { "banderas": ["pasantia_1er_hallazgo"] },
+  "contexto": "🔗 Implementar",
+  "texto": "No alcanza con que algo esté autorizado. Alguien, en algún punto del circuito, tiene que sostenerlo hasta que llegue.\n\nPor primera vez entendés qué significa implementar una política pública.",
+  "opciones": [
+    { "icono": "🤝", "texto": "Compartir lo que encontraste", "descripcion": "Mostrarle lo que encontraste con tu compañera de trabajo y volver a casa.", "efectos": {}, "banderaSet": ["pasantia_medicina_resuelta"] }
   ]
 },
 
-{
-  "id": "politica_pasantia_cierre_01",
-  "carrera": "politica",
-  "orden": 83,
-  "omitirSiNoCumple": true,
-  "requiere": {
-    "banderas": ["pasantia_caso_resuelto", "experiencia_salud_completada"]
-  },
-  "contexto": "🔗 Implementar",
-  "texto": "Seguís el recorrido del trámite.\n\nEl programa está definido, la prestación está autorizada, el pedido fue realizado. Pero cada parte depende de otra para que finalmente llegue a quien la necesita. En el medio aparecen demoras, información que no se actualiza y áreas que tendrían que coordinarse entre sí y no lo hacen.\n\nTe acordás del semáforo con Violeta.\n\nNo alcanza con que algo esté autorizado. Alguien, en algún punto del circuito, tiene que sostenerlo hasta que llegue.\n\nPor primera vez entendés qué significa implementar una política pública.",
-  "opciones": [
-    {
-      "icono": "➡️",
-      "texto": "Seguir",
-      "descripcion": "Seguir.",
-      "efectos": {},
-      "banderaSet": ["pasantia_medicina_resuelta"]
-    }
-  ]
-},
-
-{
-  "id": "politica_pasantia_cierre_02",
-  "carrera": "politica",
-  "orden": 83,
-  "omitirSiNoCumple": true,
-  "requiere": {
-    "banderas": ["pasantia_caso_resuelto"],
-    "banderas_no": ["experiencia_salud_completada"]
-  },
-  "contexto": "🔗 Implementar",
-  "texto": "Seguís el recorrido del trámite.\n\nEl programa está definido, la prestación está autorizada, el pedido fue realizado. Pero cada parte depende de otra para que finalmente llegue a quien la necesita. En el medio aparecen demoras, información que no se actualiza y áreas que tendrían que coordinarse entre sí y no lo hacen.\n\nNo alcanza con que algo esté autorizado. Alguien, en algún punto del circuito, tiene que sostenerlo hasta que llegue.\n\nPor primera vez entendés qué significa implementar una política pública.",
-  "opciones": [
-    {
-      "icono": "➡️",
-      "texto": "Seguir",
-      "descripcion": "Seguir.",
-      "efectos": {},
-      "banderaSet": ["pasantia_medicina_resuelta"]
-    }
-  ]
-},
   {
     "id": "politica_oportunidad_01",
     "carrera": "politica",
@@ -1099,5 +1259,224 @@
       "efectos": {}
     }
   ]
+},
+
+{
+  "id": "politica_apuro_economico_comedor",
+  "carrera": "politica",
+  "rangoOrden": [50, 60],
+  "funcion": "acompanamiento_economico",
+  "contexto": "🍽️ ¿Comemos algo?",
+  "texto": "Son las dos de la tarde. Todavía te quedan varias horas de cursada y tenés la plata justa para volver a casa.\n\nMale te pregunta:\n\n—¿Comemos algo?\n\nSabés que si la gastás te tenés que volver caminando.\n\n¿Qué hacés?",
+  "opciones": [
+    {
+      "icono": "🙅",
+      "texto": "Aguantar y decirle: \"No amiga, tranqui. No tengo hambre.\"",
+      "descripcion": "Guardarte la plata del viaje y bancarte el resto de la tarde sin comer.",
+      "efectos": { "energia": -1 },
+      "resultado": {
+        "texto": "La tarde se hace larga y en la última clase te cuesta concentrarte. Llegás a tu casa y comés apenas entrás."
+      }
+    },
+    {
+      "icono": "🤲",
+      "texto": "Pedirle plata prestada.",
+      "descripcion": "Contarle a Male que andás justo de plata y pedirle que te preste para comer.",
+      "efectos": { "confianza": 1, "energia": 1 },
+      "banderaSet": ["conocio_comedor"],
+      "resultado": {
+        "texto": "Male: —No, tranqui, te invito yo. Vamos al comedor, no hace falta que me devuelvas.",
+        "recurso": {
+          "nombre": "Comedores Universitarios - UNR ↗️",
+          "descripcion": "Información sobre los comedores universitarios de la Universidad Nacional de Rosario.",
+          "link": "https://unr.edu.ar/comedores/"
+        }
+      }
+    }
+  ],
+  "consecuencia": {
+    "requiere": {
+      "banderas": ["conocio_comedor"]
+    },
+    "contexto": "📱 El QR",
+    "texto": "Durante las siguientes semanas seguís yendo al comedor cuando podés. Pero este mes perdés algunas horas de trabajo debido al cursado, y empezás a tener que ajustar otros gastos para llegar a fin de mes.\n\nUn día, mientras estás esperando tu menú, ves un QR cerca de la caja.\n\n¿Qué hacés?",
+    "efectos": { "dinero": -1 },
+    "opciones": [
+      {
+        "icono": "📱",
+        "texto": "Escanear el QR.",
+        "descripcion": "Escanear el código para ver qué es y de qué se trata.",
+        "efectos": { "dinero": 1, "confianza": 1 },
+        "banderaSet": ["conocio_beca_alimentos"],
+        "resultado": {
+          "texto": "Abrís el enlace. Es información sobre la Beca de Alimentos de la UNR. Te inscribís.",
+          "recurso": {
+            "nombre": "Becas UNR - Beca de Alimentos ↗️",
+            "descripcion": "Beca que cubre el costo de las comidas en los comedores universitarios. Inscripción online.",
+            "link": "https://becas.unr.edu.ar/"
+          }
+        },
+        "consecuencia": {
+          "contexto": "🤝 Orientación Estudiantil",
+          "texto": "Pasa el tiempo y la situación económica empieza a afectar tu cursada. Ya no se trata solo de ajustar gastos: necesitás tomar más horas de trabajo y empezás a faltar a algunas clases. Te das cuenta de que, si la situación sigue así, cada vez te va a costar más sostener la carrera.\n\nAlguien de Orientación Estudiantil te cuenta sobre la Beca de Asistencia Integral.\n\n¿Qué hacés?",
+          "efectos": { "energia": -1 },
+          "opciones": [
+            {
+              "icono": "🔎",
+              "texto": "Averiguar si podés acceder a ese acompañamiento.",
+              "descripcion": "Preguntar en Orientación Estudiantil si cumplís los requisitos para esa beca.",
+              "efectos": { "confianza": 1, "dinero": 1 },
+              "banderaSet": ["averiguo_asistencia_integral"],
+              "resultado": {
+                "recurso": {
+                  "nombre": "Becas UNR - Beca de Asistencia Integral ↗️",
+                  "descripcion": "Acompañamiento económico integral orientado a estudiantes con dificultades para garantizar su permanencia en la carrera. Inscripción online en becas.unr.edu.ar.",
+                  "link": "https://becas.unr.edu.ar/"
+                }
+              }
+            },
+            {
+              "icono": "💪",
+              "texto": "Intentar seguir resolviéndolo por tu cuenta.",
+              "descripcion": "No pedir ayuda todavía e intentar bancar la situación económica solo/a.",
+              "efectos": { "energia": -1 },
+              "banderaSet": ["sostiene_problema_economico"]
+            }
+          ]
+        }
+      },
+      {
+        "icono": "⏳",
+        "texto": "Seguir esperando.",
+        "descripcion": "No prestarle atención al QR y quedarte esperando tu turno como siempre.",
+        "efectos": { },
+        "banderaSet": ["mantiene_solucion_comedor"]
+      }
+    ]
+  }
+},
+
+{
+  "id": "politica_salir_del_papel",
+  "carrera": "politica",
+  "rangoOrden": [30, 40],
+  "funcion": "acompanamiento_academico",
+  "contexto": "🎤 Salir del papel",
+  "texto": "Pasaron algunos días. Tenés que presentar oralmente un trabajo en clase. Arrancás bien. Después te hacen una pregunta. Sabés la respuesta, pero no logras formularla.\n\nTe trabas.\n\nMirás tus apuntes.\n\nIntentás volver a explicar.\n\nCuando finalmente terminás, sentís que no salió tan mal. Pero tampoco salió como lo habías imaginado.\n\nAfuera del aula, te cruzás con Fede.\n\n—¿Cómo te fue?\n\n—No sé. Me había estudiado todo. Pero cuando tuve que explicarlo me quedé en blanco.\n\nFede se ríe.\n\n—A mí me pasaba lo mismo.\n\n—¿Y qué hiciste?\n\n—Y... la verdad que solo, releyendo, no me entra nada. Yo empecé a ir con un tutor de Codo a Codo. Me ayudó a encontrar otra forma de estudiar, a organizarme y a preparar mejor las exposiciones. Me obliga a no quedarme solamente leyendo. Si querés te paso los horarios.\n\n¿Qué hacés?",
+  "opciones": [
+    {
+      "icono": "🤝",
+      "texto": "Dale. Quiero probar.",
+      "descripcion": "Aceptar la propuesta de Fede y anotarte en Codo a Codo.",
+      "efectos": { "confianza": 1, "energia": -1, "interes_disciplina": 1 },
+      "banderaSet": ["flag_codo_a_codo"],
+      "resultado": {
+      "texto": "El martes era el único hueco libre que tenías esa semana, pero vas igual. No es una clase: es un espacio de acompañamiento con un estudiante avanzado. Le contás cómo venís estudiando y juntos revisan qué te está pasando y cómo podés encararlo de otra manera.\n\nEn un momento te das cuenta de algo: habías leído varias veces los apuntes, pero nunca habías intentado explicar con tus propias palabras lo que habías entendido.\n\nEn la próxima exposición te va mejor, aunque esa tarde libre ya no la tenés.",
+        "recurso": {
+          "nombre": "Programa Codo a Codo ↗️",
+          "descripcion": "Acompañamiento académico entre estudiantes, con herramientas para mejorar las estrategias de estudio y organizar mejor el aprendizaje.",
+          "link": "https://unr.edu.ar/codo-a-codo/"
+        }
+      }
+    },
+    {
+      "icono": "📖",
+      "texto": "Nah, para la próxima cambio algunas cosas y estudio más horas.",
+      "descripcion": "Confiar en tu propio método y resolverlo metiéndole más horas de estudio.",
+      "efectos": { "progreso": 1, "energia": -1 },
+      "banderaSet": ["flag_metodo_propio"],
+      "resultado": {
+        "texto": "Volvés a estudiar, esta vez metiéndole muchas más horas e intentando explicar cada tema como si alguien te estuviera haciendo una pregunta. La próxima exposición te sale mejor. Eso sí: llegás agotado, y no tenés del todo claro si vas a poder sostener el mismo ritmo para todas las materias."
+      }
+    }
+  ],
+  "consecuencia": {
+   "contexto": "🗓️ Demasiado para una semana",
+   "texto": "Semanas después:\n\nLa estrategia nueva te sirvió.\n\nPero ahora aparece otro problema.\n\nTenés tres materias encima, dos trabajos prácticos y un parcial la semana siguiente. Abrís el calendario y no sabés por dónde empezar.\n\nEn la fotocopiadora escuchás a un compañero comentar:\n\n—Yo antes iba a las tutorías cuando no entendía una materia. Pero me di cuenta de que no era solamente que no entendía. No sabía cómo organizarme con todo.\n\n—¿Y qué hiciste?\n\n—Fui a Orientación Estudiantil.\n\nTe quedás pensando si tu problema también es ese.\n\n¿Qué hacés?",
+    "efectos": { "energia": -1 },
+    "opciones": [
+      {
+        "icono": "🧭",
+        "texto": "Ir a Orientación Estudiantil.",
+        "descripcion": "Acercarte a Orientación Estudiantil para ver cómo organizarte mejor con todo.",
+        "efectos": { "confianza": 1, "progreso": 1 },
+        "banderaSet": ["flag_orientacion_estudiantil"],
+        "resultado": {
+          "recurso": {
+            "nombre": "Orientación Estudiantil UNR ↗️",
+            "descripcion": "Espacio de acompañamiento ante dificultades de organización y adaptación a la vida universitaria, con acceso a Entrevistas de Orientación Pedagógica.",
+            "link": "https://unr.edu.ar/orientacion-estudiantil/"
+          }
+        }
+      },
+      {
+        "icono": "🚶",
+        "texto": "Seguir por tu cuenta.",
+        "descripcion": "No pedir ayuda todavía e intentar organizarte solo/a con lo que tenés.",
+        "efectos": { "energia": -1 },
+        "banderaSet": ["flag_autogestion_estudio"]
+      }
+    ]
+  }
+},
+
+{
+  "id": "transversal_silencio_gime",
+  "carrera": "politica",
+  "rangoOrden": [90, 100],
+  "funcion": "acompanamiento_y_bienestar",
+  "contexto": "🌙 El mensaje de Gime",
+  "requiere": {
+    "variables": { "energia": { "max": 1 } }
+  },
+  "texto": "Hace más de una semana que no vas a la facu.\n\nSilenciaste el grupo hace unos días, sin pensarlo mucho.\n\nEstás en tu cuarto, de noche, con el celular en la mano.\n\nTe llega un mensaje de Gime:\n\n\"Che, ¿todo bien? ¿no estás yendo más a cursar?\"\n\n¿Qué le contestás?",
+  "opciones": [
+    {
+      "icono": "💬",
+      "texto": "Contarle que la venís pasando mal en serio y que no tenés ganas de nada.",
+      "descripcion": "Abrirte de verdad con Gime, sin bajarle el tono a cómo la estás pasando.",
+      "efectos": { "confianza": 1, "energia": 1 },
+      "banderaSet": ["abrio_conversacion", "conocio_salud_mental"],
+      "resultado": {
+        "texto": "Gime: Uh... con razón no estabas apareciendo. A mí me pasó algo parecido el cuatrimestre pasado. Venía bastante mal, estaba agotada, dormía pésimo y terminé yendo al Centro de Salud de la Siberia. Hablé con alguien de ahí y me re sirvió. Si querés, te acompaño.",
+        "recurso": {
+          "nombre": "Centro de Salud \"Dr. Arturo Illia\" ↗️",
+          "descripcion": "Atención primaria gratuita para estudiantes sin obra social: medicina general, psicología, trabajo social, enfermería y un dispositivo específico de salud mental. Lunes a viernes de 9 a 17 hs, con turno o por guardia en situaciones urgentes.",
+          "link": "https://radio.unr.edu.ar/2026/04/06/la-unr-abre-el-centro-de-salud-siberia-dr-arturo-illia/"
+        }
+      }
+    },
+    {
+      "icono": "🙂",
+      "texto": "\"Todo bien, un quilombo personal nomás.\"",
+      "descripcion": "Restarle importancia y cortar la conversación ahí, sin dar más detalles.",
+      "efectos": { "energia": -1 },
+      "banderaSet": ["minimizo", "no_abrio_con_gime"],
+      "resultado": {
+        "texto": "Gime: Ok, cualquier cosa avisame."
+      }
+    },
+    {
+      "icono": "🔇",
+      "texto": "No contestar.",
+      "descripcion": "Dejar el mensaje sin responder y quedarte con el celular en la mano.",
+      "efectos": { "energia": -1, "confianza": -1 },
+      "banderaSet": ["evito", "no_abrio_con_gime"]
+    }
+  ],
+  "consecuencia": {
+    "requiere": {
+      "banderas": ["no_abrio_con_gime"]
+    },
+    "contexto": "🏥 La sala de espera",
+    "texto": "Estás en la sala de espera del Centro de Salud \"Dr. Arturo Illia\" en la Siberia, esperando que te llamen para el certificado que te piden en el área de Deportes de la facultad. Hace poco empezaste a entrenar para despejarte un poco y levantar el ánimo.\n\nMientras esperás, mirás alrededor.\n\nEn una pared hay información sobre las distintas formas de atención del centro. Entre ellas, encontrás una referencia al acompañamiento en salud mental.\n\nNo sabías que también podías consultar por eso ahí.\n\nTe quedás mirando el cartel un segundo más.\n\nDespués escuchás tu nombre. Te llaman para el certificado.\n\nSabés que podés volver si alguna vez lo necesitás.",
+    "efectos": { "confianza": 1 },
+    "banderaSet": ["conocio_salud_mental"]
+  },
+  "recurso": {
+    "nombre": "Centro de Salud \"Dr. Arturo Illia\" ↗️",
+    "descripcion": "Atención primaria gratuita para estudiantes sin obra social: medicina general, psicología, trabajo social, enfermería y un dispositivo específico de salud mental. Lunes a viernes de 9 a 17 hs, con turno o por guardia en situaciones urgentes.",
+    "link": "https://radio.unr.edu.ar/2026/04/06/la-unr-abre-el-centro-de-salud-siberia-dr-arturo-illia/"
+  }
 }
 ]

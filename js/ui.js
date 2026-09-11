@@ -65,6 +65,12 @@ function renderEvento(evento, onElegir, estado) {
     narrativaBloque.innerHTML += `<p class="decision-narrativa-titulo">${evento.contexto}</p>`;
   }
   narrativaBloque.innerHTML += `<p class="decision-narrativa-texto">${(evento.icono ? evento.icono + ' ' : '') + evento.texto}</p>`;
+    if (evento.recurso) {
+    narrativaBloque.appendChild(crearFichaRecurso(evento.recurso));
+  }
+  if (evento.recursoSecundario) {
+    narrativaBloque.appendChild(crearFichaRecurso(evento.recursoSecundario));
+  }
   narrativa.appendChild(narrativaBloque);
   narrativaGrupo.appendChild(narrativa);
 
@@ -131,9 +137,9 @@ function crearHeaderJugador(resumen) {
 }
 
 
-function crearPanelIndicadores(resumen) {
+function crearPanelIndicadores(resumen, opciones = {}) {
   const panel = document.createElement('div');
-  panel.className = 'decision-panel';
+  panel.className = 'decision-panel' + (opciones.final ? ' final' : '');
   panel.id = 'panel-stats';
 
   const datos = document.createElement('div');
@@ -380,7 +386,7 @@ function renderCargandoIntervencionIA() {
 
   const parrafo = document.createElement('p');
   parrafo.className = 'intervencion-ia-cargando';
-  parrafo.innerHTML = 'Preparando tu comentario personalizado con IA <span class="emoji-carga">🪄</span>';
+  parrafo.innerHTML = 'Analizando tu recorrido con IA <span class="emoji-carga">🪄</span>';
   contenedor.appendChild(parrafo);
 }
 
@@ -439,6 +445,7 @@ ficha.appendChild(nombre);
 }
 
 const ASSETS_FACULTADES = 'assets/facultades/';
+const CARRERAS_NO_DISPONIBLES = ['arquitectura', 'economia'];
 const ICONOS_FACULTAD = {
   fcpolit: { prefix: 'fcpolit', tipo: 'fila', count: 7 },
   farpd: {
@@ -549,6 +556,10 @@ facultad.carreras.forEach((carrera) => {
   boton.type = 'button';
   boton.className = 'boton-probar';
   boton.textContent = carrera.nombre;
+  if (CARRERAS_NO_DISPONIBLES.includes(carrera.id)) {
+  boton.classList.add('no-disponible');
+  boton.disabled = true;
+}
 
   if (carrera.id === 'medicina') {
     const demo = document.createElement('span');
@@ -565,13 +576,6 @@ facultad.carreras.forEach((carrera) => {
   });
 
   contenedorCarrera.appendChild(boton);
-
-if (carrera.id === 'arquitectura' || carrera.id === 'economia') {
-  const proximo = document.createElement('span');
-  proximo.className = 'badge-proximamente';
-  proximo.textContent = 'PRÓXIMAMENTE';
-  contenedorCarrera.appendChild(proximo);
-}
 
 filaBotonesProbar.appendChild(contenedorCarrera);
 });
@@ -655,6 +659,24 @@ function renderFinDeEventos() {
   contenedor.appendChild(texto);
 }
 
+function renderResultadoFinal(resumen) {
+  const contenedor = document.getElementById('juego');
+  if (!contenedor) return;
+  contenedor.innerHTML = '';
+
+  contenedor.appendChild(crearLogoHorizontal());
+
+  const bloque = document.createElement('div');
+  bloque.className = 'decision-bloque';
+
+  const personaje = document.createElement('div');
+  personaje.className = 'decision-personaje';
+  personaje.appendChild(crearHeaderJugador(resumen));
+  personaje.appendChild(crearPanelIndicadores(resumen, { final: true }));
+  bloque.appendChild(personaje);
+
+  contenedor.appendChild(bloque);
+}
 
 function renderDebugEstado(estado) {
   const debug = document.getElementById('debug');
@@ -666,6 +688,7 @@ function renderDebugEstado(estado) {
 export {
   renderEvento,
   renderConsecuencia,
+  renderResultadoFinal,
   renderResultadoOpcion,
   renderInicio,
   renderFinDeEventos,
