@@ -23,10 +23,20 @@
 // Los eventos transversales NO reemplazan la progresión principal.
 // Solamente pueden aparecer entre etapas.
 
+import {
+  renderEvento,
+  renderInicio,
+  renderFinDeEventos,
+  renderResultadoFinal,
+  renderDebugEstado,
+  renderCargandoIntervencionIA,
+  actualizarNarrativaFinal
+} from './ui.js';
 
 import {
   estadoInicial,
   registrarDecision,
+  registrarEvento,
   obtenerContextoSeguroIA
 } from './estado.js';
 
@@ -42,16 +52,6 @@ import {
   cargar,
   borrar
 } from './storage.js';
-
-import {
-  renderEvento,
-  renderInicio,
-  renderFinDeEventos,
-  renderResultadoFinal,
-  renderDebugEstado,
-  renderIntervencionIA,
-  renderCargandoIntervencionIA
-} from './ui.js';
 
 let estado;
 let eventos;
@@ -647,58 +647,58 @@ function mostrarSiguiente() {
 
   };
 
-
   // ----------------------------------------------------------
-  // INTERVENCIÓN DE IA (única vez, punto fijo del recorrido)
+  // FINAL DE LA PARTIDA (evento único de orden 110)
   // ----------------------------------------------------------
 
 const ORDEN_FINAL = 110;
 
-if (
-  evento.orden === ORDEN_FINAL &&
-  !estado.banderas.intervencion_ia_vista
-  ) {
+if (evento.orden === ORDEN_FINAL) {
 
-    estado.banderas.intervencion_ia_vista = true;
+  registrarEvento(estado, evento.id);
+  guardar(estado);
 
-    renderCargandoIntervencionIA();
-
-    pedirIntervencionIA(estado).then((texto) => {
-
-         renderIntervencionIA(
-        texto || '...',
-        () => renderEvento(
-          {
-            contexto: evento.contexto,
-            texto: aplicarConflictoATexto(evento.texto),
-            opciones: evento.opciones
-          },
-          manejarEleccion,
-          construirResumenJugador(estado, facultades)
-        )
-      );
-
-    });
-
-  } else {
-        renderEvento(
-      {
-        contexto: evento.contexto,
-        texto: aplicarConflictoATexto(evento.texto),
-        opciones: evento.opciones
-      },
-      manejarEleccion,
-      construirResumenJugador(estado, facultades)
-    )
-
-  }
-
-
-  renderDebugEstado(
-    estado
+  renderResultadoFinal(                     // pantalla final normal, con panel de stats, desde el arranque
+    construirResumenJugador(estado, facultades),
+    { cargando: true }
   );
+
+  const botonReiniciar = document.getElementById('reiniciar');
+  if (botonReiniciar) botonReiniciar.textContent = 'Jugar de nuevo';
+
+  pedirIntervencionIA(estado).then((texto) => {
+
+    actualizarNarrativaFinal(               // solo actualiza el texto dentro de la misma caja
+      evento.contexto,
+      texto || evento.texto
+    );
+
+    renderDebugEstado(estado);
+
+  });
+
+  return;
+
 }
 
+else {
+      renderEvento(
+    {
+      contexto: evento.contexto,
+      texto: aplicarConflictoATexto(evento.texto),
+      opciones: evento.opciones
+    },
+    manejarEleccion,
+    construirResumenJugador(estado, facultades)
+  )
+
+}
+
+
+renderDebugEstado(
+  estado
+);
+}
 
 // ------------------------------------------------------------
 // INTERVENCIÓN DE IA — LLAMADA AL WORKER

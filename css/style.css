@@ -544,6 +544,11 @@ body {
   flex-shrink: 0;
 }
 
+#reiniciar {
+  position: relative;
+  margin-left: calc((100% - 365px) / 2 + 12px);
+}
+
 #reiniciar:hover {
   background-color: #120ffe;
 }
@@ -690,9 +695,198 @@ body {
 }
 
 .decision-panel.final .decision-parametros {
+  display: none;
+}
+
+.decision-panel.final.expandido .decision-parametros {
   display: flex;
 }
 
 .decision-panel.final .decision-colapsar {
   display: none;
+}
+
+/* --- Variante de arcos SOLO para la pantalla final --- */
+
+.decision-panel.final .decision-promedio {
+  width: 94.154px;
+  height: 51px;
+}
+
+.decision-panel.final .decision-competencia-valor {
+  width: 30px;
+}
+
+.decision-panel.final .decision-competencia-arco {
+  width: 30px;
+  height: 16px;
+}
+
+.decision-panel.final .decision-promedio-arco svg path {
+  stroke-width: 4px;
+}
+
+.decision-panel.final .decision-competencia-arco svg path {
+  stroke-width: 6px;
+}
+
+.decision-panel.final .decision-stats-fila {
+  flex-direction: column;
+  align-items: center;
+}
+
+.decision-panel.final .decision-promedio {
+  width: 144px;
+  height: 78px;
+}
+
+.decision-panel.final .decision-promedio-arco svg path {
+  stroke-width: 6px;
+}
+
+.decision-panel.final .decision-stats-fila {
+  gap: 27px;
+}
+
+.decision-panel.final .decision-promedio-num {
+  width: 44px;
+}
+
+.decision-panel.final .decision-promedio-num strong {
+  font-size: 23.445px;
+}
+
+.decision-panel.final .decision-promedio-num span {
+  font-size: 9.6px;
+}
+
+.decision-panel.final .decision-promedio-caret {
+  width: 24px;
+  height: 24px;
+}
+
+.decision-panel.final .decision-promedio-caret img {
+  width: 9.95px;
+  height: 4.97px;
+  left: 7px;
+  top: 9.5px;
+}
+
+.decision-panel.final .decision-promedio {
+  padding: 38px 47px;
+  gap: 10px;
+}
+
+.decision-panel.final .decision-competencias-fila {
+  gap: 41px;
+}
+
+.decision-panel.final .decision-competencia {
+  width: 46px;
+}
+
+.decision-panel.final .decision-parametros {
+  margin-top: -9px;
+}
+
+.decision-panel.final .decision-parametro-porcentaje {
+  margin-top: -4px;
+}
+
+.decision-panel.final .decision-objetivos {
+  display: none;
+}
+
+.decision-panel.final.expandido .decision-objetivos {
+  display: flex;
+}
+
+.decision-panel.final .decision-barra-fondo,
+.decision-panel.final .decision-barra-progreso {
+  height: 9px;
+}
+
+.decision-panel.final .decision-hitos {
+  justify-content: center;
+  gap: 65px;
+  padding: 0 7px;
+  margin-top: 0;
+}
+
+.decision-panel.final .decision-colapsar {
+  display: flex;
+}
+
+.decision-panel.final .decision-competencias-fila {
+  gap: 30px;
+}
+
+.decision-panel.final .decision-competencia {
+  width: 55px;
+}
+
+.decision-panel.final .decision-competencia-valor {
+  width: 36px;
+  padding: 11px 12px;
+  margin-bottom: -7px;
+}
+
+.decision-panel.final .decision-competencia-arco {
+  width: 36px;
+  height: 19px;
+}
+
+.decision-panel.final .decision-competencia-valor span {
+  font-size: 10px;
+}
+
+.decision-panel.final .decision-competencia-label {
+  font-size: 9px;
+}
+
+.decision-panel.final .decision-promedio {
+  width: 120px;
+  height: 65px;
+  padding: 31.66px 39.15px;
+  gap: 8.33px;
+}
+
+.decision-panel.final .decision-promedio-arco svg path {
+  stroke-width: 4px;
+}
+
+.decision-panel.final .decision-promedio-num {
+  width: 36.66px;
+}
+
+.decision-panel.final .decision-promedio-num strong {
+  font-size: 19.53px;
+}
+
+.decision-panel.final .decision-promedio-num span {
+  font-size: 8px;
+}
+
+.decision-panel.final .decision-promedio-caret {
+  width: 20px;
+  height: 20px;
+}
+
+.decision-panel.final .decision-promedio-caret img {
+  width: 8.28px;
+  height: 4.14px;
+  left: 5.86px;
+  top: 7.9px;
+}
+
+.decision-panel.final .decision-objetivos {
+  width: 100%;
+}
+
+.decision-resultado-final {
+  cursor: default;
+}
+
+.decision-resultado-final:hover {
+  background: rgba(0, 0, 0, 0.22);
 }

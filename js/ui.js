@@ -8,7 +8,7 @@
 const ASSETS = 'assets/decision/';
 
 const ICONO_GENERICO = '📌';
-const DESCRIPCION_GENERICA = 'Elegí cómo actuar frente a esta situación.';
+const DESCRIPCION_GENERICA = 'Seguir avanzando.';
 
 const HITOS = [
   { icono: ASSETS + 'icono-personas.svg' },
@@ -390,27 +390,6 @@ function renderCargandoIntervencionIA() {
   contenedor.appendChild(parrafo);
 }
 
-function renderIntervencionIA(texto, onContinuar) {
-  const contenedor = document.getElementById('juego');
-  if (!contenedor) return;
-  contenedor.innerHTML = '';
-
-  const parrafo = document.createElement('p');
-  parrafo.className = 'intervencion-ia-texto';
-  parrafo.textContent = texto;
-  contenedor.appendChild(parrafo);
-
-  const boton = document.createElement('button');
-  boton.type = 'button';
-  boton.className = 'continuar';
-  boton.textContent = 'Continuar';
-  boton.addEventListener('click', () => {
-    boton.disabled = true;
-    onContinuar();
-  });
-  contenedor.appendChild(boton);
-}
-
 
 function crearFichaRecurso(recurso) {
   const ficha = document.createElement('div');
@@ -659,7 +638,7 @@ function renderFinDeEventos() {
   contenedor.appendChild(texto);
 }
 
-function renderResultadoFinal(resumen) {
+function renderResultadoFinal(resumen, narrativa = {}) {
   const contenedor = document.getElementById('juego');
   if (!contenedor) return;
   contenedor.innerHTML = '';
@@ -675,13 +654,42 @@ function renderResultadoFinal(resumen) {
   personaje.appendChild(crearPanelIndicadores(resumen, { final: true }));
   bloque.appendChild(personaje);
 
-  contenedor.appendChild(bloque);
+const narrativaGrupo = document.createElement('div');
+narrativaGrupo.className = 'decision-narrativa-grupo';
+
+const caja = document.createElement('div');
+caja.className = 'decision-eleccion decision-resultado-final';
+caja.id = 'resultado-final-caja';
+
+caja.innerHTML = narrativa.cargando
+  ? `<div class="decision-eleccion-cuerpo">
+       <p class="decision-eleccion-desc intervencion-ia-cargando">Analizando tu recorrido con IA <span class="emoji-carga">🪄</span></p>
+     </div>`
+  : `<div class="decision-eleccion-cuerpo">
+       ${narrativa.contexto ? `<p class="decision-eleccion-titulo">${narrativa.contexto}</p>` : ''}
+       <p class="decision-eleccion-desc">${narrativa.texto || ''}</p>
+     </div>`;
+
+narrativaGrupo.appendChild(caja);
+bloque.appendChild(narrativaGrupo);
+
+contenedor.appendChild(bloque);
 }
 
 function renderDebugEstado(estado) {
   const debug = document.getElementById('debug');
   if (!debug) return;
   debug.textContent = JSON.stringify(estado, null, 2);
+}
+
+function actualizarNarrativaFinal(contexto, texto) {
+  const caja = document.getElementById('resultado-final-caja');
+  if (!caja) return;
+
+  caja.innerHTML = `<div class="decision-eleccion-cuerpo">
+    ${contexto ? `<p class="decision-eleccion-titulo">${contexto}</p>` : ''}
+    <p class="decision-eleccion-desc">${texto || ''}</p>
+  </div>`;
 }
 
 
@@ -692,7 +700,7 @@ export {
   renderResultadoOpcion,
   renderInicio,
   renderFinDeEventos,
-  renderIntervencionIA,
   renderCargandoIntervencionIA,
-  renderDebugEstado
+  renderDebugEstado,
+  actualizarNarrativaFinal
 };
