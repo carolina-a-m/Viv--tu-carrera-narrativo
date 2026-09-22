@@ -1703,13 +1703,14 @@
     "id": "politica_oportunidad_01_sin_pasantia",
     "carrera": "politica",
     "orden": 90,
-    "requiere": {
+        "requiere": {
       "banderas": [
         "primer_parcial_resuelto"
       ],
       "banderas_no": [
         "conocio_sector_publico",
-        "conocio_consultoria"
+        "conocio_consultoria",
+        "priorizo_estudio"
       ]
     },
     "contexto": "⚖️ Una oportunidad",
@@ -1761,6 +1762,118 @@
       }
     ]
   },
+{
+  "id": "politica_un_dia_trabajo_salud",
+  "carrera": "politica",
+  "rangoOrden": [90, 100],
+  "funcion": "desarrollo_laboral",
+  "requiere": {
+    "banderas": ["tiene_trabajo", "conocio_sector_publico"]
+  },
+  "contexto": "🏛️ Un día en el nuevo trabajo",
+  "texto": "Ya llevás unas semanas en tu nuevo rol. Ana te muestra algo: en los últimos meses, varios casos como el de tu pasantía quedaron trabados por el mismo motivo, una confirmación que nadie termina de cargar en el sistema.\n\n—No es la primera vez que pasa esto. ¿Se te ocurre algo para que deje de pasar?",
+  "opciones": [
+    {
+      "icono": "📋",
+      "texto": "Proponer un recordatorio automático en el sistema.",
+      "descripcion": "Proponer un recordatorio automático en el sistema.",
+      "resultado": {
+        "texto": "A Ana le gusta la idea, pero dice que para cambiar el sistema hay que pedírselo a otra área, y ahí las cosas tardan. Queda anotado para más adelante."
+      }
+    },
+    {
+      "icono": "👥",
+      "texto": "Proponer que alguien del equipo llame para confirmar antes de que se venza el plazo.",
+      "descripcion": "Proponer que alguien del equipo llame para confirmar antes de que se venza el plazo.",
+      "resultado": {
+        "texto": "A Ana le parece más fácil: es sumar un paso al final de cada trámite. Empiezan a probarlo esa misma semana."
+      }
+    },
+    {
+      "icono": "📝",
+      "texto": "Escribir un instructivo que deje más claro el paso que se está salteando.",
+      "descripcion": "Escribir un instructivo que deje más claro el paso que se está salteando.",
+      "resultado": {
+        "texto": "Lo escribís en una hoja y Ana la pega cerca de las computadoras del equipo. Chiquito, pero ya está funcionando."
+      }
+    }
+  ]
+},
+{
+  "id": "politica_un_dia_trabajo_consultora",
+  "carrera": "politica",
+  "rangoOrden": [90, 100],
+  "funcion": "desarrollo_laboral",
+  "requiere": {
+    "banderas": ["tiene_trabajo", "conocio_consultoria"]
+  },
+  "contexto": "🏛️ Un día en el nuevo trabajo",
+  "texto": "Ya estás dentro del equipo de análisis. Te muestran los resultados de dos relevamientos sobre el mismo tema, la percepción del transporte público local, hechos con meses de diferencia. Algo no cierra: uno muestra mejora, el otro muestra que empeoró.\n\n—Tenemos que decidir qué va en las conclusiones del informe —te dice tu coordinador.",
+  "opciones": [
+    {
+      "icono": "🔍",
+      "texto": "Buscar qué cambió entre una encuesta y la otra.",
+      "descripcion": "Buscar qué cambió entre una encuesta y la otra.",
+      "resultado": {
+        "texto": "Encontrás que la segunda se hizo en pleno verano, con menos gente en la calle. Puede explicar la diferencia, o no. Igual, es un dato que suma."
+      }
+    },
+    {
+      "icono": "📊",
+      "texto": "Mostrar los dos resultados tal cual, sin elegir uno.",
+      "descripcion": "Mostrar los dos resultados tal cual, sin elegir uno.",
+      "resultado": {
+        "texto": "El informe queda con las dos versiones, una al lado de la otra. Es menos prolijo, pero más honesto con lo que realmente se sabe."
+      }
+    },
+    {
+      "icono": "💬",
+      "texto": "Preguntar al cliente qué resultado le interesa más mostrar.",
+      "descripcion": "Preguntar al cliente qué resultado le interesa más mostrar.",
+      "resultado": {
+        "texto": "El cliente te lo dice sin vueltas. Ahí entendés algo nuevo: a veces el trabajo no termina en el dato, termina en quién decide qué mostrar. Eso también es política."
+      }
+    }
+  ]
+},
+{
+  "id": "politica_un_dia_trabajo_sin_pasantia",
+  "carrera": "politica",
+  "rangoOrden": [90, 100],
+  "funcion": "desarrollo_laboral",
+  "requiere": {
+    "banderas": ["tiene_trabajo"],
+    "banderas_no": ["conocio_sector_publico", "conocio_consultoria"]
+  },
+  "contexto": "🏛️ Un día en el nuevo trabajo",
+  "texto": "Te suman a un equipo que está armando una propuesta para el Concejo Municipal sobre un problema puntual: la falta de lugares en jardines maternales en el Barrio Empalme Graneros.\n\nTu tarea: ayudar a armar esa propuesta.",
+  "opciones": [
+    {
+      "icono": "📊",
+      "texto": "Juntar los datos de cuántas familias piden un lugar y no lo consiguen.",
+      "descripcion": "Juntar los datos de cuántas familias piden un lugar y no lo consiguen.",
+      "resultado": {
+        "texto": "Armás una lista con los barrios donde el problema es peor. El equipo la usa para armar el mapa completo."
+      }
+    },
+    {
+      "icono": "👥",
+      "texto": "Hablar con vecinos y organizaciones del barrio.",
+      "descripcion": "Hablar con vecinos y organizaciones del barrio.",
+      "resultado": {
+        "texto": "Te cuentan que muchas familias ni siquiera se anotan, porque no saben que existe la lista de espera."
+      }
+    },
+    {
+      "icono": "📄",
+      "texto": "Buscar cómo resolvieron esto en otras ciudades.",
+      "descripcion": "Buscar cómo resolvieron esto en otras ciudades.",
+      "resultado": {
+        "texto": "Encontrás que en otro municipio ampliaron el horario de los jardines que ya tenían, en vez de construir uno nuevo. Puede servir como idea."
+      }
+    }
+  ]
+},
   {
     "id": "politica_consecuencia_trabajo_01",
     "carrera": "politica",
@@ -1772,7 +1885,7 @@
       ]
     },
     "contexto": "📈 Más responsabilidad",
-    "texto": "Tu trabajo empieza a ocupar cada vez más lugar en tu vida, y ya no es tan fácil hacer convivir las dos cosas.\n\nUnos meses después, tu jefe te llama a la oficina.\n\n\"Necesito a alguien que se haga cargo del nuevo equipo. Vengo pensando en vos.\"\n\nSon más horas, más responsabilidad y menos margen para la facultad.\n\nUn compañero de la cursada, que ya casi no te ve, te dice de pasada:\n\"¿Seguís cursando?\"",
+    "texto": "Tu trabajo empieza a ocupar cada vez más lugar en tu vida, y ya no es tan fácil hacer convivir las dos cosas.\n\nUnos meses después, te llaman de la oficina.\n\n\"Necesito a alguien que se haga cargo del nuevo equipo. Vengo pensando en vos.\"\n\nSon más horas, más responsabilidad y menos margen para la facultad.\n\nUn compañero de la cursada, que ya casi no te ve, te dice de pasada:\n\"¿Seguís cursando?\"",
     "opciones": [
       {
         "icono": "💼",
@@ -1846,9 +1959,12 @@
     "carrera": "politica",
     "orden": 100,
     "omitirSiNoCumple": true,
-    "requiere": {
+        "requiere": {
       "banderas": [
         "priorizo_estudio"
+      ],
+      "banderas_no": [
+        "tiene_trabajo"
       ],
       "intereses": {
         "investigacion": {
@@ -2030,13 +2146,14 @@
     "carrera": "politica",
     "orden": 100,
     "omitirSiNoCumple": true,
-    "requiere": {
+        "requiere": {
       "banderas": [
         "priorizo_estudio"
       ],
       "banderas_no": [
         "acepto_oportunidad",
-        "intento_combinar"
+        "intento_combinar",
+        "tiene_trabajo"
       ],
       "intereses": {
         "investigacion": {
@@ -2413,7 +2530,8 @@
                 "banderaSet": [
                   "averiguo_asistencia_integral"
                 ],
-                "resultado": {
+                                "resultado": {
+                  "texto": "Te confirman que cumplís los requisitos. Empezás el trámite de inscripción.",
                   "recurso": {
                     "nombre": "Becas UNR - Beca de Asistencia Integral ↗️",
                     "descripcion": "Acompañamiento económico integral orientado a estudiantes con dificultades para garantizar su permanencia en la carrera. Inscripción online en becas.unr.edu.ar.",
@@ -2581,7 +2699,8 @@
         "banderaSet": [
           "flag_orientacion_estudiantil"
         ],
-        "resultado": {
+                "resultado": {
+          "texto": "Pedís un turno y te reciben en pocos días. Juntos revisan tu semana y armás un plan más realista para organizarte.",
           "recurso": {
             "nombre": "Orientación Estudiantil UNR ↗️",
             "descripcion": "Espacio de acompañamiento ante dificultades de organización y adaptación a la vida universitaria, con acceso a Entrevistas de Orientación Pedagógica.",

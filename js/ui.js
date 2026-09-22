@@ -354,7 +354,7 @@ function crearBoxOpcion(opcion, onClick) {
   const cabecera = document.createElement('div');
   cabecera.className = 'decision-eleccion-cabecera';
   const icono = opcion.icono || ICONO_GENERICO;
-  cabecera.innerHTML = `<p class="decision-eleccion-titulo">${icono} ${opcion.texto}</p>`;
+  cabecera.innerHTML = `<p class="decision-eleccion-titulo">${icono} ${opcion.texto || ''}</p>`;
   if (opcion.badge) {
     cabecera.innerHTML += `<span class="decision-eleccion-badge">${opcion.badge}</span>`;
   }
