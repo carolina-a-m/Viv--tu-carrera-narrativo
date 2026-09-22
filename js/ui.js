@@ -18,21 +18,62 @@ const HITOS = [
 ];
 
 
-import { RANGOS_VARIABLES } from './config-variables.js';
+import { RANGOS_VISUALES } from './config-variables.js';
+import { porcentajeVisual, esPorcentajeCritico, esCritico, presentacionIndicador } from './metricas.js';
 
-function crearArcoGauge(porcentaje, grosor = 6) {
-  const pct = Math.min(100, Math.max(0, porcentaje));
-  const angulo = 180 - (pct / 100) * 180;
-  const rad = (angulo * Math.PI) / 180;
-  const cx = 50, cy = 50, r = 45;
-  const x = cx + r * Math.cos(rad);
-  const y = cy - r * Math.sin(rad);
+// Único diccionario de nombres: lo usan el panel y los chips de efecto.
+const ETIQUETAS = {
+  vocacion: 'Vocación',
+  estabilidad: 'Estabilidad',
+  energia: 'Energía',
+  confianza: 'Confianza',
+  exploracion: 'Exploración',
+  dedicacion: 'Dedicación',
+  rendimiento: 'Rendimiento',
+  progreso: 'Progreso'
+};
+
+const COLOR_NORMAL = 'var(--verde)';
+const COLOR_CRITICO = 'var(--rojo)';
+
+// Estado del panel de estadísticas: solo cambia por click manual del usuario.
+let panelExpandido = false;
+
+// Último estado dibujado del panel (valores internos y presentación).
+// Sirve para animar los arcos desde ahí hasta el valor nuevo.
+let ultimoPanel = null;
+
+function crearArcoGauge(porcentaje, grosor = 6, color = COLOR_NORMAL, destino = null) {
+  const limitar = (p) => Math.min(100, Math.max(0, p));
+  const pct = limitar(porcentaje);
+  const trazo = 'M 5 50 A 45 45 0 0 1 95 50';
+  const datosDestino = destino
+    ? `data-pct="${limitar(destino.porcentaje)}" data-color="${destino.color}"`
+    : '';
   return `
     <svg viewBox="0 0 100 55" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}" fill="none" stroke="#707070" stroke-width="${grosor}" stroke-linecap="round" />
-      ${pct > 0 ? `<path d="M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${x} ${y}" fill="none" stroke="var(--verde)" stroke-width="${grosor}" stroke-linecap="round" />` : ''}
+      <path d="${trazo}" fill="none" stroke="#707070" stroke-width="${grosor}" stroke-linecap="round" />
+      <path class="arco-relleno" pathLength="100" d="${trazo}" fill="none" stroke-width="${grosor}" stroke-linecap="round" style="stroke:${color}; stroke-dasharray:${pct} 100; opacity:${pct > 0 ? 1 : 0};" ${datosDestino} />
     </svg>
   `;
+}
+
+function animarArcos(panel) {
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    panel.querySelectorAll('.arco-relleno[data-pct]').forEach((arco) => {
+      const pct = Number(arco.dataset.pct);
+      arco.style.strokeDasharray = `${pct} 100`;
+      arco.style.stroke = arco.dataset.color;
+      arco.style.opacity = pct > 0 ? 1 : 0;
+    });
+  }));
+}
+
+function crearDeltaFlotante(cambio) {
+  if (!cambio) return '';
+  const valor = Number(cambio.toFixed(1));
+  const texto = Number.isInteger(valor) ? valor : valor.toFixed(1);
+  return `<span class="delta-flotante ${valor > 0 ? 'positivo' : 'negativo'}">${valor > 0 ? '+' : ''}${texto}</span>`;
 }
 
 function renderEvento(evento, onElegir, estado) {
@@ -59,12 +100,15 @@ function renderEvento(evento, onElegir, estado) {
 
   const narrativa = document.createElement('div');
   narrativa.className = 'decision-narrativa';
-  const narrativaBloque = document.createElement('div');
+    const narrativaBloque = document.createElement('div');
   narrativaBloque.className = 'decision-narrativa-bloque';
   if (evento.contexto) {
     narrativaBloque.innerHTML += `<p class="decision-narrativa-titulo">${evento.contexto}</p>`;
   }
   narrativaBloque.innerHTML += `<p class="decision-narrativa-texto">${(evento.icono ? evento.icono + ' ' : '') + evento.texto}</p>`;
+  if (evento.generadoPorIA && evento.fuenteUrl) {
+    narrativaBloque.appendChild(crearFuenteIA(evento.fuenteTitulo, evento.fuenteUrl));
+  }
     if (evento.recurso) {
     narrativaBloque.appendChild(crearFichaRecurso(evento.recurso));
   }
@@ -94,6 +138,21 @@ function crearLogoHorizontal() {
   div.className = 'decision-logo';
   div.innerHTML = `<img src="${ASSETS}logo-horizontal.svg" alt="Viví tu carrera">`;
   return div;
+}
+
+function crearFuenteIA(titulo, url) {
+  const ficha = crearFichaRecurso({
+    nombre: `${titulo || url} ↗️`,
+    link: url
+  });
+  ficha.classList.add('ficha-fuente-ia');
+
+  const etiqueta = document.createElement('p');
+  etiqueta.className = 'fuente-ia-etiqueta';
+  etiqueta.innerHTML = `<span class="varita-ia">🪄</span> Texto generado con IA a partir de una noticia real`;
+  ficha.prepend(etiqueta);
+
+  return ficha;
 }
 
 
@@ -150,18 +209,32 @@ function crearPanelIndicadores(resumen, opciones = {}) {
 
   const promedio = document.createElement('div');
   promedio.className = 'decision-promedio';
-  const rangoInteres = RANGOS_VARIABLES.interes_disciplina;
-  const porcentajeInteres = ((resumen.interes ?? rangoInteres.min) - rangoInteres.min) / (rangoInteres.max - rangoInteres.min) * 100;
- promedio.innerHTML = `
-    <div class="decision-promedio-arco">${crearArcoGauge(porcentajeInteres, 4)}</div>
+    const previo = ultimoPanel;
+  const actual = { valores: {}, pres: {} };
+  const leerIndicador = (clave, valor) => {
+    const pres = presentacionIndicador(clave, valor);
+    const valorPrevio = previo?.valores[clave];
+    const antes = previo?.pres[clave] || pres;
+    const cambio = valorPrevio === undefined ? 0 : valor - valorPrevio;
+    actual.valores[clave] = valor;
+    actual.pres[clave] = pres;
+    return { pres, antes, cambio };
+  };
+
+  const vocacion = leerIndicador('vocacion', resumen.vocacion ?? 0);
+  const presVocacion = vocacion.pres;
+  promedio.innerHTML = `
+    <div class="decision-promedio-arco">${crearArcoGauge(vocacion.antes.porcentaje, 4, vocacion.antes.color, presVocacion)}</div>
+    ${crearDeltaFlotante(vocacion.cambio)}
     <div class="decision-promedio-valor">
       <div class="decision-promedio-num">
-        <strong>${(resumen.interes ?? 0).toFixed(1)}</strong>
-        <span>Interes</span>
+        <strong>${presVocacion.delta.toFixed(1)}</strong>
+        <span>${ETIQUETAS.vocacion}</span>
       </div>
       <div class="decision-promedio-caret"><img src="${ASSETS}caret-up.svg" alt=""></div>
     </div>
   `;
+
   filaStats.appendChild(promedio);
 
   const competencias = document.createElement('div');
@@ -170,20 +243,22 @@ function crearPanelIndicadores(resumen, opciones = {}) {
   filaComp.className = 'decision-competencias-fila';
 
   const variables = resumen.variables || {};
-  const etiquetas = { dinero: 'Dinero', energia: 'Energía', confianza: 'Confianza', exploracion: 'Exploración' };
+  const clavesCompetencias = ['estabilidad', 'energia', 'confianza', 'exploracion'];
 
-  Object.keys(etiquetas).forEach((clave) => {
-    const valor = variables[clave] ?? 0;
-    const rango = RANGOS_VARIABLES[clave] ?? { min: 0, max: 100 };
-    const porcentaje = ((valor - rango.min) / (rango.max - rango.min)) * 100;
+  
+
+  clavesCompetencias.forEach((clave) => {
+        const ind = leerIndicador(clave, variables[clave] ?? 0);
+    const pres = ind.pres;
     const item = document.createElement('div');
     item.className = 'decision-competencia';
-    item.innerHTML = `
+        item.innerHTML = `
       <div class="decision-competencia-valor">
-        <div class="decision-competencia-arco">${crearArcoGauge(porcentaje)}</div>
-        <span>${valor}</span>
+        <div class="decision-competencia-arco">${crearArcoGauge(ind.antes.porcentaje, 6, ind.antes.color, pres)}</div>
+        ${crearDeltaFlotante(ind.cambio)}
+        <span class="decision-competencia-num">${pres.delta}</span>
       </div>
-      <p class="decision-competencia-label">${etiquetas[clave]}</p>
+      <p class="decision-competencia-label">${ETIQUETAS[clave]}</p>
     `;
     filaComp.appendChild(item);
   });
@@ -194,18 +269,21 @@ function crearPanelIndicadores(resumen, opciones = {}) {
 
   const parametros = document.createElement('div');
   parametros.className = 'decision-parametros';
-  const configParametros = [
-    { clave: 'rendimiento', label: 'Rendimiento' },
-    { clave: 'progreso', label: 'Progreso' }
+    const configParametros = [
+    { label: ETIQUETAS.rendimiento, pct: variables.rendimiento ?? 0, critico: true },
+    { label: ETIQUETAS.dedicacion, pct: porcentajeVisual('dedicacion', variables.dedicacion ?? 0), critico: false }
   ];
-  configParametros.forEach(({ clave, label }) => {
-    const valor = Math.min(100, Math.max(0, variables[clave] ?? 0));
+  configParametros.forEach(({ label, pct, critico }) => {
+    const valor = Math.round(Math.min(100, Math.max(0, pct)));
+    const estilo = critico && esPorcentajeCritico(valor)
+      ? `width:${valor}%; background:${COLOR_CRITICO}`
+      : `width:${valor}%`;
     const item = document.createElement('div');
     item.className = 'decision-parametro';
     item.innerHTML = `
       <p class="decision-parametro-label">${label}</p>
       <div class="decision-parametro-track">
-        <div class="decision-parametro-progreso" style="width:${valor}%"></div>
+        <div class="decision-parametro-progreso" style="${estilo}"></div>
       </div>
       <p class="decision-parametro-porcentaje">${valor}%</p>
     `;
@@ -247,14 +325,19 @@ function crearPanelIndicadores(resumen, opciones = {}) {
 
   const toggle = document.createElement('button');
   toggle.type = 'button';
-  toggle.className = 'decision-colapsar';
+  toggle.className = 'decision-colapsar' + (panelExpandido ? ' abierto' : '');
   toggle.setAttribute('aria-label', 'Mostrar/ocultar estadísticas');
   toggle.innerHTML = `<div class="decision-colapsar-icono"><img src="${ASSETS}caret-down.svg" alt=""></div>`;
+  if (panelExpandido) panel.classList.add('expandido');
   toggle.addEventListener('click', () => {
-    toggle.classList.toggle('abierto');
-    panel.classList.toggle('expandido');
+    panelExpandido = !panelExpandido;
+    toggle.classList.toggle('abierto', panelExpandido);
+    panel.classList.toggle('expandido', panelExpandido);
   });
   panel.appendChild(toggle);
+
+  ultimoPanel = actual;
+  animarArcos(panel);
 
   return panel;
 }
@@ -289,14 +372,13 @@ function crearBoxOpcion(opcion, onClick) {
 
   const mods = document.createElement('div');
   mods.className = 'decision-eleccion-mods';
-  const etiquetasEfecto = { dinero: 'Dinero', energia: 'Energía', confianza: 'Confianza', exploracion: 'Exploración', progreso: 'Progreso' };
-  const efectos = opcion.efectos || {};
+    const efectos = opcion.efectos || {};
   Object.keys(efectos).forEach((clave) => {
     const valor = efectos[clave];
     if (!valor) return;
     const mod = document.createElement('div');
     mod.className = 'decision-mod ' + (valor > 0 ? 'positivo' : 'negativo');
-    mod.innerHTML = `<strong>${valor > 0 ? '+' : ''}${valor}</strong><span>${etiquetasEfecto[clave] || clave}</span>`;
+    mod.innerHTML = `<strong>${valor > 0 ? '+' : ''}${valor}</strong><span>${ETIQUETAS[clave] || clave}</span>`;
     mods.appendChild(mod);
   });
   footer.appendChild(mods);
@@ -467,6 +549,7 @@ function crearIconoFacultad(facultadId) {
 
 
 function renderInicio(facultades, onEmpezar) {
+  ultimoPanel = null;
   const contenedor = document.getElementById('inicio');
   if (!contenedor) return;
   contenedor.innerHTML = '';
@@ -483,6 +566,25 @@ function renderInicio(facultades, onEmpezar) {
   inputNombre.placeholder = 'Tu nombre';
   inputNombre.autocomplete = 'off';
   contenedor.appendChild(inputNombre);
+
+  const avisoNombre = document.createElement('p');
+  avisoNombre.className = 'aviso-nombre';
+  avisoNombre.setAttribute('role', 'alert');
+  avisoNombre.textContent = '✍️ Escribí tu nombre para comenzar';
+  contenedor.appendChild(avisoNombre);
+
+  function mostrarAvisoNombre() {
+    avisoNombre.classList.add('visible');
+    inputNombre.classList.remove('invalido');
+    void inputNombre.offsetWidth;
+    inputNombre.classList.add('invalido');
+    inputNombre.focus();
+  }
+
+  inputNombre.addEventListener('input', () => {
+    avisoNombre.classList.remove('visible');
+    inputNombre.classList.remove('invalido');
+  });
 
   const eleccionFacultades = document.createElement('div');
   eleccionFacultades.className = 'eleccion-facultades';
@@ -611,6 +713,11 @@ filaBotonesProbar.appendChild(contenedorCarrera);
     if (!facultadElegida || !carreraElegida) return;
 
     const nombre = inputNombre.value.trim();
+
+    if (!nombre) {
+      mostrarAvisoNombre();
+      return;
+    }
 
     onEmpezar({
       nombre,

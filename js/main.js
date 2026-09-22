@@ -48,6 +48,11 @@ import {
 } from './motor.js';
 
 import {
+  calcularProgresoCarrera,
+  calcularRendimiento
+} from './metricas.js';
+
+import {
   guardar,
   cargar,
   borrar
@@ -182,20 +187,28 @@ async function cargarConflictoActual() {
 }
 
 
+const MARCADOR_CONFLICTO = '{{CONFLICTO_RESUMEN}}';
+
+function eventoUsaConflicto(texto) {
+  return Boolean(
+    conflictoActual &&
+    texto &&
+    texto.includes(MARCADOR_CONFLICTO)
+  );
+}
+
 function aplicarConflictoATexto(texto) {
 
-  const MARCADOR = '{{CONFLICTO_RESUMEN}}';
-
-  if (!texto || !texto.includes(MARCADOR)) {
+  if (!texto || !texto.includes(MARCADOR_CONFLICTO)) {
     return texto;
   }
 
   const relleno =
     conflictoActual
-      ? `${conflictoActual.resumen_adaptado} (Fuente: ${conflictoActual.fuente_titulo})`
+      ? conflictoActual.resumen_adaptado
       : 'Una medida reciente generó reclamos de distintos sectores.';
 
-  return texto.replaceAll(MARCADOR, relleno);
+  return texto.replaceAll(MARCADOR_CONFLICTO, relleno);
 }
 
 function construirResumenJugador(estado, facultades) {
@@ -208,13 +221,21 @@ function construirResumenJugador(estado, facultades) {
     c => c.id === estado.carreraActiva
   );
 
+  const progreso = calcularProgresoCarrera(eventos, estado);
+  const rendimiento = calcularRendimiento(estado);
+
   return {
     nombre: estado.nombre,
     facultadId: facultad?.id || null,
     carreraNombre: carrera?.nombre || '',
-    interes: estado.variables.interes_disciplina,
-    progreso: estado.variables.progreso,
-    variables: estado.variables
+    vocacion: estado.variables.vocacion,
+    progreso,
+    rendimiento,
+    variables: {
+      ...estado.variables,
+      progreso,
+      rendimiento
+    }
   };
 }
 
@@ -682,11 +703,16 @@ if (evento.orden === ORDEN_FINAL) {
 }
 
 else {
+      const usaConflicto = eventoUsaConflicto(evento.texto);
+
       renderEvento(
     {
       contexto: evento.contexto,
       texto: aplicarConflictoATexto(evento.texto),
-      opciones: evento.opciones
+      opciones: evento.opciones,
+      generadoPorIA: usaConflicto,
+      fuenteTitulo: usaConflicto ? conflictoActual.fuente_titulo : null,
+      fuenteUrl: usaConflicto ? conflictoActual.fuente_url : null
     },
     manejarEleccion,
     construirResumenJugador(estado, facultades)
@@ -708,7 +734,7 @@ const URL_INTERVENCION_IA =
   'https://intervencion-ia.vivitucarrera.workers.dev';
 
 
-const VARIABLES_NO_NARRATIVAS = ['progreso', 'tiempo', 'rendimiento'];
+const VARIABLES_NO_NARRATIVAS = ['dedicacion', 'tiempo'];
 
 function construirResumenTrayectoria(estado) {
 

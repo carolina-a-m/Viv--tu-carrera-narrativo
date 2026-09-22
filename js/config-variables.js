@@ -1,26 +1,29 @@
 // config-variables.js
-// Rangos de cada variable del juego, usados para calcular
-// el porcentaje que se muestra en los indicadores visuales
-// (arcos, barras).
+// Generado por scripts/simular-rangos.mjs (5000 partidas simuladas). No editar a mano.
 //
-// Calculados a partir de estadoInicial() (estado.js) + el
-// delta teórico acumulado de scripts/calcular-rangos.mjs sobre
-// eventos_politica.json + eventos-transversales.json.
-//
-// Son techos/pisos teóricos (asumen tomar siempre la opción
-// que más suma/resta), no un promedio real de partida — varios
-// caminos son mutuamente excluyentes. Recalcular con el script
-// cada vez que se agreguen carreras o se cierre el contenido
-// narrativo.
+// RANGOS_VARIABLES: límites duros. Los usa estado.js para acotar valores.
+// RANGOS_VISUALES: percentil 5-95 de lo que ocurre en partidas reales,
+// ampliado para incluir el valor inicial. Los usa la UI para calcular
+// el porcentaje de arcos y barras.
 
 export const RANGOS_VARIABLES = {
-  interes_disciplina: { min: 0, max: 20 },
-  dinero: { min: 4, max: 14 },
-  energia: { min: -19, max: 14 },
-  confianza: { min: 4, max: 49 },
-  exploracion: { min: -1, max: 39 },
-  progreso: { min: 0, max: 21 },
-  rendimiento: { min: 0, max: 13 },
-  tiempo: { min: -11, max: 11 },
-  cansancio: { min: -2, max: 2 }
+  vocacion: { min: -50, max: 50 },
+  estabilidad: { min: -50, max: 50 },
+  energia: { min: -50, max: 50 },
+  confianza: { min: -50, max: 50 },
+  exploracion: { min: -50, max: 50 },
+  dedicacion: { min: -50, max: 50 },
+  tiempo: { min: -50, max: 50 },
+  cansancio: { min: -50, max: 50 }
+};
+
+export const RANGOS_VISUALES = {
+  vocacion: { min: -3, max: 9 },
+  estabilidad: { min: 0, max: 8 },
+  energia: { min: 1, max: 16 },
+  confianza: { min: -1, max: 10 },
+  exploracion: { min: -3, max: 7 },
+  dedicacion: { min: 0, max: 10 },
+  tiempo: { min: 5, max: 6 },
+  cansancio: { min: 0, max: 1 }
 };

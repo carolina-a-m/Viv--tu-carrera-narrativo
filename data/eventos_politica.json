@@ -33,7 +33,7 @@
         "texto": "Buscar antecedentes",
         "descripcion": "Buscar antecedentes, decisiones y conflictos anteriores que puedan explicar la situación actual.",
         "efectos": {
-          "progreso": 2,
+          "dedicacion": 2,
           "exploracion": 2,
           "energia": -2
         },
@@ -91,7 +91,7 @@
         "efectos": {
           "vocacion": 1,
           "confianza": 1,
-          "progreso": 1,
+          "dedicacion": 1,
           "energia": -2
         },
         "intereses": {
@@ -108,7 +108,7 @@
         "texto": "Separar",
         "descripcion": "Separar lo central de lo secundario: preguntarse si ese interés en común afecta realmente cómo se juega el conflicto.",
         "efectos": {
-          "progreso": 1,
+          "dedicacion": 1,
           "energia": 1,
           "vocacion": -1
         },
@@ -126,7 +126,7 @@
         "descripcion": "Jerarquizar en el mapa a los actores según su capacidad real para imponer su posición.",
         "efectos": {
           "confianza": 1,
-          "progreso": 1,
+          "dedicacion": 1,
           "energia": -1
         },
         "intereses": {
@@ -157,7 +157,7 @@
         "descripcion": "Usar el caso anterior como punto de comparación.",
         "efectos": {
           "confianza": 1,
-          "progreso": 1,
+          "dedicacion": 1,
           "energia": -1
         },
         "intereses": {
@@ -205,7 +205,7 @@
         "descripcion": "Defender el dato: revisar qué evidencia hay detrás y sostenerlo aunque contradiga el relato más difundido.",
         "efectos": {
           "confianza": 1,
-          "progreso": 1
+          "dedicacion": 1
         },
         "intereses": {
           "comunicacion": 1,
@@ -221,7 +221,7 @@
         "descripcion": "Investigar quién produjo ese dato, cómo se obtuvo y qué podría estar dejando afuera.",
         "efectos": {
           "exploracion": 1,
-          "progreso": 1,
+          "dedicacion": 1,
           "energia": -1
         },
         "intereses": {
@@ -239,7 +239,7 @@
         "efectos": {
           "confianza": 1,
           "exploracion": 1,
-          "progreso": 1,
+          "dedicacion": 1,
           "energia": -2
         },
         "intereses": {
@@ -290,7 +290,7 @@
         "texto": "Seguir de largo",
         "descripcion": "Esta vez preferís irte.",
         "efectos": {
-          "progreso": 1,
+          "dedicacion": 1,
           "energia": 3
         },
         "banderaSet": [
@@ -363,7 +363,7 @@
         "texto": "Seguir de largo",
         "descripcion": "Preferís ver primero cómo te va con las demás materias.",
         "efectos": {
-          "progreso": 1,
+          "dedicacion": 1,
           "energia": 5
         },
         "banderaSet": [
@@ -410,7 +410,7 @@
         "texto": "Seguir caminando",
         "descripcion": "Ya tenés bastante con la cursada.",
         "efectos": {
-          "progreso": 1,
+          "dedicacion": 1,
           "energia": 2
         },
         "banderaSet": [
@@ -463,13 +463,13 @@
         "texto": "Esperar el resultado",
         "descripcion": "Ahora solo queda esperar la nota.",
         "efectos": {
-          "energia": -1, "confianza": 1
+          "energia": -1, "confianza": -1
         },
         "banderaSet": [
           "primer_parcial_realizado"
         ],
         "resultadoAleatorio": {
-          "variable": "progreso",
+          "variable": "dedicacion",
           "probabilidadBase": 0.3,
           "incrementoPorPunto": 0.2,
           "banderaExito": "aprobo_primer_parcial",
@@ -552,7 +552,7 @@
         "texto": "Cambiar de método",
         "descripcion": "Cambiar tu forma de estudiar y volver a intentarlo.",
         "efectos": {
-          "progreso": 1,
+          "dedicacion": 1,
           "confianza": 1,
           "energia": -1
         },
@@ -596,7 +596,8 @@
         "descripcion": "Hay cosas que me gustan, pero otras no tienen nada que ver con lo que esperaba.",
         "efectos": {
           "exploracion": 1,
-          "confianza": -1
+          "confianza": -3,
+          "vocacion": -1
         },
         "intereses": {
           "politica": 1
@@ -639,7 +640,8 @@
         "descripcion": "Hay cosas que me gustan, pero otras no tienen nada que ver con lo que esperaba.",
         "efectos": {
           "exploracion": 1,
-          "confianza": -1
+          "confianza": -3,
+          "vocacion": -1
         },
         "intereses": {
           "politica": 1
@@ -680,9 +682,10 @@
         "icono": "🤔",
         "texto": "Hay cosas que no esperaba",
         "descripcion": "Hay cosas que me gustan, pero otras no tienen nada que ver con lo que esperaba.",
-        "efectos": {
+                "efectos": {
           "exploracion": 1,
-          "confianza": -1
+          "confianza": -3,
+          "vocacion": -1
         },
         "intereses": {
           "politica": 1
@@ -710,7 +713,7 @@
       ]
     },
     "contexto": "🔍 Otro camino posible",
-    "texto": "\n\nVioleta, una compañera, te cuenta que tiene un amigo que estudia Medicina en la UNR. Está participando de una actividad de extensión en un centro de salud público y te ofrece acompañarla.\n\nEs simplemente una oportunidad para mirar qué hay del otro lado.",
+    "texto": "\n\nVioleta, una compañera, te cuenta que tiene un amigo que estudia Medicina en la UNR. Está participando de una actividad de extensión en un centro de salud público y te ofrece acompañarla.",
     "opciones": [
       {
         "icono": "✅",
@@ -968,10 +971,11 @@
         "icono": "📚",
         "texto": "Priorizar la carrera",
         "descripcion": "Prefiero seguir enfocándome en la carrera y no sumar más responsabilidades.",
-        "efectos": {
-          "progreso": 1,
+          "efectos": {
+          "dedicacion": 1,
           "energia": 2,
-          "exploracion": -1
+          "exploracion": -1,
+          "estabilidad": -1
         },
         "banderaSet": [
           "priorizo_estudio"
@@ -1010,7 +1014,7 @@
         "texto": "Buscar casos parecidos",
         "descripcion": "Buscar si hay más casos parecidos y comparar qué pasó en cada uno antes de mirar este a fondo.",
         "efectos": {
-          "progreso": 1,
+          "dedicacion": 1,
           "energia": -1
         },
         "banderaSet": [
@@ -1057,7 +1061,7 @@
         "efectos": {
           "energia": -1,
           "vocacion": 1,
-          "progreso": 1
+          "dedicacion": 1
         },
         "banderaSet": [
           "pasantia_1er_hallazgo",
@@ -1098,7 +1102,7 @@
         "efectos": {
           "energia": -1,
           "vocacion": 1,
-          "progreso": 1
+          "dedicacion": 1
         },
         "banderaSet": [
           "pasantia_1er_hallazgo",
@@ -1139,7 +1143,7 @@
         "efectos": {
           "energia": -1,
           "vocacion": 1,
-          "progreso": 1
+          "dedicacion": 1
         },
         "banderaSet": [
           "pasantia_1er_hallazgo",
@@ -1186,7 +1190,7 @@
         "efectos": {
           "energia": -1,
           "vocacion": 1,
-          "progreso": 1
+          "dedicacion": 1
         },
         "banderaSet": [
           "pasantia_1er_hallazgo",
@@ -1227,7 +1231,7 @@
         "efectos": {
           "energia": -1,
           "vocacion": 1,
-          "progreso": 1
+          "dedicacion": 1
         },
         "banderaSet": [
           "pasantia_1er_hallazgo",
@@ -1268,7 +1272,7 @@
         "descripcion": "Mostrarle lo que encontraste a tu compañera de trabajo y volver a casa.",
         "efectos": {
           "vocacion": 1,
-          "progreso": 1
+          "dedicacion": 1
         },
         "banderaSet": [
           "pasantia_medicina_resuelta"
@@ -1296,7 +1300,7 @@
         "descripcion": "Mostrarle lo que encontraste a tu compañera de trabajo y volver a casa.",
         "efectos": {
           "vocacion": 1,
-          "progreso": 1
+          "dedicacion": 1
         },
         "banderaSet": [
           "pasantia_medicina_resuelta"
@@ -1324,7 +1328,7 @@
         "descripcion": "Mostrarle lo que encontraste a tu compañera de trabajo y volver a casa.",
         "efectos": {
           "vocacion": 1,
-          "progreso": 1
+          "dedicacion": 1
         },
         "banderaSet": [
           "pasantia_medicina_resuelta"
@@ -1394,7 +1398,7 @@
         "texto": "Ordenar respuestas",
         "descripcion": "Cargar y organizar las respuestas que ya llegaron.",
         "efectos": {
-          "progreso": 1,
+          "dedicacion": 1,
           "energia": -1
         },
         "intereses": {
@@ -1441,7 +1445,7 @@
         "texto": "Problemas de frecuencia",
         "descripcion": "Juntar las respuestas relacionadas con demoras y tiempos de espera.",
         "efectos": {
-          "progreso": 1,
+          "dedicacion": 1,
           "energia": -1
         },
         "intereses": {
@@ -1504,7 +1508,7 @@
         "texto": "Armar un gráfico",
         "descripcion": "Convertir los resultados en algo fácil de visualizar.",
         "efectos": {
-          "progreso": 2
+          "dedicacion": 2
         },
         "intereses": {
           "tecnico": 1,
@@ -1520,7 +1524,7 @@
         "texto": "Seguir investigando",
         "descripcion": "Preguntar qué otros datos podrían ayudar a entender el resultado.",
         "efectos": {
-          "progreso": 1,
+          "dedicacion": 1,
           "exploracion": 1,
           "energia": -1
         },
@@ -1577,17 +1581,18 @@
       }
     ]
   },
-  {
-    "id": "politica_oportunidad_01",
+   {
+    "id": "politica_oportunidad_01_salud",
     "carrera": "politica",
     "orden": 90,
     "requiere": {
       "banderas": [
-        "primer_parcial_resuelto"
+        "primer_parcial_resuelto",
+        "conocio_sector_publico"
       ]
     },
     "contexto": "⚖️ Una oportunidad",
-    "texto": "Estás en cuarto año.\n\nTe ofrecen una oportunidad laboral que realmente te interesa.\n\nPero hay un problema: el horario se superpone con los primeros 30 minutos de una materia importante.\n\nNo hay una opción perfecta.",
+    "texto": "Ya estás en cuarto año. Un día te llama Ana, con quien trabajaste en la pasantía.\n\n\"Che, se abrió un puesto media jornada en el área, algo más en serio que lo que hacías antes. Pensé en vos.\"\n\nEs la chance real de laburar en gestión pública mientras seguís estudiando. El problema aparece enseguida: el horario se superpone con los primeros 30 minutos de una materia importante. No hay una opción perfecta.",
     "opciones": [
       {
         "icono": "🚀",
@@ -1608,10 +1613,132 @@
         "icono": "📚",
         "texto": "Priorizar la carrera",
         "descripcion": "Mantener tu camino actual y priorizar la carrera.",
-        "efectos": {
-          "progreso": 3,
+          "efectos": {
+          "dedicacion": 3,
           "vocacion": 1,
-          "exploracion": -3
+          "exploracion": -3,
+          "estabilidad": -2
+        },
+        "banderaSet": [
+          "priorizo_estudio"
+        ]
+      },
+      {
+        "icono": "⚖️",
+        "texto": "Combinar ambas cosas",
+        "descripcion": "Intentar combinar ambas cosas.",
+        "efectos": {
+          "energia": -2,
+          "exploracion": 1,
+          "estabilidad": 1,
+          "confianza": -1
+        },
+        "banderaSet": [
+          "tiene_trabajo",
+          "intento_combinar"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "politica_oportunidad_01_consultora",
+    "carrera": "politica",
+    "orden": 90,
+    "requiere": {
+      "banderas": [
+        "primer_parcial_resuelto",
+        "conocio_consultoria"
+      ]
+    },
+    "contexto": "⚖️ Una oportunidad",
+    "texto": "Ya estás en cuarto año. Te escribe alguien de la consultora donde hiciste la pasantía:\n\n\"Estamos armando equipo para un proyecto grande, de varios meses. ¿Te interesaría sumarte a una jornada medio tiempo?\"\n\nEs la chance de pasar de hacer encuestas en la calle a formar parte del equipo de análisis. El problema aparece enseguida: el horario se superpone con los primeros 30 minutos de una materia importante. No hay una opción perfecta.",
+    "opciones": [
+      {
+        "icono": "🚀",
+        "texto": "Aceptar la oportunidad",
+        "descripcion": "Aceptar la oportunidad. Puede no volver a aparecer.",
+        "efectos": {
+          "exploracion": 2,
+          "estabilidad": 1,
+          "energia": -2,
+          "vocacion": -1
+        },
+        "banderaSet": [
+          "tiene_trabajo",
+          "acepto_oportunidad"
+        ]
+      },
+      {
+        "icono": "📚",
+        "texto": "Priorizar la carrera",
+        "descripcion": "Mantener tu camino actual y priorizar la carrera.",
+          "efectos": {
+          "dedicacion": 3,
+          "vocacion": 1,
+          "exploracion": -3,
+          "estabilidad": -2
+        },
+        "banderaSet": [
+          "priorizo_estudio"
+        ]
+      },
+      {
+        "icono": "⚖️",
+        "texto": "Combinar ambas cosas",
+        "descripcion": "Intentar combinar ambas cosas.",
+        "efectos": {
+          "energia": -2,
+          "exploracion": 1,
+          "estabilidad": 1,
+          "confianza": -1
+        },
+        "banderaSet": [
+          "tiene_trabajo",
+          "intento_combinar"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "politica_oportunidad_01_sin_pasantia",
+    "carrera": "politica",
+    "orden": 90,
+    "requiere": {
+      "banderas": [
+        "primer_parcial_resuelto"
+      ],
+      "banderas_no": [
+        "conocio_sector_publico",
+        "conocio_consultoria"
+      ]
+    },
+    "contexto": "⚖️ Una oportunidad",
+    "texto": "Ya estás en cuarto año. Una profesora te recomienda para un puesto de media jornada laboral en una fundación que trabaja en políticas públicas locales.\n\nEs tu primera oportunidad real de laburar en algo relacionado con lo que estudiás, realmente te interesa, en un rol mucho más en serio y cercano a la carrera que cualquier changa que hayas tenido hasta ahora. El problema aparece enseguida: el horario se superpone con los primeros 30 minutos de una materia importante. No hay una opción perfecta.",
+    "opciones": [
+      {
+        "icono": "🚀",
+        "texto": "Aceptar la oportunidad",
+        "descripcion": "Aceptar la oportunidad. Puede no volver a aparecer.",
+        "efectos": {
+          "exploracion": 2,
+          "estabilidad": 1,
+          "energia": -2,
+          "vocacion": -1
+        },
+        "banderaSet": [
+          "tiene_trabajo",
+          "acepto_oportunidad"
+        ]
+      },
+      {
+        "icono": "📚",
+        "texto": "Priorizar la carrera",
+        "descripcion": "Mantener tu camino actual y priorizar la carrera.",
+          "efectos": {
+          "dedicacion": 3,
+          "vocacion": 1,
+          "exploracion": -3,
+          "estabilidad": -2
         },
         "banderaSet": [
           "priorizo_estudio"
@@ -1675,6 +1802,46 @@
     ]
   },
   {
+    "id": "politica_consecuencia_trabajo_combinar_01",
+    "carrera": "politica",
+    "orden": 100.5,
+    "omitirSiNoCumple": true,
+    "requiere": {
+      "banderas": [
+        "intento_combinar"
+      ]
+    },
+    "contexto": "📈 Más responsabilidad",
+    "texto": "Venís haciendo malabares desde que aceptaste el trabajo sin dejar la facultad. Hasta ahora lo venías sosteniendo — justo, pero sosteniendo.\n\nUnos meses después, tu jefe te llama a la oficina.\n\n\"Necesito a alguien que se haga cargo del nuevo equipo. Vengo pensando en vos.\"\n\nAceptar significaría bastante más horas — de las que hoy ya no te sobran.\n\nUn compañero de la cursada, que hace tiempo que te ve cada vez menos, te dice de pasada:\n\"¿Seguís cursando?\"",
+    "opciones": [
+      {
+        "icono": "💼",
+        "texto": "Aceptar el nuevo desafío",
+        "descripcion": "Aceptar el nuevo desafío.",
+        "efectos": {
+          "estabilidad": 2,
+          "energia": -2,
+          "vocacion": -1
+        },
+        "banderaSet": [
+          "asumio_responsabilidad"
+        ]
+      },
+      {
+        "icono": "⚖️",
+        "texto": "Mantener el equilibrio",
+        "descripcion": "Mantener el equilibrio y no sumar más responsabilidades por ahora.",
+        "efectos": {
+          "confianza": 1,
+          "vocacion": 1
+        },
+        "banderaSet": [
+          "mantuvo_equilibrio"
+        ]
+      }
+    ]
+  },
+   {
     "id": "politica_consecuencia_investigacion_01",
     "carrera": "politica",
     "orden": 100,
@@ -1690,14 +1857,14 @@
       }
     },
     "contexto": "🔬 Una propuesta",
-    "texto": "Unos meses después, se te acerca al salir de una clase una docente.\n—¿Te acordás del proyecto sobre paridad en los concejos? Todavía estamos buscando gente. ¿Te interesaría sumarte?",
+    "texto": "Unos meses después, se te acerca al salir de una clase una docente.\n—¿Te acordás del proyecto sobre paridad en los concejos? Todavía estamos buscando gente. ¿Te interesaría sumarte?\n\nTu decisión de priorizar la carrera te dio el tiempo justo para meterte de lleno en algo que ya te había llamado la atención desde el principio.",
     "opciones": [
       {
         "icono": "🔬",
         "texto": "Participar del proyecto",
         "descripcion": "Aceptar y participar del proyecto.",
         "efectos": {
-          "progreso": 1,
+          "dedicacion": 1,
           "vocacion": 1,
           "energia": -1
         },
@@ -1711,9 +1878,9 @@
       {
         "icono": "📚",
         "texto": "Mantener el foco en la cursada",
-        "descripcion": "Agradecer la propuesta y mantener el foco en la cursada.",
+        "descripcion": "Agradecer y seguir con lo tuyo.",
         "efectos": {
-          "progreso": 1,
+          "dedicacion": 1,
           "energia": 1
         }
       }
@@ -1737,7 +1904,7 @@
         "texto": "Mirar quién ocupa qué",
         "descripcion": "Ver qué lugares con más peso real terminan ocupando varones aunque las listas sean paritarias.",
         "efectos": {
-          "progreso": 1,
+          "dedicacion": 1,
           "vocacion": 1
         },
         "intereses": {
@@ -1752,7 +1919,7 @@
         "texto": "Comparar entre concejos",
         "descripcion": "Ver cómo varía el cumplimiento entre distintos concejos.",
         "efectos": {
-          "progreso": 1,
+          "dedicacion": 1,
           "exploracion": 1
         },
         "intereses": {
@@ -1767,7 +1934,7 @@
         "texto": "Hablar con concejalas",
         "descripcion": "Entrevistar a algunas para entender cómo lo viven desde adentro.",
         "efectos": {
-          "progreso": 1,
+          "dedicacion": 1,
           "confianza": 1,
           "energia": -1
         },
@@ -1824,7 +1991,7 @@
         "efectos": {
           "energia": -1,
           "confianza": 1,
-          "progreso": 1
+          "dedicacion": 1
         },
         "banderaSet": [
           "prioriza_organizacion"
@@ -1849,7 +2016,7 @@
         "descripcion": "Bajar una actividad para llegar mejor al parcial.",
         "efectos": {
           "energia": 3,
-          "progreso": 5,
+          "dedicacion": 5,
           "confianza": 1
         },
         "banderaSet": [
@@ -1878,14 +2045,14 @@
       }
     },
     "contexto": "➡️ Sin sobresaltos",
-    "texto": "Seguiste avanzando materia por materia.\n\nNo hubo una única experiencia que marcara el rumbo. Tu recorrido se viene construyendo, sobre todo, en la cursada misma.",
+    "texto": "Seguiste avanzando materia por materia, sin apurarte a definirte por un camino en particular.\n\nNo hubo una única experiencia que marcara el rumbo de un guión sobre vos - pero fuiste construyendo tu propio criterio, cursada tras cursada, a tu ritmo.",
     "opciones": [
       {
         "icono": "➡️",
         "texto": "Seguir",
         "descripcion": "Seguir manteniendo el ritmo y sosteniendo la cursada.",
         "efectos": {
-          "progreso": 1,
+          "dedicacion": 1,
           "energia": 2,
           "vocacion": 5
         }
@@ -1905,7 +2072,7 @@
         "descripcion": "Querés saber en qué medida los jóvenes realmente inciden en las decisiones políticas que los afectan.",
         "efectos": {
           "vocacion": 1,
-          "progreso": 1
+          "dedicacion": 1
         },
         "intereses": {
           "politica": 1
@@ -1963,7 +2130,7 @@
         "texto": "Acotar el tema",
         "descripcion": "Elegir un caso, período o grupo específico.",
         "efectos": {
-          "progreso": 2
+          "dedicacion": 2
         },
         "intereses": {
           "politica": 1
@@ -1977,7 +2144,7 @@
         "texto": "Buscar qué se investigó",
         "descripcion": "Revisar antecedentes para ver qué preguntas ya fueron respondidas.",
         "efectos": {
-          "progreso": 1,
+          "dedicacion": 1,
           "exploracion": 1
         },
         "intereses": {
@@ -1992,7 +2159,7 @@
         "texto": "Discutir la idea",
         "descripcion": "Contarle tu propuesta a otras personas y escuchar qué preguntas aparecen.",
         "efectos": {
-          "progreso": 1,
+          "dedicacion": 1,
           "confianza": 1,
           "energia": -1
         },
@@ -2022,7 +2189,7 @@
         "texto": "Acotar el tema",
         "descripcion": "Elegir un caso, período o grupo específico.",
         "efectos": {
-          "progreso": 2
+          "dedicacion": 2
         },
         "intereses": {
           "investigacion": 1
@@ -2036,7 +2203,7 @@
         "texto": "Buscar qué se investigó",
         "descripcion": "Revisar antecedentes para ver qué preguntas ya fueron respondidas.",
         "efectos": {
-          "progreso": 1,
+          "dedicacion": 1,
           "exploracion": 1
         },
         "intereses": {
@@ -2051,7 +2218,7 @@
         "texto": "Discutir la idea",
         "descripcion": "Contarle tu propuesta a otras personas y escuchar qué preguntas aparecen.",
         "efectos": {
-          "progreso": 1,
+          "dedicacion": 1,
           "confianza": 1,
           "energia": -1
         },
@@ -2081,7 +2248,7 @@
         "texto": "Acotar el tema",
         "descripcion": "Elegir un caso, período o grupo específico.",
         "efectos": {
-          "progreso": 2
+          "dedicacion": 2
         },
         "intereses": {
           "social": 1
@@ -2095,7 +2262,7 @@
         "texto": "Buscar qué se investigó",
         "descripcion": "Revisar antecedentes para ver qué preguntas ya fueron respondidas.",
         "efectos": {
-          "progreso": 1,
+          "dedicacion": 1,
           "exploracion": 1
         },
         "intereses": {
@@ -2110,7 +2277,7 @@
         "texto": "Discutir la idea",
         "descripcion": "Contarle tu propuesta a otras personas y escuchar qué preguntas aparecen.",
         "efectos": {
-          "progreso": 1,
+          "dedicacion": 1,
           "confianza": 1,
           "energia": -1
         },
@@ -2322,7 +2489,7 @@
         "texto": "Nah, para la próxima cambio algunas cosas y estudio más horas.",
         "descripcion": "Confiar en tu propio método y resolverlo metiéndole más horas de estudio.",
         "efectos": {
-          "progreso": 2,
+          "dedicacion": 2,
           "energia": -1,
           "confianza": 1
         },
@@ -2358,7 +2525,7 @@
         "descripcion": "Acercarte a Orientación Estudiantil para ver cómo organizarte mejor con todo.",
         "efectos": {
           "confianza": 1,
-          "progreso": 1,
+          "dedicacion": 1,
           "energia": 3
         },
         "banderaSet": [
@@ -2408,7 +2575,7 @@
         "descripcion": "Acercarte a Orientación Estudiantil para ver cómo organizarte mejor con todo.",
         "efectos": {
           "confianza": 1,
-          "progreso": 1,
+          "dedicacion": 1,
           "energia": -1
         },
         "banderaSet": [
@@ -2439,7 +2606,7 @@
     "id": "transversal_silencio_gime",
     "carrera": "politica",
      "rangoOrden": [
-      61,
+      60,
       79
     ],
     "funcion": "acompanamiento_y_bienestar",
@@ -2447,7 +2614,7 @@
     "requiere": {
       "variables": {
         "energia": {
-          "max": -2
+          "max": 3
         }
       },
       "banderas_no": [

@@ -4,7 +4,7 @@
 
 import { RANGOS_VARIABLES } from './config-variables.js';
 
-const ESQUEMA_VERSION = 3;
+const ESQUEMA_VERSION = 5;
 
 
 function estadoInicial() {
@@ -21,14 +21,15 @@ function estadoInicial() {
     // cada elegirOpcion según la opción elegida.
     permiteTransversal: true,
 
+    // Progreso y rendimiento NO se guardan: son métricas derivadas
+    // (ver metricas.js).
     variables: {
-      interes_disciplina: 0,
-      dinero: 5,
-      energia: 5,
-      confianza: 5,
+      vocacion: 0,
+      estabilidad: 3,
+      energia: 11,
+      confianza: 2,
       exploracion: 0,
-      progreso: 0,
-      rendimiento: 0,
+      dedicacion: 0,
       tiempo: 5,
       cansancio: 0
     },
@@ -111,7 +112,6 @@ function aplicarEfectos(estado, efectos = {}) {
     estado.variables[variable] = nuevoValor;
   }
 }
-
 const GRUPOS_EXCLUYENTES = {
   politica: {
     postura_oportunidad_laboral: [
