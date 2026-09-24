@@ -1703,14 +1703,14 @@
     "id": "politica_oportunidad_01_sin_pasantia",
     "carrera": "politica",
     "orden": 90,
-        "requiere": {
+    "requiere": {
       "banderas": [
-        "primer_parcial_resuelto"
+        "primer_parcial_resuelto",
+        "priorizo_estudio"
       ],
       "banderas_no": [
         "conocio_sector_publico",
-        "conocio_consultoria",
-        "priorizo_estudio"
+        "conocio_consultoria"
       ]
     },
     "contexto": "⚖️ Una oportunidad",
@@ -1768,7 +1768,8 @@
   "rangoOrden": [90, 100],
   "funcion": "desarrollo_laboral",
   "requiere": {
-    "banderas": ["tiene_trabajo", "conocio_sector_publico"]
+    "banderas": ["tiene_trabajo", "conocio_sector_publico"],
+    "banderas_no": ["priorizo_estudio"]
   },
   "contexto": "🏛️ Un día en el nuevo trabajo",
   "texto": "Ya llevás unas semanas en tu nuevo rol. Ana te muestra algo: en los últimos meses, varios casos como el de tu pasantía quedaron trabados por el mismo motivo, una confirmación que nadie termina de cargar en el sistema.\n\n—No es la primera vez que pasa esto. ¿Se te ocurre algo para que deje de pasar?",
@@ -1805,7 +1806,8 @@
   "rangoOrden": [90, 100],
   "funcion": "desarrollo_laboral",
   "requiere": {
-    "banderas": ["tiene_trabajo", "conocio_consultoria"]
+    "banderas": ["tiene_trabajo", "conocio_consultoria"],
+    "banderas_no": ["priorizo_estudio"]
   },
   "contexto": "🏛️ Un día en el nuevo trabajo",
   "texto": "Ya estás dentro del equipo de análisis. Te muestran los resultados de dos relevamientos sobre el mismo tema, la percepción del transporte público local, hechos con meses de diferencia. Algo no cierra: uno muestra mejora, el otro muestra que empeoró.\n\n—Tenemos que decidir qué va en las conclusiones del informe —te dice tu coordinador.",
@@ -2674,15 +2676,20 @@
   {
     "id": "politica_orientacion_estudiantil_metodo_01",
     "carrera": "politica",
-        "rangoOrden": [
-      101,
+            "rangoOrden": [
+      100,
       110
     ],
     "funcion": "acompanamiento_academico",
     "requiere": {
       "banderas": [
         "satura_agenda"
-      ]
+      ],
+      "variables": {
+        "energia": {
+          "min": 4
+        }
+      }
     },
     "contexto": "🗓️ Demasiado para una semana",
     "texto": "Tenés mil cosas encima. Abrís el calendario y no sabés por dónde empezar.\n\nEn la fotocopiadora escuchás a un compañero comentar:\n\n—Yo antes iba a las tutorías cuando no entendía una materia. Pero me di cuenta de que no era solamente que no entendía. No sabía cómo organizarme con todo.\n\n—¿Y qué hiciste?\n\n—Fui a Orientación Estudiantil.\n\nTe quedás pensando si tu problema también es ese.\n\n¿Qué hacés?",
@@ -2724,22 +2731,21 @@
   {
     "id": "transversal_silencio_gime",
     "carrera": "politica",
-     "rangoOrden": [
-      60,
-      79
+            "rangoOrden": [
+      100,
+      110
     ],
     "funcion": "acompanamiento_y_bienestar",
     "contexto": "🌙 El mensaje de Gime",
     "requiere": {
+      "banderas": [
+        "satura_agenda"
+      ],
       "variables": {
         "energia": {
           "max": 3
         }
-      },
-      "banderas_no": [
-        "mantuvo_equilibrio",
-        "prioriza_organizacion"
-      ]
+      }
     },
     "texto": "Hace más de una semana que no vas a la facu.\n\nSilenciaste el grupo hace unos días, sin pensarlo mucho.\n\nEstás en tu cuarto, de noche, con el celular en la mano.\n\nTe llega un mensaje de Gime:\n\n\"Che, ¿todo bien? ¿no estás yendo más a cursar?\"\n\n¿Qué le contestás?",
     "opciones": [

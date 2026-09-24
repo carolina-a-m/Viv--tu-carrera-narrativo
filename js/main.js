@@ -509,7 +509,7 @@ function mostrarSiguiente() {
         estado.carreraActiva;
 
 
-            const resultado =
+             const resultado =
         elegirOpcion(
           estado,
           evento,
@@ -517,12 +517,16 @@ function mostrarSiguiente() {
         );
 
 
-                  registrarDecision(
-        estado,
-        opcion.texto,
-        { funcion: evento.funcion },
-        opcion.intereses || {}
-      );
+                  if (evento.opciones.length > 1) {
+
+        registrarDecision(
+          estado,
+          opcion.texto,
+          { funcion: evento.funcion },
+          opcion.intereses || {}
+        );
+
+      }
 
       if (
         estado.carreraActiva !==
