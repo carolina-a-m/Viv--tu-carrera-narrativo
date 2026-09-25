@@ -491,7 +491,7 @@
     "contexto": "✅ Las notas",
     "texto": "Publican las notas.\n\nTe fue bien. No fue fácil, pero sentís que empezás a entender cómo funciona la carrera.\n\nSalís del aula bastante conforme.",
     "opciones": [
-      {
+            {
         "icono": "🚀",
         "texto": "Buscar algo nuevo",
         "descripcion": "Aprovechar el envión y empezar a buscar alguna actividad nueva.",
@@ -501,7 +501,8 @@
         },
         "banderaSet": [
           "primer_parcial_resuelto",
-          "aprobo_primer_parcial"
+          "aprobo_primer_parcial",
+          "busca_actividad_ia"
         ]
       },
       {
@@ -548,17 +549,42 @@
         ]
       },
       {
-        "icono": "🔁",
-        "texto": "Cambiar de método",
-        "descripcion": "Cambiar tu forma de estudiar y volver a intentarlo.",
+        "icono": "🔍",
+        "texto": "Buscar algo nuevo",
+        "descripcion": "El 3 no te cierra las puertas. Buscar sumar algo nuevo a la cursada, aunque el parcial no haya salido bien.",
         "efectos": {
-          "dedicacion": 1,
+          "exploracion": 1,
           "confianza": 1,
           "energia": -1
         },
         "banderaSet": [
           "desaprobo_primer_parcial",
-          "primer_parcial_resuelto"
+          "primer_parcial_resuelto",
+          "busca_actividad_ia"
+        ]
+      }
+    ]
+  },
+    {
+    "id": "politica_actividad_ia_disparador",
+    "carrera": "politica",
+    "orden": 55,
+    "omitirSiNoCumple": true,
+    "requiere": {
+      "banderas": [
+        "busca_actividad_ia"
+      ]
+    },
+    "contexto": "🔍 Algo nuevo",
+    "texto": "Estás por sumar una nueva actividad a tu cursada.",
+    "opciones": [
+      {
+        "icono": "➡️",
+        "texto": "Seguir",
+        "descripcion": "Seguir.",
+        "efectos": {},
+        "banderaSet": [
+          "actividad_ia_resuelta"
         ]
       }
     ]
@@ -681,7 +707,7 @@
       {
         "icono": "🤔",
         "texto": "Hay cosas que no esperaba",
-        "descripcion": "Hay cosas que me gustan, pero otras no tienen nada que ver con lo que esperaba.",
+        "descripcion": "Hay cosas que me gustan, pero otras no tienen nada que ver con lo que esperaba. Me gustaría conocer más para decidir qué me interesa dento de la carrera.",
                 "efectos": {
           "exploracion": 1,
           "confianza": -3,
@@ -1975,7 +2001,7 @@
       }
     },
     "contexto": "🔬 Una propuesta",
-    "texto": "Unos meses después, se te acerca al salir de una clase una docente.\n—¿Te acordás del proyecto sobre paridad en los concejos? Todavía estamos buscando gente. ¿Te interesaría sumarte?\n\nTu decisión de priorizar la carrera te dio el tiempo justo para meterte de lleno en algo que ya te había llamado la atención desde el principio.",
+    "texto": "Unos meses después, se te acerca al salir de una clase Marina, la JTP.\n—¿Te acordás del proyecto sobre paridad en los concejos? Todavía estamos buscando gente. ¿Te interesaría sumarte?\n\nTu decisión de priorizar la carrera te dio el tiempo justo para meterte de lleno en algo que ya te había llamado la atención desde el principio.",
     "opciones": [
       {
         "icono": "🔬",
@@ -2448,7 +2474,7 @@
     ],
     "funcion": "acompanamiento_economico",
     "contexto": "🍽️ ¿Comemos algo?",
-    "texto": "Son las dos de la tarde. Recién salís de una clase de Teoría Política I. Todavía te quedan varias horas de cursada y tenés la plata justa para volver a casa.\n\nMale te pregunta:\n\n—¿Comemos algo?\n\nSabés que si la gastás te tenés que volver caminando.\n\n¿Qué hacés?",
+    "texto": "Son las dos de la tarde. Recién salís de una clase de Política y Derecho I. Todavía te quedan varias horas de cursada y tenés la plata justa para volver a casa.\n\nMale te pregunta:\n\n—¿Comemos algo?\n\nSabés que si la gastás te tenés que volver caminando.\n\n¿Qué hacés?",
     "opciones": [
       {
         "icono": "🙅",
@@ -2568,7 +2594,8 @@
     },
     "requiere": {
       "banderas_no": [
-        "tiene_grupo_estudio"
+        "tiene_grupo_estudio",
+        "busca_actividad_ia"
       ]
     }
   },

@@ -655,13 +655,15 @@ body {
   font-size: 12px;
   font-weight: 700;
   line-height: 1.2;
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  opacity: 0.6;
   cursor: pointer;
   transition: opacity 0.2s ease, text-decoration-color 0.2s ease;
 }
 
 .ficha-recurso-nombre:hover {
-  opacity: 0.8;
+  opacity: 1;
   text-decoration: underline;
   text-decoration-thickness: 0.5px;
   text-underline-offset: 3px;
@@ -694,13 +696,16 @@ body {
   font-size: 9.6px;
   line-height: 1.2;
   text-align: center;
+}
+
+.intervencion-ia-cargando-texto {
   animation: respirar-carga 2s ease-in-out infinite;
 }
 
 .intervencion-ia-cargando .emoji-carga {
   display: inline-block;
-  animation: flotar-varita 1.8s ease-in-out infinite;
-  transform-origin: center;
+  animation: varita-ia-mover 2.4s ease-in-out infinite;
+  transform-origin: 50% 85%;
 }
 
 @keyframes flotar-varita {

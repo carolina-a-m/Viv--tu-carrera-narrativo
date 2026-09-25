@@ -468,7 +468,7 @@ function renderCargandoIntervencionIA() {
 
   const parrafo = document.createElement('p');
   parrafo.className = 'intervencion-ia-cargando';
-  parrafo.innerHTML = 'Analizando tu recorrido con IA <span class="emoji-carga">🪄</span>';
+  parrafo.innerHTML = '<span class="intervencion-ia-cargando-texto">Analizando tu recorrido con IA</span> <span class="emoji-carga">🪄</span>';
   contenedor.appendChild(parrafo);
 }
 
@@ -770,7 +770,7 @@ caja.id = 'resultado-final-caja';
 
 caja.innerHTML = narrativa.cargando
   ? `<div class="decision-eleccion-cuerpo">
-       <p class="decision-eleccion-desc intervencion-ia-cargando">Analizando tu recorrido con IA <span class="emoji-carga">🪄</span></p>
+              <p class="decision-eleccion-desc intervencion-ia-cargando"><span class="intervencion-ia-cargando-texto">Analizando tu recorrido con IA</span> <span class="emoji-carga">🪄</span></p>
      </div>`
   : `<div class="decision-eleccion-cuerpo">
        ${narrativa.contexto ? `<p class="decision-eleccion-titulo">${narrativa.contexto}</p>` : ''}

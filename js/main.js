@@ -37,6 +37,7 @@ import {
   estadoInicial,
   registrarDecision,
   registrarEvento,
+  setearBanderas,
   obtenerContextoSeguroIA
 } from './estado.js';
 
@@ -706,6 +707,43 @@ if (evento.orden === ORDEN_FINAL) {
 
 }
 
+else if (evento.id === 'politica_actividad_ia_disparador') {
+
+  renderEvento(
+    {
+      contexto: '<span class="emoji-carga">🪄</span> Creando escenas personalizadas con IA',
+      texto: 'El juego está tomando elementos de tu recorrido — tus decisiones, tus intereses — y construyendo con eso una serie de escenas pensadas especialmente para tu partida. Esto puede tardar unos segundos.',
+      opciones: []
+    },
+    () => {},
+    construirResumenJugador(estado, facultades)
+  );
+
+  pedirActividadIA(estado).then((eventoGenerado) => {
+
+    const eventoFinal = eventoGenerado || ACTIVIDAD_IA_FALLBACK;
+
+    registrarEvento(estado, evento.id);
+    guardar(estado);
+
+    renderEvento(
+      {
+        contexto: eventoFinal.contexto,
+        texto: eventoFinal.texto,
+        opciones: eventoFinal.opciones
+      },
+      manejarEleccionActividadIA(eventoFinal),
+      construirResumenJugador(estado, facultades)
+    );
+
+    renderDebugEstado(estado);
+
+  });
+
+  return;
+
+}
+
 else {
       const usaConflicto = eventoUsaConflicto(evento.texto);
 
@@ -797,6 +835,219 @@ function construirResumenTrayectoria(estado) {
     return null;
 
   }
+}
+
+
+// ------------------------------------------------------------
+// ACTIVIDAD GENERADA POR IA (post-primer parcial)
+// ------------------------------------------------------------
+
+const VARIABLES_PERMITIDAS_EFECTOS_IA = [
+  'vocacion', 'estabilidad', 'energia', 'confianza',
+  'exploracion', 'dedicacion'
+];
+
+const EFECTO_IA_MIN = -5;
+const EFECTO_IA_MAX = 5;
+
+const ACTIVIDAD_IA_FALLBACK = {
+  contexto: '🔍 Algo nuevo',
+  texto: 'Te anotás en un taller optativo de la facultad. No tiene mucho que ver con lo que venías haciendo hasta ahora, pero te suma otra perspectiva.',
+  opciones: [
+    {
+      icono: '➡️',
+      texto: 'Seguir',
+      descripcion: 'Seguir.',
+      efectos: { exploracion: 1 },
+      intereses: {},
+      banderaSet: []
+    }
+  ]
+};
+
+const PROFUNDIDAD_MAXIMA_ACTIVIDAD_IA = 3;
+
+function validarEscenaIA(escena, profundidad = 1) {
+
+  if (!escena || typeof escena !== 'object') return null;
+  if (typeof escena.texto !== 'string') return null;
+  if (escena.texto.length < 40 || escena.texto.length > 600) return null;
+
+  if (!Array.isArray(escena.opciones)) return null;
+  if (escena.opciones.length < 1 || escena.opciones.length > 4) return null;
+
+  const opcionesValidadas = [];
+
+  for (const opcion of escena.opciones) {
+
+    if (typeof opcion.texto !== 'string') return null;
+    if (opcion.texto.length < 1 || opcion.texto.length > 80) return null;
+
+    const efectos = opcion.efectos || {};
+
+    for (const [variable, valor] of Object.entries(efectos)) {
+
+      if (!VARIABLES_PERMITIDAS_EFECTOS_IA.includes(variable)) return null;
+      if (typeof valor !== 'number') return null;
+      if (valor < EFECTO_IA_MIN || valor > EFECTO_IA_MAX) return null;
+
+    }
+
+    const opcionValidada = {
+      icono: opcion.icono || '➡️',
+      texto: opcion.texto,
+      descripcion: opcion.descripcion || '',
+      efectos
+    };
+
+    if (opcion.escena_siguiente) {
+
+      if (profundidad >= PROFUNDIDAD_MAXIMA_ACTIVIDAD_IA) return null;
+
+      const siguienteValidada = validarEscenaIA(opcion.escena_siguiente, profundidad + 1);
+
+      if (!siguienteValidada) return null;
+
+      opcionValidada.escena_siguiente = siguienteValidada;
+
+    } else {
+
+      if (typeof opcion.cierre !== 'string') return null;
+      if (opcion.cierre.length < 10 || opcion.cierre.length > 400) return null;
+
+      opcionValidada.cierre = opcion.cierre;
+
+    }
+
+    opcionesValidadas.push(opcionValidada);
+
+  }
+
+  return {
+    contexto: typeof escena.contexto === 'string' ? escena.contexto : null,
+    texto: escena.texto,
+    opciones: opcionesValidadas
+  };
+
+}
+
+function construirEscenaGenerada(escena) {
+
+  return {
+    contexto: escena.contexto,
+    texto: escena.texto,
+    opciones: escena.opciones.map((opcion) => {
+
+      const opcionFinal = {
+        icono: opcion.icono,
+        texto: opcion.texto,
+        descripcion: opcion.descripcion,
+        efectos: opcion.efectos,
+        banderaSet: []
+      };
+
+      if (opcion.escena_siguiente) {
+        opcionFinal.consecuencia = construirEscenaGenerada(opcion.escena_siguiente);
+      } else if (opcion.cierre) {
+        opcionFinal.resultado = { texto: opcion.cierre };
+      }
+
+      return opcionFinal;
+
+    })
+  };
+
+}
+
+function construirEventoActividadIA(escenaRaiz) {
+
+  if (!escenaRaiz) return null;
+
+  const evento = construirEscenaGenerada(escenaRaiz);
+
+  evento.id = 'actividad_ia_' + Date.now();
+  evento.carrera = estado.carreraActiva;
+  evento.orden = 55;
+
+  return evento;
+
+}
+
+async function pedirActividadIA(estado) {
+
+  try {
+
+    const respuesta = await fetch(URL_INTERVENCION_IA, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        tipo: 'actividad_ia',
+        nombreJugador: estado.nombre,
+        resumenTrayectoria: construirResumenTrayectoria(estado)
+      })
+    });
+
+    if (!respuesta.ok) return null;
+
+    const datos = await respuesta.json();
+
+    const escenaValidada = validarEscenaIA(datos.escena);
+
+    if (!escenaValidada) return null;
+
+    return construirEventoActividadIA(escenaValidada);
+
+  } catch {
+
+    return null;
+
+  }
+}
+
+function manejarEleccionActividadIA(eventoRaiz) {
+
+  const manejarOpcion = (opcion) => {
+
+    const resultado = elegirOpcionConsecuencia(estado, opcion, eventoRaiz);
+
+    guardar(estado);
+
+    const continuarOMostrarSiguienteNivel = () => {
+
+      if (resultado && resultado.consecuencia) {
+
+        renderConsecuenciaComoEvento(
+          resultado.consecuencia,
+          manejarOpcion
+        );
+
+      } else {
+
+        setearBanderas(estado, ['actividad_ia_resuelta']);
+        guardar(estado);
+        mostrarSiguiente();
+
+      }
+
+    };
+
+    if (resultado && resultado.resultadoOpcion) {
+
+      renderResultadoOpcionComoEvento(
+        resultado.resultadoOpcion,
+        continuarOMostrarSiguienteNivel
+      );
+
+    } else {
+
+      continuarOMostrarSiguienteNivel();
+
+    }
+
+  };
+
+  return manejarOpcion;
+
 }
 
 

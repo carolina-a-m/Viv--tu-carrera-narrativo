@@ -122,6 +122,10 @@ const GRUPOS_EXCLUYENTES = {
     postura_carrera: [
       'retoma_politica',
       'duda_carrera'
+    ],
+    actividad_post_parcial: [
+      'busca_actividad_ia',
+      'actividad_ia_resuelta'
     ]
   },
   _default: {}
