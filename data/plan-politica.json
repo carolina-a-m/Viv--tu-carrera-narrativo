@@ -1,0 +1,498 @@
+{
+  "carrera": "politica",
+  "presentacionGeneral": {
+    "queEsLaCarrera": "La Licenciatura en Ciencia Política estudia las relaciones de poder entre el Estado y sus instituciones, los sectores dirigentes y dirigidos, las organizaciones sociales y los individuos. Forma profesionales capaces de analizar procesos políticos y sociales, y de intervenir institucionalmente en distintos niveles: desde la investigación académica hasta la gestión pública y organizacional.",
+    "perfilEgresado": "Quien se recibe de Lic. en Ciencia Política puede producir análisis políticos, investigar con rigor teórico y metodológico, diseñar y evaluar políticas públicas, asesorar en la toma de decisiones, gestionar organizaciones y coordinar equipos interdisciplinarios. También puede trabajar en el diseño de estrategias de comunicación política, campañas y procesos electorales, y en procesos de reingeniería institucional.",
+    "ambitosDesempeno": [
+      "Estado y gobierno, en sus distintos niveles y jurisdicciones",
+      "Organizaciones sociales y espacios públicos societales",
+      "Organizaciones privadas",
+      "Instituciones científicas y educativas"
+    ]
+  },
+  "dimensionesFormacion": [
+    { "nombre": "Análisis político", "descripcion": "Estudiar fenómenos y procesos socio-políticos desde distintas corrientes teóricas, clásicas y contemporáneas." },
+    { "nombre": "Políticas públicas", "descripcion": "Analizar, diseñar, implementar y evaluar políticas, planes y proyectos políticos y sociales." },
+    { "nombre": "Gestión e instituciones", "descripcion": "Gestionar organizaciones, coordinar equipos y diseñar procesos de innovación y reingeniería institucional." },
+    { "nombre": "Comunicación y opinión pública", "descripcion": "Diseñar estudios de opinión pública, estrategias de comunicación política y campañas electorales." },
+    { "nombre": "Investigación", "descripcion": "Generar conocimiento con fundamentos epistemológicos y metodológicos sólidos, en espacios de educación formal y no formal." }
+  ],
+  "areas": [
+    {
+      "id": "area_teoria_politica",
+      "nombre": "Teoría y pensamiento político",
+      "descripcion": "Cómo distintos pensadores y corrientes, desde la antigüedad hasta hoy, explicaron el poder, el Estado, la libertad, la democracia y la justicia.",
+      "materiasRelacionadas": ["teoria_politica_i", "teoria_politica_ii", "teoria_politica_iii", "pensamiento_social_y_politico_latinoamericano_ii"],
+      "etiquetas": ["politica", "investigacion", "social"]
+    },
+    {
+      "id": "area_historia_politica",
+      "nombre": "Historia política",
+      "descripcion": "Cómo se formaron y transformaron los Estados y los procesos políticos en América Latina y Argentina, a lo largo del tiempo.",
+      "materiasRelacionadas": ["historia_america_latina_y_la_construccion_del_mundo_moderno", "historia_politica_latinoamericana", "historia_politica_argentina"],
+      "etiquetas": ["politica", "social", "investigacion"]
+    },
+    {
+      "id": "area_metodologia_investigacion",
+      "nombre": "Metodología e investigación social",
+      "descripcion": "Cómo se construye el conocimiento científico y qué herramientas y técnicas se usan para investigar problemas sociales y políticos.",
+      "materiasRelacionadas": ["problematica_del_conocimiento_en_las_ciencias_sociales", "epistemologia", "metodologia_ii", "metodologia_iii"],
+      "etiquetas": ["investigacion", "tecnico", "social", "politica"]
+    },
+    {
+      "id": "area_sistemas_politicos",
+      "nombre": "Sistemas políticos y política comparada",
+      "descripcion": "Cómo funcionan las elecciones, los partidos y las democracias, y cómo se comparan distintos procesos y sistemas políticos entre países.",
+      "materiasRelacionadas": ["introduccion_a_la_ciencia_politica", "politica_comparada_i", "politica_comparada_ii", "elecciones_y_partidos_politicos"],
+      "etiquetas": ["politica", "investigacion", "organizacion", "social"]
+    },
+    {
+      "id": "area_estado_derecho_administracion",
+      "nombre": "Estado, derecho y administración pública",
+      "descripcion": "Cómo se organiza jurídica e institucionalmente el poder del Estado, y cómo funcionan y se gestionan las organizaciones públicas.",
+      "materiasRelacionadas": ["politica_y_derecho_i", "politica_y_derecho_ii", "administracion_publica_cuestiones_y_problemas", "analisis_diseno_y_gestion_de_organizaciones_publicas"],
+      "etiquetas": ["politica", "organizacion", "social", "tecnico", "investigacion"]
+    },
+    {
+      "id": "area_politicas_publicas",
+      "nombre": "Políticas públicas y planificación",
+      "descripcion": "Cómo se diseñan, implementan y evalúan políticas, planes y proyectos públicos, y cómo se analiza una situación política concreta.",
+      "materiasRelacionadas": ["planificacion_publica", "analisis_de_politicas_publicas", "analisis_politico"],
+      "etiquetas": ["politica", "organizacion", "tecnico", "investigacion", "comunicacion"]
+    },
+    {
+      "id": "area_economia_politica",
+      "nombre": "Economía política",
+      "descripcion": "Cómo se relacionan la economía y las decisiones políticas, y cómo el Estado administra recursos, gasto público e impuestos.",
+      "materiasRelacionadas": ["teoria_economica", "politica_economica", "economia_del_sector_publico"],
+      "etiquetas": ["tecnico", "politica", "investigacion", "organizacion"]
+    },
+    {
+      "id": "area_sociedad_territorio",
+      "nombre": "Sociedad, territorio y desigualdad",
+      "descripcion": "Cómo se transformaron las clases sociales, el trabajo y las desigualdades en Argentina, y cómo el poder se expresa en distintos territorios.",
+      "materiasRelacionadas": ["teoria_sociologica_i", "estructura_social_argentina", "politica_y_territorios"],
+      "etiquetas": ["social", "investigacion", "politica"]
+    },
+    {
+      "id": "area_comunicacion_politica",
+      "nombre": "Comunicación política y opinión pública",
+      "descripcion": "Cómo se relacionan la comunicación, los medios y la política, y cómo se diseñan estrategias de comunicación y campañas electorales.",
+      "materiasRelacionadas": ["comunicacion_politica"],
+      "etiquetas": ["comunicacion", "politica"]
+    },
+    {
+      "id": "area_relaciones_internacionales",
+      "nombre": "Relaciones internacionales",
+      "descripcion": "Cómo funciona el sistema internacional, cómo se relacionan los Estados entre sí y cuál es la posición de América Latina en el mundo.",
+      "materiasRelacionadas": ["relaciones_internacionales"],
+      "etiquetas": ["politica", "social", "investigacion"]
+    }
+  ],
+  "materias": [
+    {
+      "id": "historia_america_latina_y_la_construccion_del_mundo_moderno",
+      "nombre": "Historia: América Latina y la construcción del mundo moderno",
+      "anio": 1,
+      "descripcionBreve": "La materia recorre la historia de América Latina y Europa desde fines del siglo XV hasta el siglo XIX, para entender cómo se formó el mundo moderno y cómo se relacionaron sus distintas regiones. Se estudian la conquista y el orden colonial, las revoluciones, el capitalismo y la formación de los Estados nacionales latinoamericanos.",
+      "ejesTemáticos": [
+        "La conquista de América, el colonialismo y la formación de un nuevo orden mundial basado en relaciones desiguales de poder.",
+        "La formación de las monarquías, el sistema colonial, el crecimiento del capitalismo y los cambios políticos y sociales de los siglos XVI al XVIII.",
+        "Las revoluciones de Estados Unidos y Francia y los cambios en las ideas de soberanía, derechos y participación política.",
+        "Las revoluciones e independencias hispanoamericanas y los conflictos por definir quiénes forman parte del nuevo poder político.",
+        "La construcción de los Estados nacionales latinoamericanos, su organización política y económica y las formas de ordenar y controlar la sociedad."
+      ],
+      "etiquetas": ["politica", "social", "investigacion"]
+    },
+    {
+      "id": "teoria_politica_i",
+      "nombre": "Teoría Política I",
+      "anio": 1,
+      "descripcionBreve": "La materia estudia cómo distintas sociedades y pensadores entendieron la política, el poder, el Estado, la libertad y la justicia desde la antigua Grecia hasta la Ilustración francesa. Se aprende a comparar teorías políticas, analizar sus argumentos y distinguir distintas formas de entender los problemas políticos.",
+      "ejesTemáticos": [
+        "Qué es la política y qué significa lo político, y cómo se pueden estudiar y pensar estos conceptos.",
+        "Las ideas políticas de la antigua Grecia, con temas como democracia, ciudadanía, gobierno, justicia y vida en comunidad.",
+        "El pensamiento político cristiano y las relaciones entre política, religión, leyes, justicia y poder durante el mundo medieval.",
+        "El surgimiento de las ideas políticas modernas, desde Maquiavelo hasta las teorías sobre el Estado, el individuo, la libertad y el contrato social.",
+        "La Ilustración francesa, las formas de gobierno y la división de poderes."
+      ],
+      "etiquetas": ["politica", "investigacion"]
+    },
+    {
+      "id": "problematica_del_conocimiento_en_las_ciencias_sociales",
+      "nombre": "Problemática del Conocimiento en las Ciencias Sociales",
+      "anio": 1,
+      "descripcionBreve": "La materia estudia cómo se construye el conocimiento y cómo distintas corrientes filosóficas entendieron la verdad, la ciencia y la realidad social desde la antigua Grecia hasta la actualidad. También analiza cómo se formaron las ciencias sociales y cuestiona sus formas de producir conocimiento desde una perspectiva crítica y descolonial.",
+      "ejesTemáticos": [
+        "Las ideas sobre el conocimiento, la verdad y la filosofía en la antigua Grecia.",
+        "Los cambios en las formas de entender la verdad, la ciencia y el conocimiento durante los siglos XVII y XVIII.",
+        "Las distintas maneras de explicar la historia, la ciencia y la sociedad durante el siglo XIX.",
+        "Las nuevas formas de pensar al ser humano, el poder y las ciencias sociales durante los siglos XX y XXI.",
+        "Las críticas al eurocentrismo y a la forma en que las ciencias sociales construyeron conocimiento, desde perspectivas descoloniales y latinoamericanas."
+      ],
+      "etiquetas": ["investigacion", "social"]
+    },
+    {
+      "id": "introduccion_a_la_ciencia_politica",
+      "nombre": "Introducción a la Ciencia Política",
+      "anio": 1,
+      "descripcionBreve": "Introduce qué estudia la Ciencia Política, cómo fue cambiando la disciplina y qué métodos utiliza para estudiar la política. También aborda su desarrollo en América Latina y Argentina y el trabajo profesional de quienes se dedican a la Ciencia Política.",
+      "ejesTemáticos": [
+        "Qué estudia la Ciencia Política, cómo se formó como disciplina y cómo evolucionó en Europa, Estados Unidos, América Latina y Argentina.",
+        "Cómo se estudia la política de manera empírica, incluyendo métodos, técnicas, enfoques y comparación.",
+        "Las discusiones sobre cómo se desarrolló la Ciencia Política y qué problemas enfrenta en América Latina.",
+        "El trabajo de los politólogos, su papel en la sociedad y sus ámbitos de inserción profesional en Argentina."
+      ],
+      "etiquetas": ["politica", "investigacion", "organizacion"]
+    },
+    {
+      "id": "teoria_sociologica_i",
+      "nombre": "Teoría Sociológica I",
+      "anio": 1,
+      "descripcionBreve": "La materia introduce las principales teorías sociológicas clásicas y los conceptos que usan para entender la sociedad moderna. Se estudian distintas formas de explicar el capitalismo, las clases sociales, el poder, la integración social, los conflictos y el funcionamiento de la sociedad como sistema.",
+      "ejesTemáticos": [
+        "Cómo surgió la Sociología a partir de los cambios del mundo moderno y qué estudia como ciencia.",
+        "El capitalismo, las clases sociales y los conflictos entre grupos dentro de la sociedad.",
+        "Las acciones de las personas, el poder, la dominación y el avance de la racionalidad en la sociedad moderna.",
+        "La integración social, la relación entre los individuos y la sociedad, y fenómenos como la solidaridad, la coerción y el suicidio.",
+        "La sociedad entendida como un sistema de roles, relaciones y cambios, y los procesos que explican el mundo moderno."
+      ],
+      "etiquetas": ["social", "investigacion"]
+    },
+    {
+      "id": "politica_y_derecho_i",
+      "nombre": "Política y Derecho I",
+      "anio": 1,
+      "descripcionBreve": "Estudia cómo se relacionan la política y el derecho, y cómo las decisiones jurídicas pueden influir en la vida política y social. Se aprende a analizar el derecho desde distintas perspectivas, considerando sus normas, su relación con la sociedad y los valores vinculados con la justicia.",
+      "ejesTemáticos": [
+        "Conceptos básicos sobre el derecho, el poder, la autoridad y las distintas formas de entender el derecho y su relación con la política.",
+        "Las normas jurídicas, su funcionamiento, su relación con la sociedad, los cambios sociales y las distintas ideas sobre la justicia.",
+        "Derechos humanos, Constitución, derecho penal, derecho privado, derecho internacional y nuevas áreas jurídicas vinculadas con problemas actuales.",
+        "Análisis de problemas actuales en los que se cruzan cuestiones jurídicas y políticas, tanto dentro del país como en el ámbito internacional."
+      ],
+      "etiquetas": ["politica", "social", "investigacion"]
+    },
+    {
+      "id": "teoria_politica_ii",
+      "nombre": "Teoría Política II",
+      "anio": 2,
+      "descripcionBreve": "Recorre las principales ideas sobre la política desde las revoluciones del siglo XVIII hasta la década de 1920. Se estudian distintas formas de pensar el Estado, la libertad, la igualdad, el mercado, la democracia, la revolución, el poder y los conflictos sociales, relacionándolas con los problemas políticos de su época y con el presente.",
+      "ejesTemáticos": [
+        "Libertad, Estado y sociedad: distintas formas de pensar el orden político, los derechos, la ciudadanía y el papel del Estado.",
+        "Mercado, democracia e igualdad: cómo se relacionan la economía, la libertad, la igualdad y las formas de gobierno.",
+        "Críticas al Estado, al capitalismo y a la propiedad: revolución, comunismo, anarquismo, autogestión y organización de los trabajadores.",
+        "Revolución, democracia y lucha política: debates sobre reforma y revolución, huelgas, participación, organización y emancipación de las mujeres.",
+        "Estado, poder y decisión política: hegemonía, burocracia, partidos, liderazgo, soberanía, parlamentarismo y conflictos políticos."
+      ],
+      "etiquetas": ["politica", "social", "investigacion"]
+    },
+    {
+      "id": "teoria_economica",
+      "nombre": "Teoría Económica",
+      "anio": 2,
+      "descripcionBreve": "Recorre cómo fueron cambiando las principales ideas económicas desde el surgimiento del capitalismo hasta la actualidad. Introduce conceptos de microeconomía y macroeconomía para entender mercados, dinero, empleo, inflación, crecimiento, comercio exterior y las políticas económicas.",
+      "ejesTemáticos": [
+        "Origen y evolución del pensamiento económico: del mercantilismo y la fisiocracia a las primeras ideas sobre el capitalismo.",
+        "Capitalismo, trabajo y distribución: distintas explicaciones sobre el valor, el trabajo, la explotación, el mercado y el funcionamiento de la economía.",
+        "Mercados y decisiones económicas: cómo se explican la oferta, la demanda, los precios, el equilibrio, las empresas y las distintas formas de mercado.",
+        "Macroeconomía, dinero y políticas económicas: funcionamiento de una economía, consumo, ahorro, inversión, empleo, dinero, Estado y políticas públicas.",
+        "Economía abierta y desarrollo: comercio y finanzas internacionales, tipo de cambio, inflación, desempleo, deuda, crecimiento y límites de las políticas económicas."
+      ],
+      "etiquetas": ["tecnico", "politica", "investigacion"]
+    },
+    {
+      "id": "relaciones_internacionales",
+      "nombre": "Relaciones Internacionales",
+      "anio": 2,
+      "descripcionBreve": "Estudia cómo funciona el sistema internacional y cómo se relacionan los Estados y otros actores a través del poder, la política y la economía. Recorre los principales cambios del orden mundial desde la Segunda Guerra Mundial hasta la actualidad, con especial atención a América Latina y su posición en el mundo.",
+      "ejesTemáticos": [
+        "Conceptos y teorías para entender las relaciones internacionales, sus actores, conflictos, acuerdos y distintas formas de organización del mundo.",
+        "Cambios en el poder mundial desde la Guerra Fría hasta la actualidad, incluyendo el papel de Estados Unidos, Rusia, China, Europa, India y los BRICS.",
+        "Evolución de la economía mundial, el comercio, las finanzas, las crisis económicas y las relaciones entre los Estados y los actores económicos.",
+        "El Sur Global y los procesos de descolonización, cooperación y búsqueda de mayor autonomía frente a las potencias mundiales.",
+        "América Latina en el sistema internacional: relaciones con Estados Unidos y China, integración regional y cambios políticos en la región."
+      ],
+      "etiquetas": ["politica", "social", "investigacion"]
+    },
+    {
+      "id": "epistemologia",
+      "nombre": "Epistemología",
+      "anio": 2,
+      "descripcionBreve": "La materia estudia qué es el conocimiento científico y cómo se construye, especialmente en las ciencias sociales. Permite conocer distintas formas de entender la ciencia, discutir sus criterios, límites y relación con la sociedad, y reflexionar sobre la práctica de investigación.",
+      "ejesTemáticos": [
+        "Qué es el conocimiento científico y cómo se construye en las ciencias sociales.",
+        "Distintas formas de entender la ciencia, desde el positivismo hasta las críticas de Popper, Kuhn y Feyerabend.",
+        "Cómo se construye el conocimiento científico, y qué relación tienen la ciencia, la verdad, las subjetividades y el poder.",
+        "La teoría crítica y la relación entre conocimiento, intereses y sociedad.",
+        "Los debates actuales sobre ciencia, capitalismo, feminismo, epistemologías del Sur y producción de conocimiento en Ciencia Política y Relaciones Internacionales."
+      ],
+      "etiquetas": ["investigacion", "politica", "social"]
+    },
+    {
+      "id": "politica_y_territorios",
+      "nombre": "Política y Territorios",
+      "anio": 2,
+      "descripcionBreve": "La materia estudia cómo se relacionan la política y el espacio geográfico, y cómo las relaciones sociales y de poder se expresan en distintos territorios. Se trabaja con casos y procesos de escala mundial, nacional y local, con especial atención a América Latina y el Caribe.",
+      "ejesTemáticos": [
+        "América Latina en el mundo, las desigualdades entre regiones y las relaciones entre territorio, poder y colonialidad.",
+        "El desarrollo en América Latina, la relación entre territorio y Estado, y el papel de las fronteras.",
+        "Las relaciones entre cultura, comunidad, trabajo y territorio, y las distintas formas de entender el espacio, el paisaje y los lugares."
+      ],
+      "etiquetas": ["politica", "social"]
+    },
+    {
+      "id": "historia_politica_latinoamericana",
+      "nombre": "Historia Política Latinoamericana",
+      "anio": 2,
+      "descripcionBreve": "Estudia la historia política de América Latina entre 1870 y 2000, enfocándose en cómo se construyeron y transformaron los Estados y su relación con la sociedad. Permite conocer y comparar procesos políticos de distintos países y entender cómo conflictos, acuerdos y cambios sociales, económicos y culturales influyeron en ellos.",
+      "ejesTemáticos": [
+        "La formación de los Estados latinoamericanos y las reformas y revoluciones que cuestionaron el orden político entre 1880 y 1918.",
+        "Los cambios políticos y sociales entre las guerras mundiales, incluyendo la incorporación de nuevos actores, las izquierdas y derechas, las crisis económicas y los gobiernos populistas.",
+        "América Latina durante la Guerra Fría: desarrollismo, revoluciones, conflictos políticos, influencia de Estados Unidos y dictaduras militares.",
+        "Las dictaduras, las crisis económicas, el avance del neoliberalismo y las transiciones y consolidación de las democracias entre 1973 y 2000."
+      ],
+      "etiquetas": ["politica", "social"]
+    },
+    {
+      "id": "pensamiento_social_y_politico_latinoamericano_ii",
+      "nombre": "Pensamiento Social y Político Latinoamericano II",
+      "anio": 2,
+      "descripcionBreve": "Recorre los principales problemas sociales y políticos que marcaron el pensamiento latinoamericano durante el siglo XX y comienzos del XXI. Permite analizar cómo se construyeron esas ideas, en qué contextos surgieron y cómo pueden ayudar a pensar problemas del presente.",
+      "ejesTemáticos": [
+        "Cómo se construyeron las ideas sobre América Latina y sobre lo político y lo social desde una mirada histórica y situada.",
+        "Las discusiones sobre nación, antiimperialismo, nacionalismo y socialismo en América Latina.",
+        "Las ideas sobre desarrollo y dependencia y las distintas formas de explicar la posición de América Latina en la economía mundial.",
+        "Los autoritarismos, las dictaduras y las transiciones a la democracia, incluyendo sus dimensiones políticas, económicas y sociales.",
+        "Las críticas a la colonialidad y las relaciones entre poder, raza, género y feminismo desde perspectivas latinoamericanas."
+      ],
+      "etiquetas": ["politica", "social", "investigacion"]
+    },
+    {
+      "id": "teoria_politica_iii",
+      "nombre": "Teoría Política III",
+      "anio": 3,
+      "descripcionBreve": "Estudia las principales teorías políticas contemporáneas de los siglos XX y XXI y los conceptos que permiten comprender debates políticos actuales. Se aprende a relacionar distintas ideas sobre democracia, libertad, poder, Estado, igualdad y participación con los problemas políticos de cada época.",
+      "ejesTemáticos": [
+        "Distintas formas de entender la democracia, la participación, la representación, la igualdad y la libertad.",
+        "El totalitarismo y los autoritarismos, junto con las relaciones entre poder, violencia, terror e ideología.",
+        "Los debates dentro del liberalismo sobre libertad, igualdad, derechos, justicia y el papel del Estado.",
+        "La libertad republicana, la relación entre lo público y lo privado y las diferencias entre republicanismo y liberalismo.",
+        "El marxismo contemporáneo, la hegemonía, el conflicto político, la radicalización de la democracia y los populismos."
+      ],
+      "etiquetas": ["politica", "social"]
+    },
+    {
+      "id": "historia_politica_argentina",
+      "nombre": "Historia Política Argentina",
+      "anio": 3,
+      "descripcionBreve": "Recorre la historia política argentina desde la consolidación del Estado nacional en 1880 hasta la crisis de 2001. Analiza cómo fueron cambiando el poder político, los conflictos sociales, los gobiernos, los partidos, los movimientos sociales y las relaciones entre el Estado y distintos sectores de la sociedad.",
+      "ejesTemáticos": [
+        "La formación del Estado nacional, el régimen político y los conflictos sociales entre 1880 y 1916.",
+        "Los gobiernos radicales, la ampliación de la participación política y los conflictos laborales y sociales entre 1916 y 1930.",
+        "Los cambios políticos, económicos y sociales desde 1930 hasta 1955, incluyendo la restauración conservadora y el surgimiento del peronismo.",
+        "Las crisis políticas, los gobiernos militares, el peronismo y los conflictos sociales entre 1955 y 1983.",
+        "La recuperación democrática, las reformas económicas de los años 90 y los conflictos sociales y políticos que llevaron a la crisis de 2001."
+      ],
+      "etiquetas": ["politica", "social", "investigacion"]
+    },
+    {
+      "id": "politica_y_derecho_ii",
+      "nombre": "Política y Derecho II",
+      "anio": 3,
+      "descripcionBreve": "Estudia cómo se organiza y distribuye el poder político según la Constitución Argentina. Se trabajan los poderes del Estado, el federalismo, las elecciones, los partidos políticos y las formas de participación ciudadana. También se analiza la relación entre Constitución, democracia y capitalismo, y se discuten distintas formas de pensar y transformar el orden constitucional.",
+      "ejesTemáticos": [
+        "Cómo se distribuye el poder entre el Congreso, el Poder Ejecutivo, el Poder Judicial y otros órganos.",
+        "Cómo funciona el federalismo argentino, qué competencias tienen las provincias y los municipios y qué debates existen sobre sus autonomías.",
+        "Cómo funcionan las elecciones, los partidos políticos y distintas formas de participación ciudadana.",
+        "Cómo se relacionan la Constitución, la democracia y el capitalismo, y qué distintas formas de organización constitucional se han desarrollado."
+      ],
+      "etiquetas": ["politica", "organizacion"]
+    },
+    {
+      "id": "politica_economica",
+      "nombre": "Política Económica",
+      "anio": 3,
+      "descripcionBreve": "Estudia la relación entre economía y política, especialmente en América Latina y Argentina. Recorre los principales cambios económicos de las últimas décadas y analiza cómo influyeron en las decisiones del Estado, las relaciones sociales y las políticas económicas.",
+      "ejesTemáticos": [
+        "La economía latinoamericana en la globalización y su incorporación al mercado mundial.",
+        "Los cambios y conflictos de la economía argentina desde la crisis de 1929 hasta la última dictadura.",
+        "La política económica de la última dictadura y la transformación económica, política y social que impulsó.",
+        "Los problemas económicos durante la recuperación democrática, la crisis de la deuda, la Convertibilidad y las reformas de mercado.",
+        "La economía argentina desde la postconvertibilidad hasta la política económica de Cambiemos."
+      ],
+      "etiquetas": ["politica", "organizacion"]
+    },
+    {
+      "id": "administracion_publica_cuestiones_y_problemas",
+      "nombre": "Administración Pública: cuestiones y problemas",
+      "anio": 3,
+      "descripcionBreve": "La materia estudia qué es la Administración Pública, cómo se relaciona con la política y el Estado, y cómo fue cambiando su forma de entenderse y organizarse. También analiza las transformaciones del Estado, las reformas administrativas y los problemas actuales de la gestión pública, con especial atención a Argentina y América Latina.",
+      "ejesTemáticos": [
+        "Cómo surgió el estudio de la Administración Pública y cuáles fueron sus principales debates sobre la relación entre política y administración.",
+        "Cómo funcionan el Estado, la burocracia y las organizaciones públicas, y cómo los problemas sociales llegan a convertirse en asuntos de gobierno.",
+        "La crisis del Estado social y las reformas que buscaron reducir y transformar la intervención estatal, especialmente en América Latina y Argentina.",
+        "Los cambios más recientes en la Administración Pública: mejoras en su funcionamiento, modernización, democratización, gobernanza y gobierno abierto."
+      ],
+      "etiquetas": ["politica", "organizacion", "social"]
+    },
+    {
+      "id": "estructura_social_argentina",
+      "nombre": "Estructura Social Argentina",
+      "anio": 3,
+      "descripcionBreve": "La materia estudia cómo se formó y fue cambiando la estructura social argentina desde fines del siglo XIX hasta la actualidad. Analiza las transformaciones de las clases sociales, el trabajo, la pobreza, las desigualdades y los sectores sociales en distintos períodos económicos y políticos.",
+      "ejesTemáticos": [
+        "Cómo cambió la sociedad argentina entre el modelo agroexportador y la industrialización de 1930 a 1976, incluyendo migraciones, trabajo, clases sociales y cambios en el campo.",
+        "Las transformaciones sociales entre 1976 y 2001: cambios en las clases medias y sectores populares, pobreza, desempleo, precarización y nuevas formas de organización del sector agrario.",
+        "Los cambios sociales desde 2001 hasta 2019, incluyendo las transformaciones de las clases medias y sectores populares, el empleo, la pobreza, las desigualdades y los sectores industrial y agropecuario.",
+        "Los efectos de la pandemia de Covid-19 sobre la estructura social argentina y las desigualdades."
+      ],
+      "etiquetas": ["social", "investigacion"]
+    },
+    {
+      "id": "planificacion_publica",
+      "nombre": "Planificación Pública",
+      "anio": 4,
+      "descripcionBreve": "Se aprende a analizar problemas públicos y a diseñar, implementar y evaluar intervenciones desde el Estado. La materia trabaja herramientas para planificar en contextos complejos, considerando distintos actores, objetivos, recursos y formas de evaluar los resultados.",
+      "ejesTemáticos": [
+        "Qué es la planificación pública, cómo surgió y cómo cambió, junto con sus principales enfoques y su relación con la evaluación de políticas.",
+        "Cómo analizar una situación problemática, identificar actores, causas y problemas prioritarios, y construir una línea de base con indicadores.",
+        "Cómo diseñar una estrategia de intervención: objetivos, actividades, recursos, presupuesto, responsabilidades, riesgos y viabilidad.",
+        "Cómo incorporar en la planificación la relación entre actores públicos y privados, la coordinación entre distintos niveles de gobierno, la perspectiva de género y la Agenda 2030.",
+        "Cómo construir estrategias de monitoreo y evaluación y analizar si un plan, programa o proyecto puede ser evaluado."
+      ],
+      "etiquetas": ["politica", "organizacion", "tecnico"]
+    },
+    {
+      "id": "analisis_politico",
+      "nombre": "Análisis Político",
+      "anio": 4,
+      "descripcionBreve": "La materia enseña a analizar situaciones políticas actuales, teniendo en cuenta los actores, conflictos, discursos, recursos y relaciones que intervienen. También trabaja cómo elegir y justificar herramientas para interpretar una situación y comunicar el análisis en distintos formatos.",
+      "ejesTemáticos": [
+        "Distintas formas de entender y analizar la política, el conocimiento, los discursos y la construcción de sentidos.",
+        "Cómo analizar una situación política concreta, identificando actores, intereses, conflictos, recursos y posibles cursos de acción.",
+        "Cómo influyen el pasado, el presente, los acontecimientos y las distintas formas de entender el tiempo en el análisis político.",
+        "Producción de análisis políticos propios y comunicación de sus resultados en formatos académicos, periodísticos y de asesoramiento."
+      ],
+      "etiquetas": ["politica", "investigacion", "comunicacion"]
+    },
+    {
+      "id": "elecciones_y_partidos_politicos",
+      "nombre": "Elecciones y Partidos Políticos",
+      "anio": 4,
+      "descripcionBreve": "La materia estudia cómo funcionan las elecciones y los partidos políticos, y cómo se relacionan entre sí. Se aprende a analizar sistemas electorales, organizaciones partidarias y procesos políticos, con especial atención a América Latina y a la participación política de las mujeres.",
+      "ejesTemáticos": [
+        "Cómo funcionan los sistemas electorales y cómo fueron cambiando, especialmente en América Latina.",
+        "Cómo las reglas electorales influyen en los partidos, la elección de candidatos, su financiamiento y la participación de las mujeres.",
+        "Qué son los partidos políticos, cómo se organizan y cómo funcionan dentro y fuera de las instituciones públicas.",
+        "Cómo surgieron y cambiaron los partidos políticos en América Latina desde el siglo XIX hasta la actualidad."
+      ],
+      "etiquetas": ["politica", "investigacion", "social"]
+    },
+    {
+      "id": "metodologia_ii",
+      "nombre": "Metodología II",
+      "anio": 4,
+      "descripcionBreve": "La materia profundiza en cómo se planifica y desarrolla una investigación en ciencias sociales. Se aprende a elegir diseños de investigación, seleccionar casos y fuentes, y utilizar distintas herramientas para obtener información, evaluando sus posibilidades y limitaciones.",
+      "ejesTemáticos": [
+        "Cómo diseñar una investigación y combinar distintas formas de estudiar un problema.",
+        "Cómo seleccionar casos, muestras y fuentes para obtener información de manera adecuada.",
+        "Cómo producir información mediante observación, entrevistas y encuestas, y conocer los alcances y límites de cada técnica."
+      ],
+      "etiquetas": ["investigacion", "tecnico"]
+    },
+    {
+      "id": "analisis_de_politicas_publicas",
+      "nombre": "Análisis de Políticas Públicas",
+      "anio": 4,
+      "descripcionBreve": "La materia estudia cómo se crean, implementan y evalúan las políticas públicas y cómo se relacionan con el Estado y la sociedad. Se aprende a analizar problemas públicos, decisiones y distintas formas de intervenir, usando herramientas teóricas y técnicas de manera crítica.",
+      "ejesTemáticos": [
+        "Cómo se inicia, formula, implementa y evalúa una política pública.",
+        "Cómo se relacionan las políticas públicas con el Estado, la sociedad, la política y los cambios históricos.",
+        "Enfoques que buscan analizar las políticas mediante la racionalidad, la evidencia, las instituciones y el estudio de las decisiones.",
+        "Enfoques que analizan las políticas a partir de ideas, discursos, argumentos, cultura y distintas formas de interpretar los problemas públicos."
+      ],
+      "etiquetas": ["politica", "investigacion", "tecnico"]
+    },
+    {
+      "id": "politica_comparada_i",
+      "nombre": "Política Comparada I",
+      "anio": 4,
+      "descripcionBreve": "La materia enseña a comparar distintos fenómenos políticos para entender qué tienen en común, en qué se diferencian y por qué. Se estudian procesos de democratización, sistemas de partidos, formas de gobierno y problemas de las democracias contemporáneas, especialmente en América Latina.",
+      "ejesTemáticos": [
+        "Cómo comparar fenómenos políticos, elegir casos y conceptos, y usar la comparación para describir y explicar.",
+        "Cómo se produjeron las transiciones hacia la democracia en Europa del Sur, América Latina y Europa del Este.",
+        "Cómo funcionan y cambian los sistemas de partidos, incluyendo el papel de la oposición y la representación de género.",
+        "Diferencias entre presidencialismo, parlamentarismo y semipresidencialismo, y sus efectos sobre la gobernabilidad y la representación.",
+        "Distintas formas de democracia y problemas actuales como la inestabilidad, el retroceso y la resiliencia democrática."
+      ],
+      "etiquetas": ["politica", "investigacion", "social"]
+    },
+    {
+      "id": "metodologia_iii",
+      "nombre": "Metodología III",
+      "anio": 5,
+      "descripcionBreve": "La materia enseña a procesar y analizar datos de investigaciones cuantitativas y cualitativas. Incluye herramientas básicas de estadística y formas de organizar y analizar datos cualitativos.",
+      "ejesTemáticos": [
+        "Procesamiento de datos en investigaciones cuantitativas y cualitativas.",
+        "Conceptos básicos de estadística, estadística descriptiva y análisis de relaciones entre dos variables.",
+        "Cómo se seleccionan, recolectan y analizan datos en una investigación cualitativa.",
+        "Formas de codificar y organizar datos cualitativos para analizarlos."
+      ],
+      "etiquetas": ["investigacion", "tecnico"]
+    },
+    {
+      "id": "analisis_diseno_y_gestion_de_organizaciones_publicas",
+      "nombre": "Análisis, Diseño y Gestión de Organizaciones Públicas",
+      "anio": 5,
+      "descripcionBreve": "La materia enseña a entender cómo funcionan las organizaciones públicas, cómo se relacionan con la sociedad y cómo cambian según su contexto. También brinda herramientas para analizar, diseñar y gestionar organizaciones y estrategias de innovación.",
+      "ejesTemáticos": [
+        "Qué son las organizaciones públicas, cómo fueron cambiando y cómo se pueden analizar y gestionar.",
+        "Las dimensiones de las organizaciones, sus límites, su relación con el Estado y la sociedad, y el impacto de las tecnologías.",
+        "Cómo diseñar organizaciones y estrategias de trabajo, incluyendo modelos burocráticos, en red y de plataformas.",
+        "Innovación, trabajo colaborativo y nuevas formas de organizar la producción de bienes y servicios públicos."
+      ],
+      "etiquetas": ["organizacion", "politica", "tecnico"]
+    },
+    {
+      "id": "comunicacion_politica",
+      "nombre": "Comunicación Política",
+      "anio": 5,
+      "descripcionBreve": "La materia estudia cómo se relacionan la comunicación y la política, y cómo se analiza la opinión pública. También aborda las estrategias de comunicación, las campañas electorales y la comunicación de gobiernos, instituciones y otros actores políticos.",
+      "ejesTemáticos": [
+        "Teorías de la comunicación política y análisis e investigación de la opinión pública.",
+        "El espacio público virtual y las nuevas formas de comunicación digital.",
+        "Estrategias de comunicación política, comportamiento electoral y campañas electorales.",
+        "Comunicación de gobiernos, instituciones públicas, legislativas y judiciales.",
+        "Relación entre los medios de comunicación y la política."
+      ],
+      "etiquetas": ["comunicacion", "politica"]
+    },
+    {
+      "id": "politica_comparada_ii",
+      "nombre": "Política Comparada II",
+      "anio": 5,
+      "descripcionBreve": "Estudia cómo funcionan las administraciones públicas comparando distintos países, regiones y momentos históricos. Se aprende a analizar reformas del Estado, burocracias, empleo público y formas de organización territorial para comprender sus diferencias y problemas.",
+      "ejesTemáticos": [
+        "Cómo comparar administraciones públicas y procesos de formación de los Estados en distintos contextos.",
+        "Reformas del Estado y de la administración pública, nuevos modelos de gestión y capacidad institucional.",
+        "Formas de organizar el empleo público, selección y carrera del personal, profesionalización, corrupción y administración de datos.",
+        "Cómo se organizan territorialmente las administraciones públicas y cómo funcionan las relaciones entre distintos niveles de gobierno y organismos."
+      ],
+      "etiquetas": ["politica", "investigacion", "organizacion"]
+    },
+    {
+      "id": "economia_del_sector_publico",
+      "nombre": "Economía del Sector Público",
+      "anio": 5,
+      "descripcionBreve": "Estudia cómo interviene el Estado en la economía y cómo administra sus recursos, gastos, impuestos y deuda. También aborda el presupuesto público, desde su diseño y ejecución hasta el control de los resultados en distintos niveles de gobierno.",
+      "ejesTemáticos": [
+        "El papel del Estado en una economía mixta, sus funciones y las políticas fiscal y monetaria.",
+        "El tamaño del sector público, el gasto estatal, sus efectos económicos y las formas de financiarlo.",
+        "Los recursos públicos, los distintos tipos de impuestos y el funcionamiento del sistema tributario.",
+        "El crédito y la deuda pública, sus efectos económicos, límites y reglas fiscales.",
+        "El presupuesto público, su formulación, ejecución y control en los niveles nacional, provincial y municipal."
+      ],
+      "etiquetas": ["politica", "organizacion", "tecnico"]
+    }
+  ]
+}

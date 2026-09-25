@@ -2655,7 +2655,7 @@
     "carrera": "politica",
         "rangoOrden": [
       100,
-      110
+      104
     ],
     "funcion": "acompanamiento_academico",
         "requiere": {
@@ -2705,7 +2705,7 @@
     "carrera": "politica",
             "rangoOrden": [
       100,
-      110
+      104
     ],
     "funcion": "acompanamiento_academico",
     "requiere": {
@@ -2760,7 +2760,7 @@
     "carrera": "politica",
             "rangoOrden": [
       100,
-      110
+      104
     ],
     "funcion": "acompanamiento_y_bienestar",
     "contexto": "🌙 El mensaje de Gime",
