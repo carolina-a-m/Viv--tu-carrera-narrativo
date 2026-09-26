@@ -871,9 +871,11 @@ else if (evento.id === 'politica_actividad_ia_disparador') {
     construirResumenJugador(estado, facultades)
   );
 
-  pedirActividadIA(estado).then((eventoGenerado) => {
+  pedirEscenaIA(estado, 'actividad_ia').then((escenaValidada) => {
 
-    const eventoFinal = eventoGenerado || ACTIVIDAD_IA_FALLBACK;
+    const eventoFinal = escenaValidada
+      ? construirEventoEscenaIA(escenaValidada, 'actividad_ia', 55)
+      : ACTIVIDAD_IA_FALLBACK;
 
     registrarEvento(estado, evento.id);
     guardar(estado);
@@ -884,7 +886,46 @@ else if (evento.id === 'politica_actividad_ia_disparador') {
         texto: eventoFinal.texto,
         opciones: eventoFinal.opciones
       },
-      manejarEleccionActividadIA(eventoFinal),
+      manejarEleccionEscenaIA(eventoFinal, 'actividad_ia_resuelta'),
+      construirResumenJugador(estado, facultades)
+    );
+
+    renderDebugEstado(estado);
+
+  });
+
+  return;
+
+}
+
+else if (evento.id === 'politica_desafio_ia_disparador') {
+
+  renderEvento(
+    {
+      contexto: evento.contexto,
+      texto: evento.texto,
+      opciones: []
+    },
+    () => {},
+    construirResumenJugador(estado, facultades)
+  );
+
+  pedirEscenaIA(estado, 'desafio_ia').then((escenaValidada) => {
+
+    const eventoFinal = escenaValidada
+      ? construirEventoEscenaIA(escenaValidada, 'desafio_ia', 100.8)
+      : DESAFIO_IA_FALLBACK;
+
+    registrarEvento(estado, evento.id);
+    guardar(estado);
+
+    renderEvento(
+      {
+        contexto: eventoFinal.contexto,
+        texto: eventoFinal.texto,
+        opciones: eventoFinal.opciones
+      },
+      manejarEleccionEscenaIA(eventoFinal, 'desafio_ia_resuelta'),
       construirResumenJugador(estado, facultades)
     );
 
@@ -1097,6 +1138,21 @@ const ACTIVIDAD_IA_FALLBACK = {
   ]
 };
 
+const DESAFIO_IA_FALLBACK = {
+  contexto: '💼 El nuevo equipo',
+  texto: 'Tu primera semana a cargo no es lo que imaginabas: más reuniones, más decisiones chicas que antes no te tocaban. De a poco vas encontrando el ritmo.',
+  opciones: [
+    {
+      icono: '➡️',
+      texto: 'Seguir',
+      descripcion: 'Seguir.',
+      efectos: { estabilidad: 1 },
+      intereses: {},
+      banderaSet: []
+    }
+  ]
+};
+
 const PROFUNDIDAD_MAXIMA_ACTIVIDAD_IA = 3;
 
 function validarEscenaIA(escena, profundidad = 1) {
@@ -1191,21 +1247,21 @@ function construirEscenaGenerada(escena) {
 
 }
 
-function construirEventoActividadIA(escenaRaiz) {
+function construirEventoEscenaIA(escenaRaiz, prefijoId, orden) {
 
   if (!escenaRaiz) return null;
 
   const evento = construirEscenaGenerada(escenaRaiz);
 
-  evento.id = 'actividad_ia_' + Date.now();
+  evento.id = prefijoId + '_' + Date.now();
   evento.carrera = estado.carreraActiva;
-  evento.orden = 55;
+  evento.orden = orden;
 
   return evento;
 
 }
 
-async function pedirActividadIA(estado) {
+async function pedirEscenaIA(estado, tipo) {
 
   try {
 
@@ -1213,7 +1269,7 @@ async function pedirActividadIA(estado) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        tipo: 'actividad_ia',
+        tipo,
         nombreJugador: estado.nombre,
         resumenTrayectoria: construirResumenTrayectoria(estado)
       })
@@ -1223,11 +1279,7 @@ async function pedirActividadIA(estado) {
 
     const datos = await respuesta.json();
 
-    const escenaValidada = validarEscenaIA(datos.escena);
-
-    if (!escenaValidada) return null;
-
-    return construirEventoActividadIA(escenaValidada);
+    return validarEscenaIA(datos.escena);
 
   } catch {
 
@@ -1236,7 +1288,7 @@ async function pedirActividadIA(estado) {
   }
 }
 
-function manejarEleccionActividadIA(eventoRaiz) {
+function manejarEleccionEscenaIA(eventoRaiz, banderaFinal) {
 
   const manejarOpcion = (opcion) => {
 
@@ -1255,7 +1307,7 @@ function manejarEleccionActividadIA(eventoRaiz) {
 
       } else {
 
-        setearBanderas(estado, ['actividad_ia_resuelta']);
+        setearBanderas(estado, [banderaFinal]);
         guardar(estado);
         mostrarSiguiente();
 

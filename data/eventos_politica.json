@@ -929,7 +929,7 @@
       ]
     },
     "contexto": "🚦 El semáforo",
-    "texto": "Cuando están volviendo, se quedan un rato parados en una esquina, esperando que cambie un semáforo que no tiene ningún apuro.\n\nVioleta putea por lo bajo, como si eso fuera a acelerarlo.\n\n—Como todo, ¿no? —dice, sin mirarte—. En algún lado siempre hay un cartelito que dice 'en trámite'.\n\nTe reís. El semáforo cambia justo en ese momento.",
+    "texto": "Cuando están volviendo, se quedan un rato paradxs en una esquina, esperando que cambie un semáforo que no tiene ningún apuro.\n\nVioleta putea por lo bajo, como si eso fuera a acelerarlo.\n\n—Como todo, ¿no? —dice, sin mirarte—. En algún lado siempre hay un cartelito que dice 'en trámite'.\n\nTe reís. El semáforo cambia justo en ese momento.",
     "opciones": [
       {
         "icono": "🚶",
@@ -1889,7 +1889,7 @@
       "texto": "Hablar con vecinos y organizaciones del barrio.",
       "descripcion": "Hablar con vecinos y organizaciones del barrio.",
       "resultado": {
-        "texto": "Te cuentan que muchas familias ni siquiera se anotan, porque no saben que existe la lista de espera."
+        "texto": "Te cuentan que muchas familias ni siquiera se anotan, porque no saben que existe la lista de espera. Sumás ese dato a la propuesta: el problema no es solo la falta de lugares, sino también el acceso a la información."
       }
     },
     {
@@ -1953,7 +1953,7 @@
       ]
     },
     "contexto": "📈 Más responsabilidad",
-    "texto": "Venís haciendo malabares desde que aceptaste el trabajo sin dejar la facultad. Hasta ahora lo venías sosteniendo — justo, pero sosteniendo.\n\nUnos meses después, tu jefe te llama a la oficina.\n\n\"Necesito a alguien que se haga cargo del nuevo equipo. Vengo pensando en vos.\"\n\nAceptar significaría bastante más horas — de las que hoy ya no te sobran.\n\nUn compañero de la cursada, que hace tiempo que te ve cada vez menos, te dice de pasada:\n\"¿Seguís cursando?\"",
+    "texto": "Venís haciendo malabares desde que aceptaste el trabajo sin dejar la facultad. Hasta ahora lo venías sosteniendo — justo, pero sosteniendo.\n\nUnos meses después, te llaman de la oficina.\n\n\"Necesito a alguien que se haga cargo del nuevo equipo. Vengo pensando en vos.\"\n\nAceptar significaría bastante más horas — de las que hoy ya no te sobran.\n\nUn compañero de la cursada, que hace tiempo que te ve cada vez menos, te dice de pasada:\n\"¿Seguís cursando?\"",
     "opciones": [
       {
         "icono": "💼",
@@ -1982,6 +1982,20 @@
       }
     ]
   },
+  {
+  "id": "politica_desafio_ia_disparador",
+  "carrera": "politica",
+  "orden": 100.7,
+  "omitirSiNoCumple": true,
+  "requiere": {
+    "banderas": [
+      "asumio_responsabilidad"
+    ]
+  },
+  "contexto": "<span class=\"emoji-carga\">🪄</span> Creando una escena personalizada con IA",
+  "texto": "El juego está tomando elementos de tu recorrido — tu trabajo, tus decisiones — y construyendo con eso una escena pensada especialmente para tu partida. Esto puede tardar unos segundos.",
+  "opciones": []
+},
    {
     "id": "politica_consecuencia_investigacion_01",
     "carrera": "politica",
