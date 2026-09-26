@@ -30,7 +30,11 @@ import {
   renderResultadoFinal,
   renderDebugEstado,
   renderCargandoIntervencionIA,
-  actualizarNarrativaFinal
+  actualizarNarrativaFinal,
+  renderBotonConocerCarrera,
+  renderPresentacionCarrera,
+  renderCargandoCarreraPersonalizada,
+  actualizarCarreraPersonalizada
 } from './ui.js';
 
 import {
@@ -59,10 +63,15 @@ import {
   borrar
 } from './storage.js';
 
+import {
+  calcularAfinidadCarrera
+} from './afinidad.js';
+
 let estado;
 let eventos;
 let facultades;
 let conflictoActual = null;
+let planCarreraActivo = null;
 
 
 // ------------------------------------------------------------
@@ -114,6 +123,106 @@ async function cargarEventosCarrera(carrera) {
 
   console.log(
     `Eventos principales cargados (${carrera}): ${eventos.length}`
+  );
+
+}
+
+
+async function cargarPlanCarrera(carrera) {
+
+  try {
+
+    const resp =
+      await fetch(`./data/${carrera}.json`);
+
+    if (!resp.ok) {
+      console.warn(
+        `No se pudo cargar el plan de ${carrera}: HTTP ${resp.status} en ${resp.url}`
+      );
+      planCarreraActivo = null;
+      return;
+    }
+
+    const datos =
+      await resp.json();
+
+    if (!Array.isArray(datos?.areas) || !Array.isArray(datos?.materias)) {
+      console.warn(
+        `El plan de ${carrera} no tiene "areas" ni "materias" como arrays.`
+      );
+      planCarreraActivo = null;
+      return;
+    }
+
+    planCarreraActivo = datos;
+
+  } catch (error) {
+
+    console.warn(
+      `No se pudo cargar el plan de ${carrera}:`,
+      error.message
+    );
+
+    planCarreraActivo = null;
+
+  }
+}
+
+
+async function cargarPresentacionCarrera(carrera) {
+
+  try {
+
+    const resp =
+      await fetch(`./data/presentacion_${carrera}.json`);
+
+    if (!resp.ok) return null;
+
+    const datos =
+      await resp.json();
+
+    const gen = datos?.presentacionGeneral || {};
+
+    return {
+      queEsLaCarrera: gen.queEsLaCarrera || '',
+      perfilEgresado: gen.perfilEgresado || '',
+      ambitosDesempeno: Array.isArray(gen.ambitosDesempeno) ? gen.ambitosDesempeno : [],
+      dimensionesFormacion: Array.isArray(datos?.dimensionesFormacion) ? datos.dimensionesFormacion : []
+    };
+
+  } catch (error) {
+
+    console.warn(
+      `No se pudo cargar la presentación de ${carrera}:`,
+      error.message
+    );
+
+    return null;
+
+  }
+}
+
+
+function obtenerAfinidadCarreraActual(estado) {
+
+  // Acá necesitamos el perfil de intereses COMPLETO del jugador
+  // (todas las categorías, incluido "tecnico"), no el recorte a 3
+  // categorías que arma construirResumenTrayectoria para el epílogo.
+  const interesesCompletos = Object.entries(estado.intereses || {})
+    .filter(([, valor]) => valor > 0)
+    .map(([nombre, valor]) => ({ nombre, valor }));
+
+  if (!planCarreraActivo) {
+    console.warn('planCarreraActivo es null: no se cargó el plan de la carrera.');
+  }
+
+  if (interesesCompletos.length === 0) {
+    console.warn('estado.intereses no tiene ningún valor > 0.', estado.intereses);
+  }
+
+  return calcularAfinidadCarrera(
+    planCarreraActivo,
+    interesesCompletos
   );
 
 }
@@ -365,6 +474,10 @@ const respFacultades =
       return;
     }
 
+    await cargarPlanCarrera(
+      estado.carreraActiva
+    );
+
 
     ocultarInicio();
     mostrarReiniciar();
@@ -410,6 +523,10 @@ renderInicio(
 
       return;
     }
+
+    await cargarPlanCarrera(
+      carreraId
+    );
 
 
     guardar(
@@ -494,8 +611,6 @@ function mostrarSiguiente() {
   // Ambos son acontecimientos narrativos con opciones.
   //
   
-  const manejarEleccion = async (opcion) => {
-
       // --------------------------------------------------------
       // CARRERA ANTES DE APLICAR LA OPCIÓN
       // --------------------------------------------------------
@@ -505,6 +620,7 @@ function mostrarSiguiente() {
       // archivo de eventos de la nueva carrera antes de
       // seguir pidiéndole eventos al motor.
       //
+  const manejarEleccion = async (opcion) => {
 
       const carreraAntes =
         estado.carreraActiva;
@@ -529,7 +645,7 @@ function mostrarSiguiente() {
 
       }
 
-      if (
+            if (
         estado.carreraActiva !==
         carreraAntes
       ) {
@@ -546,6 +662,10 @@ function mostrarSiguiente() {
 
           return;
         }
+
+        await cargarPlanCarrera(
+          estado.carreraActiva
+        );
 
       }
 
@@ -699,6 +819,38 @@ if (evento.orden === ORDEN_FINAL) {
       texto || evento.texto
     );
 
+    renderBotonConocerCarrera(async () => {
+
+      // Sacar el bloque de "Tu trayectoria" y el panel de indicadores:
+      // ya se mostraron en la pantalla anterior. El header se reutiliza
+      // como parte del mismo bloque que "Así es la carrera", para que
+      // todo se lea como una sola composición y no como pantallas sueltas.
+      const cajaTrayectoria = document.getElementById('resultado-final-caja');
+      const narrativaGrupo = cajaTrayectoria ? cajaTrayectoria.parentElement : null;
+      if (cajaTrayectoria) cajaTrayectoria.remove();
+
+      const panelStats = document.getElementById('panel-stats');
+      if (panelStats) panelStats.remove();
+
+      const bloque = document.querySelector('#juego .decision-bloque');
+      if (bloque) bloque.classList.add('bloque-compacto');
+
+      const presentacion =
+        await cargarPresentacionCarrera(estado.carreraActiva);
+
+      renderPresentacionCarrera(presentacion, narrativaGrupo);
+
+      renderCargandoCarreraPersonalizada();
+
+      const textoCarrera =
+        await pedirCarreraPersonalizada(estado);
+
+      actualizarCarreraPersonalizada(
+        textoCarrera || 'No pudimos generar esta lectura en este momento.'
+      );
+
+    });
+
     renderDebugEstado(estado);
 
   });
@@ -829,6 +981,86 @@ function construirResumenTrayectoria(estado) {
     const datos = await respuesta.json();
 
     return datos.texto || null;
+
+  } catch {
+
+    return null;
+
+  }
+}
+
+
+// ------------------------------------------------------------
+// CARRERA PERSONALIZADA (cruce afinidad → IA)
+// ------------------------------------------------------------
+
+function normalizarNombreMateria(texto) {
+  return texto
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function convertirMateriasALinks(texto, areasAfines) {
+
+  const materiasPorNombre = new Map();
+
+  (areasAfines || []).forEach((area) => {
+    (area.materias || []).forEach((materia) => {
+      if (materia?.nombre) {
+        materiasPorNombre.set(normalizarNombreMateria(materia.nombre), materia);
+      }
+    });
+  });
+
+  return texto.replace(/\*+([^*]+?)\*+/g, (coincidenciaCompleta, nombreDetectado) => {
+
+    const materia =
+      materiasPorNombre.get(normalizarNombreMateria(nombreDetectado));
+
+    if (materia && materia.link) {
+      return `<a class="ficha-recurso-nombre" style="font-size:inherit; font-weight:inherit;" href="${materia.link}" target="_blank" rel="noopener noreferrer">${materia.nombre} ↗️</a>`;
+    }
+
+    return nombreDetectado;
+
+  });
+
+}
+
+async function pedirCarreraPersonalizada(estado) {
+
+  const areasAfines =
+    obtenerAfinidadCarreraActual(estado);
+
+  if (!areasAfines || areasAfines.length === 0) {
+    console.warn('Sin áreas afines calculadas: no se llegó a llamar a la IA.');
+    return null;
+  }
+
+  try {
+
+    const respuesta = await fetch(URL_INTERVENCION_IA, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        tipo: 'carrera_personalizada',
+        nombreJugador: estado.nombre,
+        areasAfines,
+        resumenTrayectoria: construirResumenTrayectoria(estado)
+      })
+    });
+
+    if (!respuesta.ok) return null;
+
+    const datos = await respuesta.json();
+
+    if (!datos.texto) return null;
+
+    return convertirMateriasALinks(datos.texto, areasAfines);
 
   } catch {
 

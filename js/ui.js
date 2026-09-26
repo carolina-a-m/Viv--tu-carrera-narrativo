@@ -770,8 +770,8 @@ caja.id = 'resultado-final-caja';
 
 caja.innerHTML = narrativa.cargando
   ? `<div class="decision-eleccion-cuerpo">
-              <p class="decision-eleccion-desc intervencion-ia-cargando"><span class="intervencion-ia-cargando-texto">Analizando tu recorrido con IA</span> <span class="emoji-carga">🪄</span></p>
-     </div>`
+        <p class="decision-eleccion-desc intervencion-ia-cargando"><span class="intervencion-ia-cargando-texto">Analizando tu recorrido con IA</span> <span class="emoji-carga">🪄</span></p>
+             </div>`
   : `<div class="decision-eleccion-cuerpo">
        ${narrativa.contexto ? `<p class="decision-eleccion-titulo">${narrativa.contexto}</p>` : ''}
        <p class="decision-eleccion-desc">${narrativa.texto || ''}</p>
@@ -800,6 +800,176 @@ function actualizarNarrativaFinal(contexto, texto) {
 }
 
 
+function renderBotonConocerCarrera(onClick) {
+  const contenedor = document.getElementById('juego');
+  if (!contenedor) return;
+
+  const opciones = document.createElement('div');
+  opciones.className = 'decision-elecciones';
+  opciones.appendChild(crearBoxOpcion(
+    {
+      icono: '🎓',
+      texto: 'Conocer la carrera desde tus intereses',
+      descripcion: 'Ver cómo tu recorrido se conecta con la carrera que elegiste.',
+      efectos: {}
+    },
+    () => {
+      opciones.remove();
+      onClick();
+    }
+  ));
+  contenedor.appendChild(opciones);
+}
+
+
+function renderPresentacionCarrera(presentacion, host) {
+  const contenedor = host || document.getElementById('juego');
+  if (!contenedor || !presentacion) return;
+
+  const wrap = document.createElement('div');
+  wrap.className = 'presentacion-carrera';
+
+  wrap.innerHTML = `
+    <p class="presentacion-titulo pc-anim" style="--pc-delay:0s">🎓 Así es la carrera</p>
+    <p class="presentacion-texto pc-anim" style="--pc-delay:0.12s">${presentacion.queEsLaCarrera || ''}</p>
+    <div class="presentacion-perfil pc-anim" style="--pc-delay:0.24s">
+      <p class="presentacion-subtitulo">Perfil de quien egresa</p>
+      <p class="presentacion-texto">${presentacion.perfilEgresado || ''}</p>
+    </div>
+  `;
+
+  if (Array.isArray(presentacion.ambitosDesempeno) && presentacion.ambitosDesempeno.length > 0) {
+
+    const bloqueAmbitos = document.createElement('div');
+    bloqueAmbitos.className = 'presentacion-ambitos pc-anim';
+    bloqueAmbitos.style.setProperty('--pc-delay', '0.36s');
+    bloqueAmbitos.innerHTML = `<p class="presentacion-subtitulo">Dónde te podés desempeñar</p>`;
+
+    const track = document.createElement('div');
+    track.className = 'pc-carrusel';
+
+    presentacion.ambitosDesempeno.forEach((ambito, i) => {
+      const pill = document.createElement('div');
+      pill.className = 'pc-pill';
+      pill.style.setProperty('--pc-pill-delay', `${0.45 + i * 0.08}s`);
+      pill.textContent = ambito;
+      track.appendChild(pill);
+    });
+
+    const puntos = document.createElement('div');
+    puntos.className = 'pc-puntos';
+    presentacion.ambitosDesempeno.forEach((_, i) => {
+      const punto = document.createElement('span');
+      punto.className = 'pc-punto' + (i === 0 ? ' activo' : '');
+      puntos.appendChild(punto);
+    });
+
+    const actualizarPuntos = () => {
+      const maxScroll = Math.max(1, track.scrollWidth - track.clientWidth);
+      const ratio = track.scrollLeft / maxScroll;
+      const indice = Math.round(ratio * (presentacion.ambitosDesempeno.length - 1));
+      puntos.querySelectorAll('.pc-punto').forEach((p, i) => {
+        p.classList.toggle('activo', i === indice);
+      });
+    };
+
+    track.addEventListener('scroll', actualizarPuntos);
+
+    // Arrastre con mouse: el scroll nativo con gesto ya cubre touch y
+    // trackpad, pero un mouse con rueda simple no tiene forma de mover
+    // un contenedor horizontal sin esto.
+    let arrastrando = false;
+    let origenX = 0;
+    let scrollInicial = 0;
+
+    track.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      arrastrando = true;
+      track.classList.add('pc-arrastrando');
+      origenX = e.clientX;
+      scrollInicial = track.scrollLeft;
+      track.setPointerCapture(e.pointerId);
+    });
+
+    track.addEventListener('pointermove', (e) => {
+      if (!arrastrando || e.pointerType !== 'mouse') return;
+      track.scrollLeft = scrollInicial - (e.clientX - origenX);
+    });
+
+    const terminarArrastre = (e) => {
+      if (e.pointerType && e.pointerType !== 'mouse') return;
+      arrastrando = false;
+      track.classList.remove('pc-arrastrando');
+    };
+
+    track.addEventListener('pointerup', terminarArrastre);
+    track.addEventListener('pointercancel', terminarArrastre);
+
+    // Rueda de mouse tradicional (vertical) traducida a scroll horizontal.
+    track.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        track.scrollLeft += e.deltaY;
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    bloqueAmbitos.appendChild(track);
+    bloqueAmbitos.appendChild(puntos);
+    wrap.appendChild(bloqueAmbitos);
+  }
+
+  if (Array.isArray(presentacion.dimensionesFormacion) && presentacion.dimensionesFormacion.length > 0) {
+
+    const bloqueDim = document.createElement('div');
+    bloqueDim.className = 'presentacion-dimensiones pc-anim';
+    bloqueDim.style.setProperty('--pc-delay', '0.5s');
+    bloqueDim.innerHTML = `<p class="presentacion-subtitulo presentacion-subtitulo-tenue">También vas a formarte en</p>`;
+
+    const nube = document.createElement('div');
+    nube.className = 'pc-nube';
+    presentacion.dimensionesFormacion.forEach((d) => {
+      const chip = document.createElement('span');
+      chip.className = 'pc-chip';
+      chip.textContent = d.nombre;
+      if (d.descripcion) chip.title = d.descripcion;
+      nube.appendChild(chip);
+    });
+
+    bloqueDim.appendChild(nube);
+    wrap.appendChild(bloqueDim);
+  }
+
+  contenedor.appendChild(wrap);
+}
+
+
+function renderCargandoCarreraPersonalizada() {
+  const contenedor = document.getElementById('juego');
+  if (!contenedor) return;
+
+  const bloque = document.createElement('div');
+  bloque.className = 'presentacion-carrera';
+  bloque.id = 'carrera-personalizada-caja';
+  bloque.innerHTML = `
+    <p class="presentacion-subtitulo presentacion-subtitulo-ia intervencion-ia-cargando pc-anim" style="--pc-delay:0s">
+      <span class="intervencion-ia-cargando-texto">Cruzando tu recorrido con las materias de la carrera</span> <span class="emoji-carga">🪄</span>
+    </p>
+  `;
+  contenedor.appendChild(bloque);
+}
+
+
+function actualizarCarreraPersonalizada(texto) {
+  const caja = document.getElementById('carrera-personalizada-caja');
+  if (!caja) return;
+
+  caja.innerHTML = `
+    <p class="presentacion-subtitulo presentacion-subtitulo-ia pc-anim" style="--pc-delay:0s"><span class="varita-ia">🪄</span> Lo que encontramos en tu recorrido</p>
+    <p class="presentacion-texto pc-anim" style="--pc-delay:0.12s">${texto || ''}</p>
+  `;
+}
+
+
 export {
   renderEvento,
   renderConsecuencia,
@@ -809,5 +979,9 @@ export {
   renderFinDeEventos,
   renderCargandoIntervencionIA,
   renderDebugEstado,
-  actualizarNarrativaFinal
+  actualizarNarrativaFinal,
+  renderBotonConocerCarrera,
+  renderPresentacionCarrera,
+  renderCargandoCarreraPersonalizada,
+  actualizarCarreraPersonalizada
 };
