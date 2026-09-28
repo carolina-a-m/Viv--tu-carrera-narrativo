@@ -137,12 +137,12 @@ function presentacionIndicador(clave, valor) {
   } else if (delta > 0) {
     const tramo = maximo - base;
     porcentaje = tramo > 0 ? Math.min(100, (delta / tramo) * 100) : 100;
-    color = mezclarColor('var(--verde)', porcentaje);
+    color = 'var(--verde)';
   } else if (delta < 0) {
     const puntoCritico = base === 0 ? -1 : UMBRAL_CRITICO_PCT;
     const tramo = base - puntoCritico;
     porcentaje = Math.min(100, (-delta / tramo) * 100);
-    color = mezclarColor('var(--rojo)', porcentaje);
+    color = 'var(--rojo)';
   }
 
   return { delta, porcentaje, color };

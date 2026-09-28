@@ -11,10 +11,11 @@ const ICONO_GENERICO = '📌';
 const DESCRIPCION_GENERICA = 'Seguir avanzando.';
 
 const HITOS = [
-  { icono: ASSETS + 'icono-personas.svg' },
-  { icono: ASSETS + 'icono-libro.svg' },
-  { icono: ASSETS + 'icono-datos.svg' },
-  { icono: ASSETS + 'icono-maletin.svg', opaco: true }
+  { label: '1' },
+  { label: '2' },
+  { label: '3' },
+  { label: '4' },
+  { label: '5' }
 ];
 
 
@@ -43,17 +44,18 @@ let panelExpandido = false;
 // Sirve para animar los arcos desde ahí hasta el valor nuevo.
 let ultimoPanel = null;
 
-function crearArcoGauge(porcentaje, grosor = 6, color = COLOR_NORMAL, destino = null) {
+function crearArcoGauge(porcentaje, grosor = 6, color = COLOR_NORMAL, destino = null, flash = false) {
   const limitar = (p) => Math.min(100, Math.max(0, p));
   const pct = limitar(porcentaje);
   const trazo = 'M 5 50 A 45 45 0 0 1 95 50';
   const datosDestino = destino
     ? `data-pct="${limitar(destino.porcentaje)}" data-color="${destino.color}"`
     : '';
+  const claseRelleno = 'arco-relleno' + (flash ? ' arco-flash' : '');
   return `
     <svg viewBox="0 0 100 55" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <path d="${trazo}" fill="none" stroke="#707070" stroke-width="${grosor}" stroke-linecap="round" />
-      <path class="arco-relleno" pathLength="100" d="${trazo}" fill="none" stroke-width="${grosor}" stroke-linecap="round" style="stroke:${color}; stroke-dasharray:${pct} 100; opacity:${pct > 0 ? 1 : 0};" ${datosDestino} />
+      <path class="${claseRelleno}" pathLength="100" d="${trazo}" fill="none" stroke-width="${grosor}" stroke-linecap="round" style="stroke:${color}; stroke-dasharray:${pct} 100; opacity:${pct > 0 ? 1 : 0};" ${datosDestino} />
     </svg>
   `;
 }
@@ -100,12 +102,15 @@ function renderEvento(evento, onElegir, estado) {
 
   const narrativa = document.createElement('div');
   narrativa.className = 'decision-narrativa';
-    const narrativaBloque = document.createElement('div');
+  const narrativaBloque = document.createElement('div');
   narrativaBloque.className = 'decision-narrativa-bloque';
   if (evento.contexto) {
     narrativaBloque.innerHTML += `<p class="decision-narrativa-titulo">${evento.contexto}</p>`;
   }
   narrativaBloque.innerHTML += `<p class="decision-narrativa-texto">${(evento.icono ? evento.icono + ' ' : '') + evento.texto}</p>`;
+  if (evento.generadoPorIA && !evento.fuenteUrl) {
+    narrativaBloque.innerHTML += `<div class="badge-ia"><span class="varita-ia">🪄</span> Generado con IA</div>`;
+  }
   if (evento.generadoPorIA && evento.fuenteUrl) {
     narrativaBloque.appendChild(crearFuenteIA(evento.fuenteTitulo, evento.fuenteUrl));
   }
@@ -207,8 +212,32 @@ function crearPanelIndicadores(resumen, opciones = {}) {
   const filaStats = document.createElement('div');
   filaStats.className = 'decision-stats-fila';
 
+  const variablesParaEstado = resumen.variables || {};
+  const valoresCrudos = {
+    vocacion: resumen.vocacion ?? 0,
+    estabilidad: variablesParaEstado.estabilidad ?? 0,
+    energia: variablesParaEstado.energia ?? 0,
+    confianza: variablesParaEstado.confianza ?? 0,
+    exploracion: variablesParaEstado.exploracion ?? 0
+  };
+  const presCalculadas = {
+    vocacion: { ...presentacionIndicador('vocacion', valoresCrudos.vocacion), valor: valoresCrudos.vocacion },
+    estabilidad: { ...presentacionIndicador('estabilidad', valoresCrudos.estabilidad), valor: valoresCrudos.estabilidad },
+    energia: { ...presentacionIndicador('energia', valoresCrudos.energia), valor: valoresCrudos.energia },
+    confianza: { ...presentacionIndicador('confianza', valoresCrudos.confianza), valor: valoresCrudos.confianza },
+    exploracion: { ...presentacionIndicador('exploracion', valoresCrudos.exploracion), valor: valoresCrudos.exploracion }
+  };
+  const porcentajeMaximo = Math.max(...Object.values(presCalculadas).map((p) => p.porcentaje));
+  const clavesEnElMaximo = Object.keys(presCalculadas).filter(
+    (clave) => presCalculadas[clave].porcentaje === porcentajeMaximo
+  );
+  const claveDominante = clavesEnElMaximo.length === 1 ? clavesEnElMaximo[0] : null;
+    const esClaveCritica = (clave) => esCritico(clave, presCalculadas[clave].valor);
+
   const promedio = document.createElement('div');
   promedio.className = 'decision-promedio';
+  promedio.classList.toggle('arco-dominante', claveDominante === 'vocacion');
+  promedio.classList.toggle('arco-critico', esClaveCritica('vocacion'));
     const previo = ultimoPanel;
   const actual = { valores: {}, pres: {} };
   const leerIndicador = (clave, valor) => {
@@ -223,8 +252,8 @@ function crearPanelIndicadores(resumen, opciones = {}) {
 
   const vocacion = leerIndicador('vocacion', resumen.vocacion ?? 0);
   const presVocacion = vocacion.pres;
-  promedio.innerHTML = `
-    <div class="decision-promedio-arco">${crearArcoGauge(vocacion.antes.porcentaje, 4, vocacion.antes.color, presVocacion)}</div>
+    promedio.innerHTML = `
+    <div class="decision-promedio-arco">${crearArcoGauge(vocacion.antes.porcentaje, 4, vocacion.antes.color, presVocacion, vocacion.antes.porcentaje !== presVocacion.porcentaje)}</div>
     ${crearDeltaFlotante(vocacion.cambio)}
     <div class="decision-promedio-valor">
       <div class="decision-promedio-num">
@@ -252,9 +281,11 @@ function crearPanelIndicadores(resumen, opciones = {}) {
     const pres = ind.pres;
     const item = document.createElement('div');
     item.className = 'decision-competencia';
+    item.classList.toggle('arco-dominante', clave === claveDominante);
+    item.classList.toggle('arco-critico', esClaveCritica(clave));
         item.innerHTML = `
       <div class="decision-competencia-valor">
-        <div class="decision-competencia-arco">${crearArcoGauge(ind.antes.porcentaje, 6, ind.antes.color, pres)}</div>
+        <div class="decision-competencia-arco">${crearArcoGauge(ind.antes.porcentaje, 6, ind.antes.color, pres, ind.antes.porcentaje !== pres.porcentaje)}</div>
         ${crearDeltaFlotante(ind.cambio)}
         <span class="decision-competencia-num">${pres.delta}</span>
       </div>
@@ -307,14 +338,19 @@ function crearPanelIndicadores(resumen, opciones = {}) {
   const hitos = document.createElement('div');
   hitos.className = 'decision-hitos';
   const totalHitos = HITOS.length;
+  const progresoActual = resumen.progreso ?? 0;
   HITOS.forEach((h, index) => {
-    const umbral = ((index + 1) / (totalHitos + 1)) * 100;
-    const activo = (resumen.progreso ?? 0) >= umbral;
+    const umbralInicio = (index / totalHitos) * 100;
+    const umbralFin = ((index + 1) / totalHitos) * 100;
+    const completado = progresoActual >= umbralFin;
+    const actual = !completado && progresoActual >= umbralInicio;
     const hito = document.createElement('div');
-    hito.className = 'decision-hito' + (h.opaco ? ' opaco' : '') + (activo ? ' activo' : '');
+    hito.className = 'decision-hito'
+      + (completado ? ' completado' : '')
+      + (actual ? ' actual' : '');
     hito.innerHTML = `
-      <div class="decision-hito-linea"></div>
-      <div class="decision-hito-icono" style="-webkit-mask-image:url('${h.icono}'); mask-image:url('${h.icono}');"></div>
+      <div class="decision-hito-linea${(completado || actual) ? ' recorrida' : ''}"></div>
+      <span class="decision-hito-anio">${h.label}</span>
     `;
     hitos.appendChild(hito);
   });
@@ -506,7 +542,7 @@ ficha.appendChild(nombre);
 }
 
 const ASSETS_FACULTADES = 'assets/facultades/';
-const CARRERAS_NO_DISPONIBLES = ['arquitectura', 'economia'];
+const CARRERAS_NO_DISPONIBLES = ['medicina', 'arquitectura', 'economia']; // TODO: confirmar ids reales de Ciencia de Datos y Diseño Gráfico
 const ICONOS_FACULTAD = {
   fcpolit: { prefix: 'fcpolit', tipo: 'fila', count: 7 },
   farpd: {
@@ -555,13 +591,14 @@ function renderInicio(facultades, onEmpezar) {
   contenedor.innerHTML = '';
 
   contenedor.innerHTML = `
-    <img class="logo" alt="Viví tu carrera" src="assets/logo.svg">
-    <p class="titulo">¿Y si tu carrera todavía<br>no estuviera decidida?</p>
-    <p class="subtitulo">Terminaste la secundaria. Tenés algunas ideas. O ninguna. Vamos a ver qué pasa</p>
+    <img class="logo pc-anim" style="--pc-delay:0s" alt="Viví tu carrera" src="assets/logo.svg">
+    <p class="titulo pc-anim" style="--pc-delay:0.08s">¿Y si tu carrera todavía<br>no estuviera decidida?</p>
+    <p class="subtitulo pc-anim" style="--pc-delay:0.16s">Terminaste la secundaria. Tenés algunas ideas. O ninguna. Vamos a ver qué pasa</p>
   `;
 
   const inputNombre = document.createElement('input');
-  inputNombre.className = 'input-nombre';
+  inputNombre.className = 'input-nombre pc-anim';
+  inputNombre.style.setProperty('--pc-delay', '0.24s');
   inputNombre.type = 'text';
   inputNombre.placeholder = 'Tu nombre';
   inputNombre.autocomplete = 'off';
@@ -584,10 +621,12 @@ function renderInicio(facultades, onEmpezar) {
   inputNombre.addEventListener('input', () => {
     avisoNombre.classList.remove('visible');
     inputNombre.classList.remove('invalido');
+    actualizarBoton();
   });
 
   const eleccionFacultades = document.createElement('div');
-  eleccionFacultades.className = 'eleccion-facultades';
+  eleccionFacultades.className = 'eleccion-facultades pc-anim';
+  eleccionFacultades.style.setProperty('--pc-delay', '0.32s');
 
   const card = document.createElement('div');
   card.className = 'card';
@@ -606,25 +645,41 @@ function renderInicio(facultades, onEmpezar) {
   filaBotonesProbar.className = 'fila-botones-probar';
   seccionProbar.appendChild(filaBotonesProbar);
 
+  const avisoProximamente = document.createElement('p');
+  avisoProximamente.className = 'aviso-proximamente';
+  avisoProximamente.setAttribute('role', 'alert');
+  seccionProbar.appendChild(avisoProximamente);
+
+  function mostrarAvisoProximamente(nombreCarrera, boton) {
+    avisoProximamente.textContent = `🔒 ${nombreCarrera} todavía no está disponible. ¡Pronto vas a poder jugarla!`;
+    avisoProximamente.classList.add('visible');
+
+    boton.classList.remove('sacudida');
+    void boton.offsetWidth;
+    boton.classList.add('sacudida');
+  }
+
   let facultadElegida = null;
   let carreraElegida = null;
 
   const botonComenzar = document.createElement('button');
   botonComenzar.type = 'button';
-  botonComenzar.className = 'boton-comenzar';
-  botonComenzar.disabled = true;
+  botonComenzar.className = 'boton-comenzar incompleto';
   botonComenzar.innerHTML = `
     <span>Comenzar</span>
   `;
 
   function actualizarBoton() {
-    botonComenzar.disabled = !(facultadElegida && carreraElegida);
+    const nombreCompletado = inputNombre.value.trim().length > 0;
+    const completo = nombreCompletado && facultadElegida && carreraElegida;
+    botonComenzar.classList.toggle('incompleto', !completo);
   }
 
   function renderCarreras(facultad) {
     filaBotonesProbar.innerHTML = '';
     carreraElegida = null;
     seccionProbar.classList.add('visible');
+    avisoProximamente.classList.remove('visible');
     if (!facultad.carreras || facultad.carreras.length === 0) {
   return;
 }
@@ -637,19 +692,20 @@ facultad.carreras.forEach((carrera) => {
   boton.type = 'button';
   boton.className = 'boton-probar';
   boton.textContent = carrera.nombre;
-  if (CARRERAS_NO_DISPONIBLES.includes(carrera.id)) {
-  boton.classList.add('no-disponible');
-  boton.disabled = true;
-}
 
-  if (carrera.id === 'medicina') {
-    const demo = document.createElement('span');
-    demo.className = 'badge-demo';
-    demo.textContent = '✦ DEMO';
-    contenedorCarrera.appendChild(demo);
+  const noDisponible = CARRERAS_NO_DISPONIBLES.includes(carrera.id);
+
+  if (noDisponible) {
+    boton.classList.add('no-disponible');
   }
 
   boton.addEventListener('click', () => {
+
+    if (noDisponible) {
+      mostrarAvisoProximamente(carrera.nombre, boton);
+      return;
+    }
+
     carreraElegida = carrera.id;
     filaBotonesProbar.querySelectorAll('.boton-probar').forEach(b => b.classList.remove('seleccionada'));
     boton.classList.add('seleccionada');
@@ -710,7 +766,12 @@ filaBotonesProbar.appendChild(contenedorCarrera);
   card.appendChild(botonComenzar);
 
   botonComenzar.addEventListener('click', () => {
-    if (!facultadElegida || !carreraElegida) return;
+    if (!facultadElegida || !carreraElegida) {
+      cardPregunta.classList.remove('sacudida-generica');
+      void cardPregunta.offsetWidth;
+      cardPregunta.classList.add('sacudida-generica');
+      return;
+    }
 
     const nombre = inputNombre.value.trim();
 
@@ -745,6 +806,53 @@ function renderFinDeEventos() {
   contenedor.appendChild(texto);
 }
 
+const MENSAJES_CARGA_TRAYECTORIA = [
+  'Cruzando tus decisiones…',
+  'Buscando un patrón en tu recorrido…',
+  'Casi listo…'
+];
+
+let intervaloRotacionCarga = null;
+
+function iniciarRotacionCarga(caja) {
+  detenerRotacionCarga();
+  let indice = 0;
+  intervaloRotacionCarga = setInterval(() => {
+    indice = (indice + 1) % MENSAJES_CARGA_TRAYECTORIA.length;
+    const el = caja.querySelector('#trayectoria-carga-texto');
+    if (!el) { detenerRotacionCarga(); return; }
+    el.classList.remove('trayectoria-final-fade');
+    void el.offsetWidth;
+    el.textContent = MENSAJES_CARGA_TRAYECTORIA[indice];
+    el.classList.add('trayectoria-final-fade');
+  }, 1800);
+}
+
+function detenerRotacionCarga() {
+  if (intervaloRotacionCarga) {
+    clearInterval(intervaloRotacionCarga);
+    intervaloRotacionCarga = null;
+  }
+}
+
+function crearMarkupCarga() {
+  return `
+    <div class="trayectoria-final-carga">
+      <div class="trayectoria-final-varita">🪄</div>
+      <p class="trayectoria-final-carga-texto" id="trayectoria-carga-texto">${MENSAJES_CARGA_TRAYECTORIA[0]}</p>
+      <div class="trayectoria-final-shimmer">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  `;
+}
+
+function dividirEnOraciones(texto) {
+  const encontradas = (texto || '').match(/[^.!?]+[.!?]+(\s+|$)/g);
+  const oraciones = encontradas ? encontradas.map(s => s.trim()).filter(Boolean) : [(texto || '').trim()];
+  return oraciones.length ? oraciones : [''];
+}
+
 function renderResultadoFinal(resumen, narrativa = {}) {
   const contenedor = document.getElementById('juego');
   if (!contenedor) return;
@@ -756,31 +864,34 @@ function renderResultadoFinal(resumen, narrativa = {}) {
   bloque.className = 'decision-bloque';
 
   const personaje = document.createElement('div');
-  personaje.className = 'decision-personaje';
+  personaje.className = 'decision-personaje trayectoria-final-personaje';
   personaje.appendChild(crearHeaderJugador(resumen));
-  personaje.appendChild(crearPanelIndicadores(resumen, { final: true }));
+  const panelStats = crearPanelIndicadores(resumen, { final: true });
+  panelStats.classList.add('trayectoria-final-panel-glow');
+  personaje.appendChild(panelStats);
   bloque.appendChild(personaje);
 
-const narrativaGrupo = document.createElement('div');
-narrativaGrupo.className = 'decision-narrativa-grupo';
+  const narrativaGrupo = document.createElement('div');
+  narrativaGrupo.className = 'decision-narrativa-grupo';
 
-const caja = document.createElement('div');
-caja.className = 'decision-eleccion decision-resultado-final';
-caja.id = 'resultado-final-caja';
+  const halo = document.createElement('div');
+  halo.className = 'trayectoria-final-halo';
+  narrativaGrupo.appendChild(halo);
 
-caja.innerHTML = narrativa.cargando
-  ? `<div class="decision-eleccion-cuerpo">
-        <p class="decision-eleccion-desc intervencion-ia-cargando"><span class="intervencion-ia-cargando-texto">Analizando tu recorrido con IA</span> <span class="emoji-carga">🪄</span></p>
-             </div>`
-  : `<div class="decision-eleccion-cuerpo">
-       ${narrativa.contexto ? `<p class="decision-eleccion-titulo">${narrativa.contexto}</p>` : ''}
-       <p class="decision-eleccion-desc">${narrativa.texto || ''}</p>
-     </div>`;
+  const wrap = document.createElement('div');
+  wrap.className = 'trayectoria-final-wrap';
+  wrap.id = 'resultado-final-caja';
 
-narrativaGrupo.appendChild(caja);
-bloque.appendChild(narrativaGrupo);
+  wrap.innerHTML = crearMarkupCarga();
 
-contenedor.appendChild(bloque);
+  narrativaGrupo.appendChild(wrap);
+  bloque.appendChild(narrativaGrupo);
+
+  contenedor.appendChild(bloque);
+
+  if (narrativa.cargando) {
+    iniciarRotacionCarga(wrap);
+  }
 }
 
 function renderDebugEstado(estado) {
@@ -790,35 +901,61 @@ function renderDebugEstado(estado) {
 }
 
 function actualizarNarrativaFinal(contexto, texto) {
-  const caja = document.getElementById('resultado-final-caja');
-  if (!caja) return;
+  const wrap = document.getElementById('resultado-final-caja');
+  if (!wrap) return 0;
 
-  caja.innerHTML = `<div class="decision-eleccion-cuerpo">
-    ${contexto ? `<p class="decision-eleccion-titulo">${contexto}</p>` : ''}
-    <p class="decision-eleccion-desc">${texto || ''}</p>
-  </div>`;
+  detenerRotacionCarga();
+
+  const oraciones = dividirEnOraciones(texto);
+  const delayBase = 0.15;
+  const paso = 0.35;
+
+  const spansHtml = oraciones.map((oracion, i) => {
+    const delay = (delayBase + i * paso).toFixed(2);
+    return `<span class="trayectoria-final-oracion pc-anim" style="--pc-delay:${delay}s">${oracion} </span>`;
+  }).join('');
+
+  const duracionTotal = (delayBase + oraciones.length * paso) * 1000 + 300;
+
+  wrap.innerHTML = `
+    <p class="trayectoria-final-eyebrow pc-anim" style="--pc-delay:0s">${contexto || 'Tu trayectoria'}</p>
+    <div class="trayectoria-final-bloque-texto" id="trayectoria-bloque-texto">
+      <p class="trayectoria-final-texto">${spansHtml}</p>
+    </div>
+    <div class="badge-ia pc-anim" style="--pc-delay:${((duracionTotal / 1000) + 0.1).toFixed(2)}s"><span class="varita-ia">🪄</span> Generado con IA</div>
+  `;
+
+  const bloqueTexto = wrap.querySelector('#trayectoria-bloque-texto');
+  if (bloqueTexto) {
+    bloqueTexto.style.setProperty('--settle-delay', `${(duracionTotal / 1000).toFixed(2)}s`);
+    bloqueTexto.classList.add('trayectoria-final-revelada');
+  }
+
+  return duracionTotal;
 }
 
+function renderBotonConocerCarrera(onClick, retraso = 0) {
+  const wrap = document.getElementById('resultado-final-caja');
+  if (!wrap) return;
 
-function renderBotonConocerCarrera(onClick) {
-  const contenedor = document.getElementById('juego');
-  if (!contenedor) return;
+  const botonWrap = document.createElement('div');
+  botonWrap.className = 'trayectoria-final-portal-wrap';
+  botonWrap.style.setProperty('--portal-delay', `${(retraso / 1000).toFixed(2)}s`);
 
-  const opciones = document.createElement('div');
-  opciones.className = 'decision-elecciones';
-  opciones.appendChild(crearBoxOpcion(
-    {
-      icono: '🎓',
-      texto: 'Conocer la carrera desde tus intereses',
-      descripcion: 'Ver cómo tu recorrido se conecta con la carrera que elegiste.',
-      efectos: {}
-    },
-    () => {
-      opciones.remove();
+  const boton = document.createElement('button');
+  boton.type = 'button';
+  boton.className = 'trayectoria-final-portal';
+  boton.innerHTML = `<span class="trayectoria-final-portal-icono">🧭</span><span>Conocer la carrera desde tus intereses</span>`;
+  boton.addEventListener('click', () => {
+    boton.classList.add('trayectoria-final-portal-click');
+    setTimeout(() => {
+      botonWrap.remove();
       onClick();
-    }
-  ));
-  contenedor.appendChild(opciones);
+    }, 220);
+  });
+
+  botonWrap.appendChild(boton);
+  wrap.appendChild(botonWrap);
 }
 
 
@@ -964,8 +1101,9 @@ function actualizarCarreraPersonalizada(texto) {
   if (!caja) return;
 
   caja.innerHTML = `
-    <p class="presentacion-subtitulo presentacion-subtitulo-ia pc-anim" style="--pc-delay:0s"><span class="varita-ia">🪄</span> Lo que encontramos en tu recorrido</p>
+    <p class="presentacion-subtitulo presentacion-subtitulo-ia pc-anim" style="--pc-delay:0s">Lo que encontramos en tu recorrido</p>
     <p class="presentacion-texto pc-anim" style="--pc-delay:0.12s">${texto || ''}</p>
+    <div class="badge-ia pc-anim" style="--pc-delay:0.3s"><span class="varita-ia">🪄</span> Generado con IA</div>
   `;
 }
 

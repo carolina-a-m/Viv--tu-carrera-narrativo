@@ -220,25 +220,36 @@ body {
 .decision-barra-fondo { width: 100%; height: 6px; border-radius: 55px; background: #707070; overflow: hidden; }
 .decision-barra-progreso { height: 100%; border-radius: 55px; background: var(--verde); }
 .decision-hitos { display: flex; justify-content: space-evenly; width: 100%; margin-top: 3px; }
-.decision-hito { display: flex; flex-direction: column; gap: 4px; align-items: center; width: 11px; }
-.decision-hito.opaco { mix-blend-mode: overlay; }
-.decision-hito-linea { width: 7.5px; height: 0; border-top: 0.5px solid rgba(255,255,255,0.7); transform: rotate(90deg); }
+.decision-hito { display: flex; flex-direction: column; gap: 4px; align-items: center; width: 16px; }
 
-.decision-hito-icono {
-  width: 11px;
-  height: 11px;
-  background-color: #707070;
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  transition: background-color 0.3s ease;
+.decision-hito-linea {
+  width: 7.5px;
+  height: 0;
+  border-top: 0.5px solid rgba(255,255,255,0.35);
+  transform: rotate(90deg);
+  transition: border-color 0.3s ease;
 }
 
-.decision-hito.activo .decision-hito-icono {
-  background-color: var(--verde);
+.decision-hito-linea.recorrida {
+  border-top-color: color-mix(in srgb, var(--verde) 70%, transparent);
+}
+
+.decision-hito-anio {
+  font-family: var(--font-titulo);
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 1;
+  color: #707070;
+  transition: color 0.3s ease, filter 0.3s ease;
+}
+
+.decision-hito.completado .decision-hito-anio {
+  color: var(--verde);
+}
+
+.decision-hito.actual .decision-hito-anio {
+  color: var(--verde);
+  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--verde) 60%, transparent));
 }
 
 .decision-colapsar {
@@ -524,9 +535,9 @@ body {
   align-items: center;
   justify-content: center;
   gap: 3px;
-  height: 32px;
-  padding: 0 20px;
-  border-radius: 40px;
+  height: 30px;
+  padding: 0 18px;
+  border-radius: 10px;
   border: 1px solid #ffffff;
   background: transparent;
   color: #ffffff;
@@ -536,8 +547,16 @@ body {
   flex-shrink: 0;
 }
 
-.boton-comenzar:disabled {
-  cursor: default;
+.boton-comenzar {
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.boton-comenzar.incompleto {
+  opacity: 0.35;
+}
+
+.sacudida-generica {
+  animation: input-nombre-sacudida 0.35s ease;
 }
 
 .boton-comenzar-icono {
@@ -589,6 +608,10 @@ body {
 }
 
 .boton-comenzar-icono svg {
+  transition: transform 0.15s ease;
+}
+
+.boton-comenzar:hover .boton-comenzar-icono svg {
   transform: scale(1.1);
 }
 
@@ -597,48 +620,41 @@ body {
   display: inline-flex;
 }
 
-.badge-demo {
+.etiqueta-proximamente {
   position: absolute;
-  right: -35px;
-  bottom: 2px;
-  padding: 3px 6px;
+  right: -10px;
+  top: -8px;
+  padding: 2px 7px;
   border-radius: 8px;
   background: #050514c0;
-  color: var(--verde);
-  border: 1px solid var(--verde);
+  border: 1px solid #707070;
+  color: #d9d9d9;
   font-size: 7px;
   font-weight: 700;
-  letter-spacing: 0.4px;
-  line-height: 1;
+  letter-spacing: 0.3px;
+  line-height: 1.3;
   white-space: nowrap;
-  animation: demoGlitch 5s ease-in-out infinite;
 }
 
-@keyframes demoGlitch {
-  0%, 91%, 100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
+.boton-probar.no-disponible.sacudida {
+  animation: input-nombre-sacudida 0.35s ease;
+}
 
-  92% {
-    transform: translateX(-1px);
-    opacity: 0.85;
-  }
+.aviso-proximamente {
+  margin: 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  text-align: left;
+  font-size: 9.6px;
+  color: #d9d9d9;
+  transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+}
 
-  93% {
-    transform: translateX(1px);
-    opacity: 0.95;
-  }
-
-  94% {
-    transform: translateX(-0.5px);
-    opacity: 0.8;
-  }
-
-  95% {
-    transform: translateX(0);
-    opacity: 1;
-  }
+.aviso-proximamente.visible {
+  max-height: 40px;
+  margin-top: 8px;
+  opacity: 1;
 }
 
 .ficha-recurso {
@@ -1053,6 +1069,8 @@ body {
 }
 
 .input-nombre.invalido {
+  opacity: 1;
+  transform: translateX(0);
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--rojo) 70%, transparent);
   animation: input-nombre-sacudida 0.35s ease;
 }
@@ -1065,11 +1083,68 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .input-nombre.invalido { animation: none; }
+  .sacudida-generica { animation: none; }
 }
 
 /* Panel: arcos que se llenan y delta flotante */
 .arco-relleno {
   transition: stroke-dasharray 0.7s ease, stroke 0.7s ease, opacity 0.3s ease;
+}
+
+/* Aísla el filtro en su propia capa para que no interactúe con el
+   backdrop-filter del panel y termine afectando la saturación general */
+.decision-promedio-arco,
+.decision-competencia-arco {
+  isolation: isolate;
+}
+
+/* Estado dominante: glow contenido, sin opacidad ni brillo general */
+@keyframes arco-dominante-glow {
+  0%, 100% { filter: drop-shadow(0 0 1px color-mix(in srgb, var(--verde) 45%, transparent)); }
+  50%      { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--verde) 65%, transparent)); }
+}
+
+.decision-promedio.arco-dominante .decision-promedio-arco,
+.decision-competencia.arco-dominante .decision-competencia-arco {
+  animation: arco-dominante-glow 2.2s ease-in-out infinite;
+}
+
+/* Estado crítico: alerta por ritmo (latido), no por luz. Rojo sin cambios. */
+@keyframes arco-critico-latido {
+  0%, 100% { transform: scale(1); }
+  8%       { transform: scale(1.07); }
+  16%      { transform: scale(1); }
+  24%      { transform: scale(1.07); }
+  32%      { transform: scale(1); }
+}
+
+.decision-promedio.arco-critico .decision-promedio-arco,
+.decision-competencia.arco-critico .decision-competencia-arco {
+  animation: arco-critico-latido 1.6s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* Flash: el propio trazo del arco destella una vez cuando su valor cambia */
+@keyframes arco-relleno-flash {
+  0%   { filter: brightness(1); }
+  35%  { filter: brightness(2) drop-shadow(0 0 6px rgba(255, 255, 255, 0.9)); }
+  100% { filter: brightness(1); }
+}
+
+.arco-relleno.arco-flash {
+  animation: arco-relleno-flash 0.7s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .decision-promedio.arco-dominante .decision-promedio-arco,
+  .decision-competencia.arco-dominante .decision-competencia-arco,
+  .decision-promedio.arco-critico .decision-promedio-arco,
+  .decision-competencia.arco-critico .decision-competencia-arco {
+    animation: none;
+  }
+  .arco-relleno.arco-flash {
+    animation: none;
+  }
 }
 
 .delta-flotante {
@@ -1294,4 +1369,245 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+/* ===== Trayectoria final — pantalla de intervención IA ===== */
+/* Mismo lenguaje directo-sobre-fondo que .presentacion-carrera:
+   sin caja, sin blur propio; el verde queda reservado como acento
+   puntual (línea lateral, etiqueta), nunca como superficie grande. */
+
+.trayectoria-final-personaje { position: relative; }
+
+.trayectoria-final-halo {
+  position: absolute;
+  inset: -30px -20px auto -20px;
+  height: 240px;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.09) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: tf-pulso 7s ease-in-out infinite;
+}
+
+@keyframes tf-pulso {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Barrido de brillo blanco en el panel de indicadores al entrar */
+.trayectoria-final-panel-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.trayectoria-final-panel-glow::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.28), transparent);
+  animation: tf-barrido 1.4s ease-out 0.3s both;
+  pointer-events: none;
+}
+
+@keyframes tf-barrido {
+  0%   { left: -60%; opacity: 0; }
+  15%  { opacity: 1; }
+  100% { left: 130%; opacity: 0; }
+}
+
+.trayectoria-final-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 323px;
+  margin: 0 auto;
+  padding: 4px 0 8px;
+  color: #ffffff;
+}
+
+/* Estado de carga */
+
+.trayectoria-final-carga {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.trayectoria-final-varita {
+  font-size: 1.6rem;
+  display: inline-block;
+  animation: varita-ia-mover 2.4s ease-in-out infinite;
+  transform-origin: 50% 85%;
+}
+
+.trayectoria-final-carga-texto {
+  font-family: var(--font);
+  font-size: 9.6px;
+  line-height: 1.2;
+  color: #ffffff;
+  opacity: 0.85;
+  text-align: center;
+}
+
+.trayectoria-final-carga-texto.trayectoria-final-fade {
+  animation: tf-fade-in 0.4s ease both;
+}
+
+@keyframes tf-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 0.85; transform: translateY(0); }
+}
+
+.trayectoria-final-shimmer {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  width: 100%;
+  max-width: 260px;
+}
+
+.trayectoria-final-shimmer span {
+  height: 8px;
+  border-radius: 6px;
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0.05) 25%,
+    rgba(255,255,255,0.16) 50%,
+    rgba(255,255,255,0.05) 75%);
+  background-size: 200% 100%;
+  animation: tf-shimmer 1.6s ease-in-out infinite;
+}
+
+.trayectoria-final-shimmer span:nth-child(1) { width: 100%; }
+.trayectoria-final-shimmer span:nth-child(2) { width: 85%; animation-delay: 0.15s; }
+.trayectoria-final-shimmer span:nth-child(3) { width: 60%; animation-delay: 0.3s; }
+
+@keyframes tf-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Revelado del epílogo — mismo patrón que .presentacion-subtitulo / .presentacion-perfil */
+
+.trayectoria-final-eyebrow {
+  margin: 0 0 8px;
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 1.3;
+  color: var(--verde);
+}
+
+.trayectoria-final-bloque-texto {
+  padding-left: 14px;
+  border-left: 3px solid var(--verde);
+  filter: brightness(1);
+}
+
+.trayectoria-final-bloque-texto.trayectoria-final-revelada {
+  animation: tf-settle-flash 0.9s ease var(--settle-delay, 0s) both;
+}
+
+@keyframes tf-settle-flash {
+  0%   { filter: brightness(1); }
+  55%  { filter: brightness(1.35); }
+  100% { filter: brightness(1); }
+}
+
+.trayectoria-final-texto {
+  margin: 0;
+  font-family: var(--font);
+  font-weight: 400;
+  font-size: 9.6px;
+  line-height: 1.5;
+  color: #ffffff;
+  opacity: 0.92;
+}
+
+.trayectoria-final-oracion {
+  display: inline;
+}
+
+/* Botón hacia "Así es la carrera" — mismo lenguaje que .boton-comenzar / #reiniciar */
+
+.trayectoria-final-portal-wrap {
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  animation: tf-fade-in 0.5s ease var(--portal-delay, 0s) forwards;
+}
+
+.trayectoria-final-portal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 20px;
+  border-radius: 40px;
+  border: 1px solid #ffffff;
+  background: transparent;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 0 0 rgba(255,255,255,0);
+  animation: tf-portal-glow 2.8s ease-in-out infinite;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.trayectoria-final-portal:hover {
+  background-color: #120ffe;
+  border-color: #120ffe;
+}
+
+.trayectoria-final-portal-click {
+  transform: scale(0.94);
+}
+
+@keyframes tf-portal-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+  50%      { box-shadow: 0 0 12px 2px rgba(255,255,255,0.25); }
+}
+
+.trayectoria-final-portal-icono { font-size: 1rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .trayectoria-final-halo,
+  .trayectoria-final-varita,
+  .trayectoria-final-portal,
+  .trayectoria-final-panel-glow::after,
+  .trayectoria-final-bloque-texto.trayectoria-final-revelada {
+    animation: none;
+  }
+}
+/* Indicador genérico de contenido generado por IA */
+
+.badge-ia {
+  display: inline-flex;
+  align-self: flex-start;
+  flex: 0 0 auto;
+  width: fit-content;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 11px;
+  margin-top: 10px;
+  border-radius: 20px;
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--verde) 40%, transparent);
+  color: #d9d9d9;
+  font-family: var(--font);
+  font-size: 8.5px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.2px;
+  opacity: 0.9;
+}
+
+.badge-ia .varita-ia {
+  font-size: 10px;
 }

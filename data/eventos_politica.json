@@ -1636,9 +1636,9 @@
         ]
       },
       {
-        "icono": "📚",
-        "texto": "Priorizar la carrera",
-        "descripcion": "Mantener tu camino actual y priorizar la carrera.",
+        "icono": "❌",
+        "texto": "Rechazar la propuesta",
+        "descripcion": "Preferís seguir enfocandote de lleno en la carrera.",
           "efectos": {
           "dedicacion": 3,
           "vocacion": 1,
@@ -1695,9 +1695,9 @@
         ]
       },
       {
-        "icono": "📚",
-        "texto": "Priorizar la carrera",
-        "descripcion": "Mantener tu camino actual y priorizar la carrera.",
+        "icono": "❌",
+        "texto": "Rechazar la propuesta",
+        "descripcion": "Preferís seguir enfocandote de lleno en la carrera.",
           "efectos": {
           "dedicacion": 3,
           "vocacion": 1,
@@ -1758,9 +1758,9 @@
         ]
       },
       {
-        "icono": "📚",
-        "texto": "Priorizar la carrera",
-        "descripcion": "Mantener tu camino actual y priorizar la carrera.",
+        "icono": "❌",
+        "texto": "Rechazar la propuesta",
+        "descripcion": "Preferís seguir enfocandote de lleno en la carrera.",
           "efectos": {
           "dedicacion": 3,
           "vocacion": 1,
@@ -2457,7 +2457,7 @@
   "contexto": "📝 La defensa",
   "texto": "Llegó el día. Tenés tu presentación preparada. Sabés que no necesitás repetir todo el trabajo: tenés que explicar qué preguntaste, cómo lo investigaste y qué encontraste.\n\n🚪 Entrás a defender el TIF.\n\nTerminás la presentación. Hubo preguntas que pudiste responder enseguida y otras que te obligaron a pensar un poco más.",
   "opciones": [
-    { "icono": "🎉", "texto": "Salir del aula", "descripcion": "Salís del aula y, por primera vez en mucho tiempo, sentís que realmente terminaste. La defensa salió bien, pudiste hablar de tu trabajo y responder las preguntas.", "efectos": { "confianza": 1 }, "banderaSet": ["tif_defendido"] }
+    { "icono": "🚪", "texto": "Salir del aula", "descripcion": "Salís del aula y, por primera vez en mucho tiempo, sentís que realmente terminaste. La defensa salió bien, pudiste hablar de tu trabajo y responder las preguntas.", "efectos": { "confianza": 1 }, "banderaSet": ["tif_defendido"] }
   ]
 },
 {
@@ -2465,10 +2465,10 @@
   "carrera": "politica",
   "orden": 108,
   "requiere": { "banderas": ["tif_defendido"] },
-  "contexto": "🎓 Después",
+  "contexto": "🔜 Después",
   "texto": "Guardás las hojas impresas del TIF en la mochila, junto a los apuntes de primer año que nunca tiraste.\n\nCerrás la mochila y te vas.",
   "opciones": [
-    { "icono": "🚪", "texto": "Irte", "descripcion": "Tu familia y amigxs te esperan afuera para festejar.", "efectos": {  "confianza": 1, "energia": 1 }, "banderaSet": ["tif_completado"] }
+    { "icono": "🎉", "texto": "Irte", "descripcion": "Tu familia y amigxs te esperan afuera para festejar.", "efectos": {  "confianza": 1, "energia": 1 }, "banderaSet": ["tif_completado"] }
   ]
 },
 {

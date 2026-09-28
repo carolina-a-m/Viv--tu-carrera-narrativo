@@ -814,7 +814,7 @@ if (evento.orden === ORDEN_FINAL) {
 
   pedirIntervencionIA(estado).then((texto) => {
 
-    actualizarNarrativaFinal(               // solo actualiza el texto dentro de la misma caja
+    const duracionRevelado = actualizarNarrativaFinal(               // solo actualiza el texto dentro de la misma caja
       evento.contexto,
       texto || evento.texto
     );
@@ -849,7 +849,9 @@ if (evento.orden === ORDEN_FINAL) {
         textoCarrera || 'No pudimos generar esta lectura en este momento.'
       );
 
-    });
+          renderDebugEstado(estado);
+
+    }, duracionRevelado);
 
     renderDebugEstado(estado);
 
@@ -884,7 +886,8 @@ else if (evento.id === 'politica_actividad_ia_disparador') {
       {
         contexto: eventoFinal.contexto,
         texto: eventoFinal.texto,
-        opciones: eventoFinal.opciones
+        opciones: eventoFinal.opciones,
+        generadoPorIA: Boolean(escenaValidada)
       },
       manejarEleccionEscenaIA(eventoFinal, 'actividad_ia_resuelta'),
       construirResumenJugador(estado, facultades)
@@ -923,7 +926,8 @@ else if (evento.id === 'politica_desafio_ia_disparador') {
       {
         contexto: eventoFinal.contexto,
         texto: eventoFinal.texto,
-        opciones: eventoFinal.opciones
+        opciones: eventoFinal.opciones,
+        generadoPorIA: Boolean(escenaValidada)
       },
       manejarEleccionEscenaIA(eventoFinal, 'desafio_ia_resuelta'),
       construirResumenJugador(estado, facultades)
