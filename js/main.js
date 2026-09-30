@@ -34,7 +34,9 @@ import {
   renderBotonConocerCarrera,
   renderPresentacionCarrera,
   renderCargandoCarreraPersonalizada,
-  actualizarCarreraPersonalizada
+  actualizarCarreraPersonalizada,
+  renderEscenaIACargando,
+  actualizarEscenaIA
 } from './ui.js';
 
 import {
@@ -321,8 +323,25 @@ function aplicarConflictoATexto(texto) {
   return texto.replaceAll(MARCADOR_CONFLICTO, relleno);
 }
 
-function construirResumenJugador(estado, facultades) {
+const EVENTOS_POR_ANIO = [
+  ['politica_inicio_01'],
+  ['politica_mitad_bien_01', 'politica_mitad_fracaso_grupo_01', 'politica_mitad_fracaso_solo_01'],
+  ['politica_pasantia_01'],
+  ['politica_oportunidad_01_salud', 'politica_oportunidad_01_consultora', 'politica_oportunidad_01_sin_pasantia'],
+  ['politica_tif_tema_01']
+];
 
+function calcularAnioAlcanzado(estado) {
+  let maxIndice = 0;
+  EVENTOS_POR_ANIO.forEach((ids, indice) => {
+    if (ids.some((id) => estado.eventosVistos.includes(id))) {
+      maxIndice = Math.max(maxIndice, indice);
+    }
+  });
+  return maxIndice;
+}
+
+function construirResumenJugador(estado, facultades) {
   const facultad = facultades.find(f =>
     f.carreras.some(c => c.id === estado.carreraActiva)
   );
@@ -333,6 +352,7 @@ function construirResumenJugador(estado, facultades) {
 
   const progreso = calcularProgresoCarrera(eventos, estado);
   const rendimiento = calcularRendimiento(estado);
+  const anioAlcanzado = calcularAnioAlcanzado(estado);
 
   return {
     nombre: estado.nombre,
@@ -340,7 +360,9 @@ function construirResumenJugador(estado, facultades) {
     carreraNombre: carrera?.nombre || '',
     vocacion: estado.variables.vocacion,
     progreso,
+    anioAlcanzado,
     rendimiento,
+    intereses: estado.intereses,
     variables: {
       ...estado.variables,
       progreso,
@@ -863,17 +885,15 @@ if (evento.orden === ORDEN_FINAL) {
 
 else if (evento.id === 'politica_actividad_ia_disparador') {
 
-  renderEvento(
-    {
-      contexto: '<span class="emoji-carga">🪄</span> Creando escenas personalizadas con IA',
-      texto: 'El juego está tomando elementos de tu recorrido — tus decisiones, tus intereses — y construyendo con eso una serie de escenas pensadas especialmente para tu partida. Esto puede tardar unos segundos.',
-      opciones: []
-    },
-    () => {},
-    construirResumenJugador(estado, facultades)
+  renderEscenaIACargando(
+    construirResumenJugador(estado, facultades),
+    MENSAJES_CARGA_ACTIVIDAD_IA
   );
 
-  pedirEscenaIA(estado, 'actividad_ia').then((escenaValidada) => {
+  Promise.all([
+    pedirEscenaIA(estado, 'actividad_ia'),
+    esperar(DURACION_MINIMA_CARGA_IA)
+  ]).then(([escenaValidada]) => {
 
     const eventoFinal = escenaValidada
       ? construirEventoEscenaIA(escenaValidada, 'actividad_ia', 55)
@@ -882,15 +902,14 @@ else if (evento.id === 'politica_actividad_ia_disparador') {
     registrarEvento(estado, evento.id);
     guardar(estado);
 
-    renderEvento(
+    actualizarEscenaIA(
       {
         contexto: eventoFinal.contexto,
         texto: eventoFinal.texto,
         opciones: eventoFinal.opciones,
         generadoPorIA: Boolean(escenaValidada)
       },
-      manejarEleccionEscenaIA(eventoFinal, 'actividad_ia_resuelta'),
-      construirResumenJugador(estado, facultades)
+      manejarEleccionEscenaIA(eventoFinal, 'actividad_ia_resuelta')
     );
 
     renderDebugEstado(estado);
@@ -903,17 +922,15 @@ else if (evento.id === 'politica_actividad_ia_disparador') {
 
 else if (evento.id === 'politica_desafio_ia_disparador') {
 
-  renderEvento(
-    {
-      contexto: evento.contexto,
-      texto: evento.texto,
-      opciones: []
-    },
-    () => {},
-    construirResumenJugador(estado, facultades)
+  renderEscenaIACargando(
+    construirResumenJugador(estado, facultades),
+    MENSAJES_CARGA_DESAFIO_IA
   );
 
-  pedirEscenaIA(estado, 'desafio_ia').then((escenaValidada) => {
+  Promise.all([
+    pedirEscenaIA(estado, 'desafio_ia'),
+    esperar(DURACION_MINIMA_CARGA_IA)
+  ]).then(([escenaValidada]) => {
 
     const eventoFinal = escenaValidada
       ? construirEventoEscenaIA(escenaValidada, 'desafio_ia', 100.8)
@@ -922,15 +939,14 @@ else if (evento.id === 'politica_desafio_ia_disparador') {
     registrarEvento(estado, evento.id);
     guardar(estado);
 
-    renderEvento(
+    actualizarEscenaIA(
       {
         contexto: eventoFinal.contexto,
         texto: eventoFinal.texto,
         opciones: eventoFinal.opciones,
         generadoPorIA: Boolean(escenaValidada)
       },
-      manejarEleccionEscenaIA(eventoFinal, 'desafio_ia_resuelta'),
-      construirResumenJugador(estado, facultades)
+      manejarEleccionEscenaIA(eventoFinal, 'desafio_ia_resuelta')
     );
 
     renderDebugEstado(estado);
@@ -1157,6 +1173,23 @@ const DESAFIO_IA_FALLBACK = {
   ]
 };
 
+const MENSAJES_CARGA_ACTIVIDAD_IA = [
+  'Buscando una actividad para vos…',
+  'Armando una escena con tu recorrido…',
+  'Casi listo…'
+];
+
+const MENSAJES_CARGA_DESAFIO_IA = [
+  'Pensando tu nuevo rol…',
+  'Armando una escena con tu recorrido…',
+  'Casi listo…'
+];
+
+// Evita que la carga parpadee si la IA responde muy rápido.
+const DURACION_MINIMA_CARGA_IA = 800;
+
+const esperar = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const PROFUNDIDAD_MAXIMA_ACTIVIDAD_IA = 3;
 
 function validarEscenaIA(escena, profundidad = 1) {
@@ -1186,7 +1219,9 @@ function validarEscenaIA(escena, profundidad = 1) {
     }
 
     const opcionValidada = {
-      icono: opcion.icono || '➡️',
+       icono: (typeof opcion.icono === 'string' && opcion.icono.trim() && opcion.icono.length <= 12)
+        ? opcion.icono.trim()
+        : '➡️',
       texto: opcion.texto,
       descripcion: opcion.descripcion || '',
       efectos
@@ -1216,7 +1251,9 @@ function validarEscenaIA(escena, profundidad = 1) {
   }
 
   return {
-    contexto: typeof escena.contexto === 'string' ? escena.contexto : null,
+       contexto: (typeof escena.contexto === 'string' && escena.contexto.trim() && escena.contexto.length <= 60)
+      ? escena.contexto.trim()
+      : null,
     texto: escena.texto,
     opciones: opcionesValidadas
   };

@@ -44,6 +44,9 @@ let panelExpandido = false;
 // Sirve para animar los arcos desde ahí hasta el valor nuevo.
 let ultimoPanel = null;
 
+// Último año (índice) alcanzado, para animar solo el que se activa de nuevo.
+let ultimoAnioAlcanzado = null;
+
 function crearArcoGauge(porcentaje, grosor = 6, color = COLOR_NORMAL, destino = null, flash = false) {
   const limitar = (p) => Math.min(100, Math.max(0, p));
   const pct = limitar(porcentaje);
@@ -71,11 +74,49 @@ function animarArcos(panel) {
   }));
 }
 
-function crearDeltaFlotante(cambio) {
-  if (!cambio) return '';
-  const valor = Number(cambio.toFixed(1));
-  const texto = Number.isInteger(valor) ? valor : valor.toFixed(1);
-  return `<span class="delta-flotante ${valor > 0 ? 'positivo' : 'negativo'}">${valor > 0 ? '+' : ''}${texto}</span>`;
+function formatearConteo(valor, decimales) {
+  return decimales === null ? String(Math.round(valor)) : Number(valor).toFixed(decimales);
+}
+
+function atributosConteo(desde, hasta, cambio, decimales) {
+  return `data-desde="${desde}" data-hasta="${hasta}" data-dir="${cambio > 0 ? 'sube' : 'baja'}" data-decimales="${decimales ?? ''}"`;
+}
+
+// El número cuenta desde el valor anterior hasta el nuevo al mismo ritmo
+// que el arco (0.7 s), en verde si sube y en rojo si baja, y vuelve a blanco.
+function animarConteoNumeros(panel) {
+  const reducirMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const DURACION = 700;
+
+  panel.querySelectorAll('[data-hasta]').forEach((el) => {
+    const desde = Number(el.dataset.desde);
+    const hasta = Number(el.dataset.hasta);
+    const decimales = el.dataset.decimales === '' ? null : Number(el.dataset.decimales);
+    const clase = el.dataset.dir === 'sube' ? 'num-sube' : 'num-baja';
+
+    if (reducirMovimiento) {
+      el.textContent = formatearConteo(hasta, decimales);
+      return;
+    }
+
+    el.classList.add(clase);
+    let inicio = null;
+
+    const paso = (ahora) => {
+      if (inicio === null) inicio = ahora;
+      const t = Math.min(1, (ahora - inicio) / DURACION);
+      const suave = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+      el.textContent = formatearConteo(desde + (hasta - desde) * suave, decimales);
+      if (t < 1) {
+        requestAnimationFrame(paso);
+      } else {
+        el.textContent = formatearConteo(hasta, decimales);
+        setTimeout(() => el.classList.remove(clase), 250);
+      }
+    };
+
+    requestAnimationFrame(paso);
+  });
 }
 
 function renderEvento(evento, onElegir, estado) {
@@ -99,7 +140,16 @@ function renderEvento(evento, onElegir, estado) {
 
   const narrativaGrupo = document.createElement('div');
   narrativaGrupo.className = 'decision-narrativa-grupo';
+  llenarNarrativaGrupo(narrativaGrupo, evento, onElegir);
 
+  bloque.appendChild(narrativaGrupo);
+  contenedor.appendChild(bloque);
+}
+
+// Identidad visual del evento (título, texto, badge IA, recursos y opciones).
+// La usan tanto renderEvento como la escena generada por IA, así que un
+// evento con IA queda idéntico a cualquier otro evento.
+function llenarNarrativaGrupo(narrativaGrupo, evento, onElegir) {
   const narrativa = document.createElement('div');
   narrativa.className = 'decision-narrativa';
   const narrativaBloque = document.createElement('div');
@@ -114,7 +164,7 @@ function renderEvento(evento, onElegir, estado) {
   if (evento.generadoPorIA && evento.fuenteUrl) {
     narrativaBloque.appendChild(crearFuenteIA(evento.fuenteTitulo, evento.fuenteUrl));
   }
-    if (evento.recurso) {
+  if (evento.recurso) {
     narrativaBloque.appendChild(crearFichaRecurso(evento.recurso));
   }
   if (evento.recursoSecundario) {
@@ -132,11 +182,7 @@ function renderEvento(evento, onElegir, estado) {
     }));
   });
   narrativaGrupo.appendChild(opciones);
-
-  bloque.appendChild(narrativaGrupo);
-  contenedor.appendChild(bloque);
 }
-
 
 function crearLogoHorizontal() {
   const div = document.createElement('div');
@@ -252,12 +298,17 @@ function crearPanelIndicadores(resumen, opciones = {}) {
 
   const vocacion = leerIndicador('vocacion', resumen.vocacion ?? 0);
   const presVocacion = vocacion.pres;
-    promedio.innerHTML = `
+    const vocacionNumero = vocacion.cambio
+    ? {
+        texto: Number(vocacion.antes.delta).toFixed(1),
+        attrs: atributosConteo(vocacion.antes.delta, presVocacion.delta, vocacion.cambio, 1)
+      }
+    : { texto: presVocacion.delta.toFixed(1), attrs: '' };
+  promedio.innerHTML = `
     <div class="decision-promedio-arco">${crearArcoGauge(vocacion.antes.porcentaje, 4, vocacion.antes.color, presVocacion, vocacion.antes.porcentaje !== presVocacion.porcentaje)}</div>
-    ${crearDeltaFlotante(vocacion.cambio)}
     <div class="decision-promedio-valor">
       <div class="decision-promedio-num">
-        <strong>${presVocacion.delta.toFixed(1)}</strong>
+        <strong ${vocacionNumero.attrs}>${vocacionNumero.texto}</strong>
         <span>${ETIQUETAS.vocacion}</span>
       </div>
       <div class="decision-promedio-caret"><img src="${ASSETS}caret-up.svg" alt=""></div>
@@ -282,12 +333,14 @@ function crearPanelIndicadores(resumen, opciones = {}) {
     const item = document.createElement('div');
     item.className = 'decision-competencia';
     item.classList.toggle('arco-dominante', clave === claveDominante);
-    item.classList.toggle('arco-critico', esClaveCritica(clave));
-        item.innerHTML = `
+        item.classList.toggle('arco-critico', esClaveCritica(clave));
+            const decimalesConteo = ind.cambio && (!Number.isInteger(ind.antes.delta) || !Number.isInteger(pres.delta)) ? 1 : null;
+    const numeroTexto = ind.cambio ? formatearConteo(ind.antes.delta, decimalesConteo) : String(pres.delta);
+    const numeroAttrs = ind.cambio ? atributosConteo(ind.antes.delta, pres.delta, ind.cambio, decimalesConteo) : '';
+    item.innerHTML = `
       <div class="decision-competencia-valor">
         <div class="decision-competencia-arco">${crearArcoGauge(ind.antes.porcentaje, 6, ind.antes.color, pres, ind.antes.porcentaje !== pres.porcentaje)}</div>
-        ${crearDeltaFlotante(ind.cambio)}
-        <span class="decision-competencia-num">${pres.delta}</span>
+        <span class="decision-competencia-num" ${numeroAttrs}>${numeroTexto}</span>
       </div>
       <p class="decision-competencia-label">${ETIQUETAS[clave]}</p>
     `;
@@ -323,38 +376,53 @@ function crearPanelIndicadores(resumen, opciones = {}) {
   datos.appendChild(parametros);
 
   const objetivos = document.createElement('div');
-
   objetivos.className = 'decision-objetivos';
+
+  const separador = document.createElement('div');
+  separador.className = 'decision-separador-puntos';
+  for (let i = 0; i < 24; i++) {
+    separador.innerHTML += '<span></span>';
+  }
+  objetivos.appendChild(separador);
+
   const barraWrap = document.createElement('div');
-  barraWrap.className = 'decision-barra-wrap';
+    barraWrap.className = 'decision-barra-wrap decision-barra-wrap-anios';
   barraWrap.innerHTML = `<div class="decision-barra-fondo"></div>`;
   const barraProgreso = document.createElement('div');
   barraProgreso.className = 'decision-barra-progreso';
   barraProgreso.style.width = `${resumen.progreso ?? 0}%`;
   barraWrap.querySelector('.decision-barra-fondo').appendChild(barraProgreso);
+
+  const indiceMaximoActual = resumen.anioAlcanzado ?? 0;
+  const huboAvance = ultimoAnioAlcanzado !== null && indiceMaximoActual > ultimoAnioAlcanzado;
+
+  const anios = document.createElement('div');
+  anios.className = 'decision-linea-anios';
+
+  HITOS.forEach((h, index) => {
+    // Partida: hay un año "actual". Pantalla final: el recorrido cerró,
+    // los años alcanzados son todos "completado" y no hay actual.
+    const completado = opciones.final
+      ? index <= indiceMaximoActual
+      : index < indiceMaximoActual;
+    const actual = !opciones.final && index === indiceMaximoActual;
+    const reciente = !opciones.final && huboAvance && index === indiceMaximoActual;
+    const pos = ((index + 1) / (HITOS.length + 1)) * 100;
+
+    const marca = document.createElement('div');
+    marca.className = 'decision-anio-marca'
+      + (completado ? ' completado' : '')
+      + (actual ? ' actual' : '')
+      + (reciente ? ' recien-alcanzado' : '');
+    marca.style.setProperty('--pos', `${pos}%`);
+    marca.innerHTML = `<span>${h.label}</span>`;
+    anios.appendChild(marca);
+  });
+
+  barraWrap.appendChild(anios);
   objetivos.appendChild(barraWrap);
 
-
-  const hitos = document.createElement('div');
-  hitos.className = 'decision-hitos';
-  const totalHitos = HITOS.length;
-  const progresoActual = resumen.progreso ?? 0;
-  HITOS.forEach((h, index) => {
-    const umbralInicio = (index / totalHitos) * 100;
-    const umbralFin = ((index + 1) / totalHitos) * 100;
-    const completado = progresoActual >= umbralFin;
-    const actual = !completado && progresoActual >= umbralInicio;
-    const hito = document.createElement('div');
-    hito.className = 'decision-hito'
-      + (completado ? ' completado' : '')
-      + (actual ? ' actual' : '');
-    hito.innerHTML = `
-      <div class="decision-hito-linea${(completado || actual) ? ' recorrida' : ''}"></div>
-      <span class="decision-hito-anio">${h.label}</span>
-    `;
-    hitos.appendChild(hito);
-  });
-  objetivos.appendChild(hitos);
+  ultimoAnioAlcanzado = indiceMaximoActual;
   datos.appendChild(objetivos);
 
   panel.appendChild(datos);
@@ -374,6 +442,7 @@ function crearPanelIndicadores(resumen, opciones = {}) {
 
   ultimoPanel = actual;
   animarArcos(panel);
+  animarConteoNumeros(panel);
 
   return panel;
 }
@@ -586,6 +655,7 @@ function crearIconoFacultad(facultadId) {
 
 function renderInicio(facultades, onEmpezar) {
   ultimoPanel = null;
+  ultimoAnioAlcanzado = null;
   const contenedor = document.getElementById('inicio');
   if (!contenedor) return;
   contenedor.innerHTML = '';
@@ -814,16 +884,16 @@ const MENSAJES_CARGA_TRAYECTORIA = [
 
 let intervaloRotacionCarga = null;
 
-function iniciarRotacionCarga(caja) {
+function iniciarRotacionCarga(caja, mensajes = MENSAJES_CARGA_TRAYECTORIA) {
   detenerRotacionCarga();
   let indice = 0;
   intervaloRotacionCarga = setInterval(() => {
-    indice = (indice + 1) % MENSAJES_CARGA_TRAYECTORIA.length;
+    indice = (indice + 1) % mensajes.length;
     const el = caja.querySelector('#trayectoria-carga-texto');
     if (!el) { detenerRotacionCarga(); return; }
     el.classList.remove('trayectoria-final-fade');
     void el.offsetWidth;
-    el.textContent = MENSAJES_CARGA_TRAYECTORIA[indice];
+    el.textContent = mensajes[indice];
     el.classList.add('trayectoria-final-fade');
   }, 1800);
 }
@@ -835,11 +905,11 @@ function detenerRotacionCarga() {
   }
 }
 
-function crearMarkupCarga() {
+function crearMarkupCarga(mensajes = MENSAJES_CARGA_TRAYECTORIA) {
   return `
     <div class="trayectoria-final-carga">
       <div class="trayectoria-final-varita">🪄</div>
-      <p class="trayectoria-final-carga-texto" id="trayectoria-carga-texto">${MENSAJES_CARGA_TRAYECTORIA[0]}</p>
+      <p class="trayectoria-final-carga-texto" id="trayectoria-carga-texto">${mensajes[0]}</p>
       <div class="trayectoria-final-shimmer">
         <span></span><span></span><span></span>
       </div>
@@ -892,6 +962,52 @@ function renderResultadoFinal(resumen, narrativa = {}) {
   if (narrativa.cargando) {
     iniciarRotacionCarga(wrap);
   }
+}
+
+// Escena generada por IA: la pantalla (logo, header y panel) se dibuja una
+// sola vez. En la zona narrativa normal va el indicador de carga y, cuando
+// llega la escena, solo se reemplaza el contenido de esa zona.
+function renderEscenaIACargando(estado, mensajes) {
+  const contenedor = document.getElementById('juego');
+  if (!contenedor) return;
+  detenerRotacionCarga();
+  contenedor.innerHTML = '';
+
+  contenedor.appendChild(crearLogoHorizontal());
+
+  const bloque = document.createElement('div');
+  bloque.className = 'decision-bloque';
+
+  if (estado) {
+    const personaje = document.createElement('div');
+    personaje.className = 'decision-personaje';
+    personaje.appendChild(crearHeaderJugador(estado));
+    personaje.appendChild(crearPanelIndicadores(estado));
+    bloque.appendChild(personaje);
+  }
+
+  const narrativaGrupo = document.createElement('div');
+  narrativaGrupo.className = 'decision-narrativa-grupo';
+  narrativaGrupo.id = 'escena-ia-grupo';
+  narrativaGrupo.innerHTML = crearMarkupCarga(mensajes);
+
+  bloque.appendChild(narrativaGrupo);
+  contenedor.appendChild(bloque);
+
+  iniciarRotacionCarga(narrativaGrupo, mensajes);
+}
+
+function actualizarEscenaIA(evento, onElegir) {
+  const grupo = document.getElementById('escena-ia-grupo');
+  if (!grupo) return;
+
+  detenerRotacionCarga();
+  grupo.innerHTML = '';
+  llenarNarrativaGrupo(grupo, evento, onElegir);
+
+  grupo.classList.remove('escena-ia-entrada');
+  void grupo.offsetWidth;
+  grupo.classList.add('escena-ia-entrada');
 }
 
 function renderDebugEstado(estado) {
@@ -1120,6 +1236,8 @@ export {
   actualizarNarrativaFinal,
   renderBotonConocerCarrera,
   renderPresentacionCarrera,
-  renderCargandoCarreraPersonalizada,
-  actualizarCarreraPersonalizada
+    renderCargandoCarreraPersonalizada,
+  actualizarCarreraPersonalizada,
+  renderEscenaIACargando,
+  actualizarEscenaIA
 };

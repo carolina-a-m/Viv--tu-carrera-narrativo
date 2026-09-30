@@ -175,7 +175,7 @@ body {
 .decision-promedio-arco { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
 .decision-promedio-arco svg { display: block; width: 100%; height: 100%; }
 .decision-promedio-valor { position: relative; z-index: 1; display: flex; align-items: flex-start; gap: 2px; }
-.decision-promedio-num { display: flex; flex-direction: column; align-items: flex-end; width: 40px; color: #ffffff; text-align: center; }
+.decision-promedio-num { display: flex; flex-direction: column; align-items: flex-end; min-width: 40px; color: #ffffff; text-align: center; }
 .decision-promedio-num strong {
   font-family: var(--font-titulo);
   font-weight: 700;
@@ -184,7 +184,7 @@ body {
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
-.decision-promedio-num span { font-size: 6.28px; font-weight: 400; line-height: 1.2; }
+.decision-promedio-num span { font-size: 7.5px; font-weight: 400; line-height: 1; white-space: nowrap; }
 .decision-promedio-caret { position: relative; width: 15.692px; height: 15.692px; overflow: hidden; }
 .decision-promedio-caret img { position: absolute; width: 6.5px; height: 3.25px; left: 4.6px; top: 6.2px; }
 
@@ -203,12 +203,12 @@ body {
 .decision-competencia-valor .decision-competencia-num {
   position: relative;
   z-index: 1;
-  display: block;
+  display: flex;
+  justify-content: center; /* centra de verdad aunque el texto sea más ancho que la caja */
   width: 100%;
   color: #ffffff;
   font-size: 8.5px;
   line-height: 1;
-  text-align: center;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
@@ -225,31 +225,179 @@ body {
 .decision-hito-linea {
   width: 7.5px;
   height: 0;
-  border-top: 0.5px solid rgba(255,255,255,0.35);
+  border-top: 0.5px solid rgba(255,255,255,0.3);
   transform: rotate(90deg);
   transition: border-color 0.3s ease;
 }
 
 .decision-hito-linea.recorrida {
-  border-top-color: color-mix(in srgb, var(--verde) 70%, transparent);
+  border-top-color: color-mix(in srgb, var(--verde) 55%, transparent);
 }
 
+/* Anillo fino, sin relleno: mismo grosor de trazo que el resto del sistema */
+.decision-hito-marco {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 0.5px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.decision-hito.completado .decision-hito-marco,
+.decision-hito.actual .decision-hito-marco {
+  border-color: color-mix(in srgb, var(--verde) 60%, transparent);
+}
+
+.decision-hito.actual .decision-hito-marco {
+  transform: scale(1.08);
+}
+
+/* Misma tipografía exacta que el número de competencia (decision-competencia-num) */
 .decision-hito-anio {
-  font-family: var(--font-titulo);
-  font-weight: 700;
-  font-size: 10px;
+  font-family: var(--font);
+  font-weight: 400;
+  font-size: 8.5px;
   line-height: 1;
+  font-variant-numeric: tabular-nums;
   color: #707070;
   transition: color 0.3s ease, filter 0.3s ease;
 }
 
 .decision-hito.completado .decision-hito-anio {
-  color: var(--verde);
+  color: #ffffff;
 }
 
 .decision-hito.actual .decision-hito-anio {
+  color: #ffffff;
+  filter: drop-shadow(0 0 2px color-mix(in srgb, var(--verde) 50%, transparent));
+}
+
+/* Microinteracción: un solo disparo al alcanzar un año nuevo, proporcional al nuevo tamaño */
+@keyframes hito-marco-pop {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(1.22); }
+  100% { transform: scale(1.08); }
+}
+
+@keyframes hito-ping {
+  0%   { transform: scale(0.9); opacity: 0.6; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+
+.decision-hito.recien-alcanzado .decision-hito-marco {
+  animation: hito-marco-pop 0.5s ease-out;
+}
+
+.decision-hito.recien-alcanzado .decision-hito-marco::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 0.5px solid color-mix(in srgb, var(--verde) 60%, transparent);
+  animation: hito-ping 0.6s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .decision-hito.recien-alcanzado .decision-hito-marco,
+  .decision-hito.recien-alcanzado .decision-hito-marco::after {
+    animation: none;
+  }
+}
+
+/* Años integrados a la barra (partida y pantalla final).
+   La barra es un trazo continuo, igual que los arcos. Los años son una
+   graduación: marca hairline de punta redondeada + número debajo,
+   apilados como el arco y su número/etiqueta.
+   Futuro = gris del track · completado = blanco · actual = verde. */
+
+.decision-barra-wrap-anios {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-bottom: 0;
+}
+
+.decision-linea-anios {
+  position: relative;
+  width: 100%;
+  height: 18px;
+  pointer-events: none;
+}
+
+.decision-panel.final .decision-linea-anios {
+  height: 20px;
+}
+
+.decision-anio-marca {
+  position: absolute;
+  top: 0;
+  left: var(--pos);
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-family: var(--font);
+  font-weight: 400;
+  font-size: 8.5px; /* misma tipografía que decision-competencia-num */
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: #707070;
+  transition: color 0.3s ease;
+}
+
+.decision-panel.final .decision-anio-marca {
+  font-size: 10px; /* igual que los números de los arcos en el final */
+}
+
+/* Marca de graduación: hereda el color del número (currentColor)
+   y termina en punta redondeada como el trazo de los arcos. */
+.decision-anio-marca::before {
+  content: '';
+  flex-shrink: 0;
+  width: 1px;
+  height: 4px;
+  margin-top: 0px; /* separación respecto de la barra; 0 para que la toque */
+  border-radius: 1px;
+  background: currentColor;
+}
+
+.decision-panel.final .decision-anio-marca::before {
+  height: 5px;
+}
+
+.decision-anio-marca span {
+  display: inline-block;
+}
+
+.decision-anio-marca.completado {
+  color: #ffffff;
+}
+
+.decision-anio-marca.actual {
   color: var(--verde);
-  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--verde) 60%, transparent));
+}
+
+@keyframes anio-pop {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+.decision-anio-marca.recien-alcanzado span {
+  animation: anio-pop 0.5s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .decision-anio-marca.recien-alcanzado span {
+    animation: none;
+  }
 }
 
 .decision-colapsar {
@@ -296,8 +444,6 @@ body {
 .decision-mod.positivo { color: var(--verde); }
 .decision-mod.negativo { color: var(--rojo); }
 .decision-mod strong { font-weight: 700; font-size: 12px; }
-.decision-competencia-valor .delta-flotante { top: 3px; }
-.decision-promedio .delta-flotante { top: 12px; }
 .decision-mod span { font-weight: 400; font-size: 9.6px; }
 .decision-eleccion-flecha { position: relative; width: 24px; height: 24px; overflow: hidden; flex-shrink: 0; margin-left: auto; }
 .decision-eleccion-flecha img { position: absolute; width: 4px; height: 8px; left: 10px; top: 8px; }
@@ -855,7 +1001,7 @@ body {
 
 .decision-panel.final .decision-barra-fondo,
 .decision-panel.final .decision-barra-progreso {
-  height: 9px;
+  height: 7px;
 }
 
 .decision-panel.final .decision-hitos {
@@ -908,7 +1054,7 @@ body {
 }
 
 .decision-panel.final .decision-promedio-num {
-  width: 50px;
+  min-width: 50px;
 }
 
 .decision-panel.final .decision-promedio-num strong {
@@ -916,7 +1062,7 @@ body {
 }
 
 .decision-panel.final .decision-promedio-num span {
-  font-size: 8px;
+  font-size: 9px;
 }
 
 .decision-panel.final .decision-promedio-caret {
@@ -1147,59 +1293,27 @@ body {
   }
 }
 
-.delta-flotante {
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 3px);
-  z-index: 2;
-  padding: 1px 6px;
-  border-radius: 20px;
-  font-size: 8px;
-  font-weight: 700;
-  line-height: 1.4;
-  white-space: nowrap;
-  pointer-events: none;
-  opacity: 0;
-  animation: delta-flotante-subir 1.6s ease-out 0.35s forwards;
+/* Cambio de métrica: el número del arco cuenta hasta el valor nuevo
+   junto con el llenado del arco. Verde si sube, rojo si baja, y vuelve
+   a blanco. Sin elementos nuevos: las etiquetas nunca se tocan. */
+
+.decision-competencia-valor .decision-competencia-num,
+.decision-promedio-num strong {
+  transition: color 0.3s ease;
 }
 
-.delta-flotante.positivo {
+.decision-competencia-valor .decision-competencia-num.num-sube,
+.decision-promedio-num strong.num-sube {
   color: var(--verde);
-  background: color-mix(in srgb, var(--verde) 18%, transparent);
 }
-.delta-flotante.negativo {
+
+.decision-competencia-valor .decision-competencia-num.num-baja,
+.decision-promedio-num strong.num-baja {
   color: var(--rojo);
-  background: color-mix(in srgb, var(--rojo) 18%, transparent);
-}
-
-@keyframes delta-flotante-subir {
-  0%   { opacity: 0; transform: translate(-50%, 3px); }
-  20%  { opacity: 1; transform: translate(-50%, 0); }
-  70%  { opacity: 1; transform: translate(-50%, 0); }
-  100% { opacity: 0; transform: translate(-50%, -3px); }
-}
-
-@keyframes delta-flotante-fade {
-  0%, 100% { opacity: 0; transform: translate(-50%, 0); }
-  20%, 70% { opacity: 1; transform: translate(-50%, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .arco-relleno { transition: none; }
-  .delta-flotante { animation-name: delta-flotante-fade; }
-}
-
-.decision-competencia-valor .delta-flotante {
-  top: 50%;
-  left: auto;
-  right: -3px;
-  transform: translate(100%, -50%);
-  animation-name: delta-flotante-lateral;
-}
-
-@keyframes delta-flotante-lateral {
-  0%,100% { opacity: 0; }
-  20%,70% { opacity: 1; }
 }
 
 /* ============================================================
@@ -1585,6 +1699,21 @@ body {
     animation: none;
   }
 }
+
+/* Entrada de una escena generada por IA: fade simple del bloque narrativo. */
+.escena-ia-entrada {
+  animation: escena-ia-fade 0.4s ease-out both;
+}
+
+@keyframes escena-ia-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .escena-ia-entrada { animation: none; }
+}
+
 /* Indicador genérico de contenido generado por IA */
 
 .badge-ia {
