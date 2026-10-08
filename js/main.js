@@ -36,8 +36,13 @@ import {
   renderCargandoCarreraPersonalizada,
   actualizarCarreraPersonalizada,
   renderEscenaIACargando,
-  actualizarEscenaIA
+  actualizarEscenaIA,
+  precargarFotoEscena
 } from './ui.js';
+
+import {
+  renderSeleccionAvatar
+} from './avatar.js';
 
 import {
   estadoInicial,
@@ -121,6 +126,8 @@ async function cargarEventosCarrera(carrera) {
 
   eventos =
     eventosCargados;
+
+  eventos.forEach(precargarFotoEscena);
 
 
   console.log(
@@ -356,6 +363,7 @@ function construirResumenJugador(estado, facultades) {
 
   return {
     nombre: estado.nombre,
+    avatar: estado.avatar,
     facultadId: facultad?.id || null,
     carreraNombre: carrera?.nombre || '',
     vocacion: estado.variables.vocacion,
@@ -551,15 +559,25 @@ renderInicio(
     );
 
 
-    guardar(
-      estado
-    );
- 
-
     ocultarInicio();
     mostrarReiniciar();
 
-    mostrarSiguiente();
+    renderSeleccionAvatar(
+      document.getElementById('juego'),
+      construirResumenJugador(estado, facultades),
+      (avatarId) => {
+
+        estado.avatar =
+          avatarId;
+
+        guardar(
+          estado
+        );
+
+        mostrarSiguiente();
+
+      }
+    );
 
   }
 );
@@ -963,6 +981,7 @@ else {
       renderEvento(
     {
       contexto: evento.contexto,
+      imagen: evento.imagen,
       texto: aplicarConflictoATexto(evento.texto),
       opciones: evento.opciones,
       generadoPorIA: usaConflicto,

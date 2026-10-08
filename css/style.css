@@ -1740,3 +1740,22 @@ body {
 .badge-ia .varita-ia {
   font-size: 10px;
 }
+
+:root{
+  --foto-lima:#C8F000;   /* poné el lima de tu paleta */
+  --foto-rojo:#FF4D4D;   /* poné el rojo de tu paleta */
+  --foto-fondo:#1C1C20;  /* poné el fondo de la tarjeta */
+}
+
+.foto-escena{position:relative;isolation:isolate;width:calc(100% + 32px);max-width:none;margin:0 -16px -10px;aspect-ratio:323/150;border-radius:15px 15px 0 0;overflow:hidden;-webkit-mask-image:linear-gradient(to bottom,#000 45%,transparent 100%);mask-image:linear-gradient(to bottom,#000 45%,transparent 100%)}
+.foto-escena img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.08);filter:blur(10px);transition:opacity .7s ease,filter .9s ease}
+.foto-escena.lista img{opacity:1;filter:blur(0);animation:fotoZoom 8s ease-out forwards}
+.foto-escena .tinte{position:absolute;inset:0;z-index:3;mix-blend-mode:color;opacity:0;pointer-events:none}
+.foto-escena.positivo .tinte{background:var(--foto-lima);animation:fotoTinte 1.4s ease forwards}
+.foto-escena.negativo .tinte{background:var(--foto-rojo);animation:fotoTinte 1.4s ease forwards}
+@keyframes fotoZoom{from{transform:scale(1.08)}to{transform:scale(1)}}
+@keyframes fotoTinte{0%{opacity:0}30%{opacity:.8}100%{opacity:.3}}
+@media (prefers-reduced-motion:reduce){
+  .foto-escena img{animation:none!important;transform:none;transition:none;opacity:1;filter:none}
+  .foto-escena .tinte{animation:none!important}
+}

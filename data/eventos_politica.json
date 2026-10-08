@@ -1,6 +1,7 @@
 [
   {
     "id": "politica_inicio_01",
+    "imagen": ["primera-semana"],
     "carrera": "politica",
     "orden": 10,
     "permiteTransversal": false,
@@ -448,6 +449,7 @@
   },
   {
     "id": "politica_parcial_presentacion_01",
+    "imagen": ["primer-parcial-a", "primer-parcial-b"],
     "carrera": "politica",
     "orden": 40,
     "requiere": {
@@ -591,6 +593,7 @@
   },
   {
     "id": "politica_mitad_fracaso_grupo_01",
+    "imagen": ["a-mitad-de-camino"],
     "carrera": "politica",
     "orden": 60,
     "requiere": {
@@ -636,6 +639,7 @@
   },
   {
     "id": "politica_mitad_fracaso_solo_01",
+    "imagen": ["a-mitad-de-camino"],
     "carrera": "politica",
     "orden": 60,
     "requiere": {
@@ -680,6 +684,7 @@
   },
   {
     "id": "politica_mitad_bien_01",
+    "imagen": ["a-mitad-de-camino"],
     "carrera": "politica",
     "orden": 60,
     "requiere": {
@@ -947,6 +952,7 @@
   },
   {
     "id": "politica_pasantia_01",
+    "imagen": ["pasantia-a", "pasantia-b"],
     "carrera": "politica",
     "orden": 80,
     "requiere": {
@@ -2220,6 +2226,7 @@
   },
   {
     "id": "politica_tif_tema_01",
+    "imagen": ["tif-a", "tif-b"],
     "carrera": "politica",
     "orden": 105,
     "contexto": "🎓 Quinto año — El TIF",
@@ -2462,6 +2469,7 @@
 },
 {
   "id": "politica_tif_cierre_01",
+  "imagen": ["despues-a", "despues-b"],
   "carrera": "politica",
   "orden": 108,
   "requiere": { "banderas": ["tif_defendido"] },
@@ -2481,6 +2489,7 @@
 },
   {
     "id": "politica_apuro_economico_comedor",
+    "imagen": ["comemos-algo-a", "comemos-algo-b"],
     "carrera": "politica",
     "rangoOrden": [
       50,
@@ -2615,6 +2624,7 @@
   },
   {
     "id": "politica_salir_del_papel",
+    "imagen": ["salir-del-papel-a", "salir-del-papel-b"],
     "carrera": "politica",
     "rangoOrden": [
       30,

@@ -140,7 +140,7 @@ function renderEvento(evento, onElegir, estado) {
 
   const narrativaGrupo = document.createElement('div');
   narrativaGrupo.className = 'decision-narrativa-grupo';
-  llenarNarrativaGrupo(narrativaGrupo, evento, onElegir);
+  llenarNarrativaGrupo(narrativaGrupo, evento, onElegir, estado?.avatar);
 
   bloque.appendChild(narrativaGrupo);
   contenedor.appendChild(bloque);
@@ -149,13 +149,16 @@ function renderEvento(evento, onElegir, estado) {
 // Identidad visual del evento (título, texto, badge IA, recursos y opciones).
 // La usan tanto renderEvento como la escena generada por IA, así que un
 // evento con IA queda idéntico a cualquier otro evento.
-function llenarNarrativaGrupo(narrativaGrupo, evento, onElegir) {
+function llenarNarrativaGrupo(narrativaGrupo, evento, onElegir, avatar) {
   const narrativa = document.createElement('div');
   narrativa.className = 'decision-narrativa';
   const narrativaBloque = document.createElement('div');
   narrativaBloque.className = 'decision-narrativa-bloque';
-  if (evento.contexto) {
-    narrativaBloque.innerHTML += `<p class="decision-narrativa-titulo">${evento.contexto}</p>`;
+  const foto = crearFotoEscena(evento, avatar);
+    if (evento.contexto) {
+    const claseAnim = foto ? ' pc-anim' : '';
+    const estiloAnim = foto ? ' style="--pc-delay:0.45s"' : '';
+    narrativaBloque.innerHTML += `<p class="decision-narrativa-titulo${claseAnim}"${estiloAnim}>${evento.contexto}</p>`;
   }
   narrativaBloque.innerHTML += `<p class="decision-narrativa-texto">${(evento.icono ? evento.icono + ' ' : '') + evento.texto}</p>`;
   if (evento.generadoPorIA && !evento.fuenteUrl) {
@@ -170,6 +173,7 @@ function llenarNarrativaGrupo(narrativaGrupo, evento, onElegir) {
   if (evento.recursoSecundario) {
     narrativaBloque.appendChild(crearFichaRecurso(evento.recursoSecundario));
   }
+  if (foto) narrativaBloque.prepend(foto);
   narrativa.appendChild(narrativaBloque);
   narrativaGrupo.appendChild(narrativa);
 
@@ -178,7 +182,14 @@ function llenarNarrativaGrupo(narrativaGrupo, evento, onElegir) {
   evento.opciones.forEach((opcion) => {
     opciones.appendChild(crearBoxOpcion(opcion, () => {
       opciones.querySelectorAll('button').forEach(b => { b.disabled = true; });
-      onElegir(opcion);
+      if (!foto) {
+        onElegir(opcion);
+        return;
+      }
+      const saldo = Object.values(opcion.efectos || {}).reduce((suma, valor) => suma + valor, 0);
+      tenirFotoEscena(foto, saldo);
+      const reducirMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      setTimeout(() => onElegir(opcion), reducirMovimiento ? 0 : 700);
     }));
   });
   narrativaGrupo.appendChild(opciones);
@@ -189,6 +200,48 @@ function crearLogoHorizontal() {
   div.className = 'decision-logo';
   div.innerHTML = `<img src="${ASSETS}logo-horizontal.svg" alt="Viví tu carrera">`;
   return div;
+}
+
+const ASSETS_ESCENAS = 'assets/escenas/';
+
+const SUFIJO_AVATAR = { avatar_1: 'b', avatar_2: 'a' };
+
+function elegirArchivoEscena(imagen, avatar) {
+  const opciones = [].concat(imagen);
+  const sufijo = SUFIJO_AVATAR[avatar];
+  const coincidencia = opciones.find((nombre) => nombre.endsWith('-' + sufijo));
+  return coincidencia || opciones[0];
+}
+
+function crearFotoEscena(evento, avatar) {
+  if (!evento.imagen) return null;
+  const archivo = elegirArchivoEscena(evento.imagen, avatar);
+  const cont = document.createElement('div');
+  cont.className = 'foto-escena';
+  cont.innerHTML = `<img src="${ASSETS_ESCENAS}${archivo}.png" alt="" decoding="async"><span class="tinte"></span>`;
+  const img = cont.querySelector('img');
+  const listo = () => cont.classList.add('lista');
+  if (img.complete) {
+    listo();
+  } else {
+    img.addEventListener('load', listo, { once: true });
+  }
+  return cont;
+}
+
+function precargarFotoEscena(evento) {
+  if (!evento || !evento.imagen) return;
+  [].concat(evento.imagen).forEach((archivo) => {
+    const precarga = new Image();
+    precarga.src = `${ASSETS_ESCENAS}${archivo}.png`;
+  });
+}
+
+function tenirFotoEscena(cont, saldo) {
+  if (!cont) return;
+  cont.classList.remove('positivo', 'negativo');
+  void cont.offsetWidth;
+  cont.classList.add(saldo >= 0 ? 'positivo' : 'negativo');
 }
 
 function crearFuenteIA(titulo, url) {
@@ -1225,6 +1278,8 @@ function actualizarCarreraPersonalizada(texto) {
 
 
 export {
+  crearLogoHorizontal,
+  crearHeaderJugador,
   renderEvento,
   renderConsecuencia,
   renderResultadoFinal,
@@ -1239,5 +1294,6 @@ export {
     renderCargandoCarreraPersonalizada,
   actualizarCarreraPersonalizada,
   renderEscenaIACargando,
-  actualizarEscenaIA
+  actualizarEscenaIA,
+  precargarFotoEscena
 };
