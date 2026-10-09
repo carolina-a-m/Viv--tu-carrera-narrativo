@@ -124,6 +124,7 @@ function renderEvento(evento, onElegir, estado) {
   if (!contenedor) return;
 
   contenedor.innerHTML = '';
+  window.scrollTo(0, 0);
 
   contenedor.appendChild(crearLogoHorizontal());
 
@@ -149,20 +150,58 @@ function renderEvento(evento, onElegir, estado) {
 // Identidad visual del evento (título, texto, badge IA, recursos y opciones).
 // La usan tanto renderEvento como la escena generada por IA, así que un
 // evento con IA queda idéntico a cualquier otro evento.
+function formatearTexto(texto, retraso) {
+  const parrafos = String(texto || '')
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+
+  const MARCA_DESTACADO = '[[destacado]]';
+
+  const html = parrafos.map((p, i) => {
+    const destacado = p.startsWith(MARCA_DESTACADO);
+    const contenido = destacado ? p.slice(MARCA_DESTACADO.length).trim() : p;
+    const dialogo = destacado || /^(—|"|“|«)/.test(contenido);
+    const delay = Math.min(retraso + i * 0.18, 1.5).toFixed(2);
+    return `<p class="decision-parrafo aparece${dialogo ? ' dialogo' : ''}" style="--pc-delay:${delay}s">${contenido.replace(/\n/g, '<br>')}</p>`;
+  }).join('');
+
+  return { html, fin: Math.min(retraso + parrafos.length * 0.18, 1.5) };
+}
+
 function llenarNarrativaGrupo(narrativaGrupo, evento, onElegir, avatar) {
   const narrativa = document.createElement('div');
   narrativa.className = 'decision-narrativa';
   const narrativaBloque = document.createElement('div');
   narrativaBloque.className = 'decision-narrativa-bloque';
+
   const foto = crearFotoEscena(evento, avatar);
-    if (evento.contexto) {
-    const claseAnim = foto ? ' pc-anim' : '';
-    const estiloAnim = foto ? ' style="--pc-delay:0.45s"' : '';
-    narrativaBloque.innerHTML += `<p class="decision-narrativa-titulo${claseAnim}"${estiloAnim}>${evento.contexto}</p>`;
+  if (foto) narrativaBloque.appendChild(foto);
+
+  if (evento.contexto) {
+    const titulo = document.createElement('p');
+    titulo.className = 'decision-narrativa-titulo aparece';
+    titulo.style.setProperty('--pc-delay', foto ? '0.3s' : '0s');
+    titulo.innerHTML = evento.contexto;
+    narrativaBloque.appendChild(titulo);
   }
-  narrativaBloque.innerHTML += `<p class="decision-narrativa-texto">${(evento.icono ? evento.icono + ' ' : '') + evento.texto}</p>`;
+
+  const texto = formatearTexto(
+    (evento.icono ? evento.icono + ' ' : '') + (evento.texto || ''),
+    foto ? 0.5 : 0.2
+  );
+  const cajaTexto = document.createElement('div');
+  cajaTexto.className = 'decision-narrativa-texto';
+  cajaTexto.innerHTML = texto.html;
+  narrativaBloque.appendChild(cajaTexto);
+
   if (evento.generadoPorIA && !evento.fuenteUrl) {
-    narrativaBloque.innerHTML += `<div class="badge-ia"><span class="varita-ia">🪄</span> Generado con IA</div>`;
+    const badge = document.createElement('span');
+    badge.className = 'badge-ia';
+    badge.innerHTML = '<span class="varita-ia">🪄</span> Generado con IA';
+    const parrafos = cajaTexto.querySelectorAll('.decision-parrafo');
+    const ultimo = parrafos[parrafos.length - 1];
+    (ultimo || cajaTexto).appendChild(badge);
   }
   if (evento.generadoPorIA && evento.fuenteUrl) {
     narrativaBloque.appendChild(crearFuenteIA(evento.fuenteTitulo, evento.fuenteUrl));
@@ -173,25 +212,39 @@ function llenarNarrativaGrupo(narrativaGrupo, evento, onElegir, avatar) {
   if (evento.recursoSecundario) {
     narrativaBloque.appendChild(crearFichaRecurso(evento.recursoSecundario));
   }
-  if (foto) narrativaBloque.prepend(foto);
+
   narrativa.appendChild(narrativaBloque);
   narrativaGrupo.appendChild(narrativa);
 
   const opciones = document.createElement('div');
   opciones.className = 'decision-elecciones';
-  evento.opciones.forEach((opcion) => {
-    opciones.appendChild(crearBoxOpcion(opcion, () => {
-      opciones.querySelectorAll('button').forEach(b => { b.disabled = true; });
-      if (!foto) {
+
+  evento.opciones.forEach((opcion, i) => {
+    const box = crearBoxOpcion(opcion, (ev) => {
+      const elegida = ev.currentTarget;
+      opciones.querySelectorAll('button').forEach((b) => {
+        b.disabled = true;
+        b.classList.add(b === elegida ? 'elegida' : 'descartada');
+      });
+
+      const reducirMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const saldo = Object.values(opcion.efectos || {}).reduce((suma, valor) => suma + valor, 0);
+      if (foto) tenirFotoEscena(foto, saldo);
+
+      if (reducirMovimiento) {
         onElegir(opcion);
         return;
       }
-      const saldo = Object.values(opcion.efectos || {}).reduce((suma, valor) => suma + valor, 0);
-      tenirFotoEscena(foto, saldo);
-      const reducirMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      setTimeout(() => onElegir(opcion), reducirMovimiento ? 0 : 700);
-    }));
+
+      setTimeout(() => narrativaGrupo.classList.add('saliendo'), 400);
+      setTimeout(() => onElegir(opcion), 650);
+    });
+
+    box.classList.add('aparece');
+    box.style.setProperty('--pc-delay', `${(texto.fin + 0.1 + i * 0.1).toFixed(2)}s`);
+    opciones.appendChild(box);
   });
+
   narrativaGrupo.appendChild(opciones);
 }
 
@@ -788,8 +841,9 @@ function renderInicio(facultades, onEmpezar) {
   const botonComenzar = document.createElement('button');
   botonComenzar.type = 'button';
   botonComenzar.className = 'boton-comenzar incompleto';
-  botonComenzar.innerHTML = `
+    botonComenzar.innerHTML = `
     <span>Comenzar</span>
+    <div class="decision-eleccion-flecha"><img src="${ASSETS}chevron-right.svg" alt=""></div>
   `;
 
   function actualizarBoton() {
@@ -1089,9 +1143,8 @@ function actualizarNarrativaFinal(contexto, texto) {
   wrap.innerHTML = `
     <p class="trayectoria-final-eyebrow pc-anim" style="--pc-delay:0s">${contexto || 'Tu trayectoria'}</p>
     <div class="trayectoria-final-bloque-texto" id="trayectoria-bloque-texto">
-      <p class="trayectoria-final-texto">${spansHtml}</p>
+      <p class="trayectoria-final-texto">${spansHtml}<span class="badge-ia pc-anim" style="--pc-delay:${((duracionTotal / 1000) + 0.1).toFixed(2)}s"><span class="varita-ia">🪄</span> Generado con IA</span></p>
     </div>
-    <div class="badge-ia pc-anim" style="--pc-delay:${((duracionTotal / 1000) + 0.1).toFixed(2)}s"><span class="varita-ia">🪄</span> Generado con IA</div>
   `;
 
   const bloqueTexto = wrap.querySelector('#trayectoria-bloque-texto');
@@ -1271,8 +1324,7 @@ function actualizarCarreraPersonalizada(texto) {
 
   caja.innerHTML = `
     <p class="presentacion-subtitulo presentacion-subtitulo-ia pc-anim" style="--pc-delay:0s">Lo que encontramos en tu recorrido</p>
-    <p class="presentacion-texto pc-anim" style="--pc-delay:0.12s">${texto || ''}</p>
-    <div class="badge-ia pc-anim" style="--pc-delay:0.3s"><span class="varita-ia">🪄</span> Generado con IA</div>
+        <p class="presentacion-texto pc-anim" style="--pc-delay:0.12s">${texto || ''}<span class="badge-ia pc-anim" style="--pc-delay:0.3s"><span class="varita-ia">🪄</span> Generado con IA</span></p>
   `;
 }
 

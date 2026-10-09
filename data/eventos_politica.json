@@ -6,7 +6,7 @@
     "orden": 10,
     "permiteTransversal": false,
     "contexto": "🗳️ Primera semana",
-    "texto": "Es tu primera semana cursando Ciencia Política. En una actividad de Introducción a la Ciencia Política, la docente divide a la clase en grupos.\n\n\"Les voy a dar un caso real. Mañana tienen que presentar un análisis.\"\n\n{{CONFLICTO_RESUMEN}}\n\nEn tu grupo aparecen tres ideas distintas.",
+    "texto": "Es tu primera semana cursando Ciencia Política. En una actividad de Introducción a la Ciencia Política, la docente divide a la clase en grupos.\n\n\"Les voy a dar un caso real. Mañana tienen que presentar un análisis.\"\n\n{{CONFLICTO_RESUMEN}}\n\n[[destacado]]En tu grupo aparecen tres ideas distintas:",
     "opciones": [
       {
         "icono": "🧩",

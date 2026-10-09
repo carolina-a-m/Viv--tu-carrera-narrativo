@@ -38,14 +38,30 @@ const TEXTO_PROXIMAMENTE = '🔒 Próximamente';
 const SILUETA = `
   <svg class="avatar-custom-silueta" viewBox="0 0 120 112" aria-hidden="true">
     <defs>
+    <radialGradient id="avBrillo">
+        <stop offset="0" stop-color="#ffffff" stop-opacity="0.55" />
+        <stop offset="0.45" stop-color="#cdec19" stop-opacity="0.22" />
+        <stop offset="1" stop-color="#cdec19" stop-opacity="0" />
+      </radialGradient>
       <linearGradient id="avGrad" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#ffffff" stop-opacity="0.22" />
         <stop offset="1" stop-color="#ffffff" stop-opacity="0.02" />
       </linearGradient>
     </defs>
 
-    <circle class="avatar-custom-anillo" cx="60" cy="56" r="46" />
-    <circle class="avatar-custom-orbita" pathLength="100" cx="60" cy="56" r="46" />
+    <mask id="avMascara" maskUnits="userSpaceOnUse" x="0" y="0" width="120" height="112">
+      <rect width="120" height="112" fill="#fff" />
+      <path d="M24 112 C24 88 40 78 60 78 C80 78 96 88 96 112 Z" fill="#000" />
+      <circle cx="60" cy="50" r="16" fill="#000" />
+    </mask>
+
+    <g mask="url(#avMascara)">
+      <circle class="avatar-custom-anillo" cx="60" cy="56" r="46" />
+      <g class="avatar-custom-orbita">
+        <circle cx="60" cy="10" r="9" fill="url(#avBrillo)" />
+        <path d="M60 3 L61.6 8.4 L67 10 L61.6 11.6 L60 17 L58.4 11.6 L53 10 L58.4 8.4 Z" fill="#ffffff" />
+      </g>
+    </g>
 
     <path class="avatar-custom-cuerpo" d="M24 112 C24 88 40 78 60 78 C80 78 96 88 96 112 Z" />
     <circle class="avatar-custom-cabeza" cx="60" cy="50" r="16" />
@@ -181,7 +197,8 @@ async function renderSeleccionAvatar(contenedor, resumen, onConfirmar) {
   narrativaGrupo.className = 'decision-narrativa-grupo avatar-narrativa';
   narrativaGrupo.innerHTML = `
     <div class="decision-narrativa">
-      <div class="decision-narrativa-bloque">
+          <div class="decision-narrativa-bloque">
+        <p class="trayectoria-final-eyebrow"></p>
         <p class="decision-narrativa-titulo">🪪 Elegí tu avatar</p>
         <p class="decision-narrativa-texto">Con esta imagen vas a recorrer la carrera.</p>
       </div>
@@ -213,7 +230,10 @@ async function renderSeleccionAvatar(contenedor, resumen, onConfirmar) {
   const confirmar = document.createElement('button');
   confirmar.type = 'button';
   confirmar.className = 'boton-comenzar incompleto avatar-confirmar';
-  confirmar.innerHTML = '<span>Continuar</span>';
+    confirmar.innerHTML = `
+    <span>Continuar</span>
+    <div class="decision-eleccion-flecha"><img src="assets/decision/chevron-right.svg" alt=""></div>
+  `;
   bloque.appendChild(confirmar);
 
   contenedor.appendChild(bloque);
